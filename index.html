@@ -106,7 +106,6 @@
       --axiom-muted: #677783;
       --axiom-border: #dce5ea;
       --axiom-success: #18a276;
-      --axiom-warning: #d89a35;
 
       --axiom-shadow:
         0 20px 55px rgba(7, 20, 33, 0.11);
@@ -125,6 +124,7 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 110px;
     }
 
     body {
@@ -208,7 +208,7 @@
     .research-bar {
       position: relative;
       z-index: 1040;
-      padding: 9px 0;
+      padding: 9px 14px;
       background:
         linear-gradient(
           90deg,
@@ -259,6 +259,7 @@
       width: 54px;
       height: 54px;
       object-fit: contain;
+      flex-shrink: 0;
     }
 
     .brand-copy {
@@ -548,7 +549,7 @@
       color: var(--axiom-cyan);
     }
 
-    /* Hero product display */
+    /* Hero product */
 
     .hero-visual {
       position: relative;
@@ -608,6 +609,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 15px;
       margin-bottom: 25px;
     }
 
@@ -623,6 +625,7 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
+      flex-shrink: 0;
       padding: 7px 10px;
       color: var(--axiom-cyan);
       border: 1px solid rgba(57, 212, 208, 0.24);
@@ -638,6 +641,7 @@
       display: block;
       width: 100%;
       max-height: 390px;
+      margin: 0 auto;
       object-fit: contain;
       filter:
         drop-shadow(0 30px 24px rgba(0, 0, 0, 0.26));
@@ -648,7 +652,7 @@
       position: relative;
       z-index: 2;
       display: flex;
-      align-items: end;
+      align-items: flex-end;
       justify-content: space-between;
       gap: 18px;
       margin-top: 18px;
@@ -724,7 +728,7 @@
       line-height: 1.45;
     }
 
-    /* Product categories */
+    /* Categories */
 
     .categories-section {
       background:
@@ -832,7 +836,7 @@
       transform: translateX(4px);
     }
 
-    /* Featured products */
+    /* Products */
 
     .featured-section {
       background: var(--axiom-white);
@@ -1005,7 +1009,7 @@
       transform: translateX(2px);
     }
 
-    /* Quality section */
+    /* Quality */
 
     .quality-section {
       position: relative;
@@ -1174,7 +1178,7 @@
       left: 5px;
     }
 
-    /* About section */
+    /* About */
 
     .about-section {
       background: #eef3f5;
@@ -1199,25 +1203,24 @@
       width: 100%;
       height: 100%;
       min-height: 530px;
-      object-fit: cover;
       border-radius: 22px;
     }
 
     .about-logo-image {
-  padding: 80px;
-  object-fit: contain;
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(57, 212, 208, 0.14),
-      transparent 55%
-    ),
-    linear-gradient(
-      145deg,
-      #071421,
-      #0e3041
-    );
-}
+      padding: 90px;
+      object-fit: contain;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(57, 212, 208, 0.17),
+          transparent 55%
+        ),
+        linear-gradient(
+          145deg,
+          #071421,
+          #0e3041
+        );
+    }
 
     .about-floating-card {
       position: absolute;
@@ -1290,7 +1293,7 @@
       line-height: 1.6;
     }
 
-    /* Research disclaimer */
+    /* Disclaimer */
 
     .disclaimer-section {
       background: var(--axiom-white);
@@ -1547,6 +1550,16 @@
       color: var(--axiom-cyan);
     }
 
+    .footer-contact-item a {
+      color: rgba(255, 255, 255, 0.57);
+      overflow-wrap: anywhere;
+      transition: color 0.2s ease;
+    }
+
+    .footer-contact-item a:hover {
+      color: var(--axiom-cyan);
+    }
+
     .footer-divider {
       margin: 45px 0 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.09);
@@ -1619,10 +1632,6 @@
         padding-top: 75px;
       }
 
-      .hero-copy {
-        max-width: 720px;
-      }
-
       .hero-visual {
         min-height: 500px;
         margin-top: 30px;
@@ -1648,7 +1657,6 @@
       }
 
       .research-bar {
-        padding: 8px 12px;
         font-size: 0.66rem;
         line-height: 1.5;
       }
@@ -1721,6 +1729,10 @@
         min-height: 410px;
       }
 
+      .about-logo-image {
+        padding: 60px;
+      }
+
       .about-floating-card {
         right: 15px;
         bottom: 18px;
@@ -1772,6 +1784,30 @@
         padding-left: 18px;
       }
 
+      .navbar-brand {
+        gap: 9px;
+        margin-right: 10px;
+      }
+
+      .brand-logo {
+        width: 42px;
+        height: 42px;
+      }
+
+      .brand-name {
+        font-size: 0.96rem;
+      }
+
+      .brand-subtitle {
+        font-size: 0.47rem;
+        letter-spacing: 0.15em;
+      }
+
+      .hero-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       .hero-card-bottom {
         align-items: flex-start;
         flex-direction: column;
@@ -1787,6 +1823,10 @@
 
       .orbit-chip {
         display: none;
+      }
+
+      .about-logo-image {
+        padding: 45px;
       }
 
       .footer-legal-links {
@@ -1808,13 +1848,12 @@
   <nav class="navbar navbar-expand-lg axiom-navbar sticky-top">
     <div class="container">
 
-      <a class="navbar-brand" href="/">
-        <!-- Replace with your Axiom logo -->
+      <a class="navbar-brand" href="./">
         <img
-  src="./images/axiom-logo-icon.png"
-  alt="Axiom Research"
-  class="about-image about-logo-image"
->
+          src="./images/axiom-logo-icon.png"
+          alt="Axiom Research Peptides"
+          class="brand-logo"
+        >
 
         <span class="brand-copy">
           <span class="brand-name">AXIOM</span>
@@ -1875,10 +1914,10 @@
 
         <a
           class="nav-action ms-lg-3"
-          href="/shop.html"
+          href="#products"
         >
           View Catalogue
-          <i class="bi bi-arrow-up-right"></i>
+          <i class="bi bi-arrow-down"></i>
         </a>
 
       </div>
@@ -1912,11 +1951,11 @@
           <div class="hero-actions">
 
             <a
-              href="/shop.html"
+              href="#products"
               class="btn-axiom-primary"
             >
               Explore Research Materials
-              <i class="bi bi-arrow-right"></i>
+              <i class="bi bi-arrow-down"></i>
             </a>
 
             <a
@@ -1959,6 +1998,7 @@
             <div class="hero-card">
 
               <div class="hero-card-top">
+
                 <span class="hero-card-label">
                   Featured research material
                 </span>
@@ -1967,28 +2007,31 @@
                   <i class="bi bi-bezier2"></i>
                   AX-R332
                 </span>
+
               </div>
 
-              <!-- Replace with one of your Axiom vial images -->
               <img
-  src="./images/axiom-slu-pp-332-vial.png"
-  alt="Axiom Research SLU-PP-332 5mg vial"
-  class="product-image"
->
+                src="./images/axiom-slu-pp-332-vial.png"
+                alt="Axiom Research SLU-PP-332 5mg research vial"
+                class="hero-product-img"
+              >
 
               <div class="hero-card-bottom">
+
                 <div>
                   <h3>SLU-PP-332</h3>
+
                   <p>
                     Specialist laboratory research compound
                   </p>
                 </div>
 
                 <img
-  src="./images/axiom-logo-icon.png"
-  alt=""
-  class="hero-card-mark"
->
+                  src="./images/axiom-logo-icon.png"
+                  alt=""
+                  class="hero-card-mark"
+                >
+
               </div>
 
             </div>
@@ -2017,6 +2060,7 @@
 
               <div>
                 <strong>Secure Packaging</strong>
+
                 <span>
                   Carefully prepared for protected delivery.
                 </span>
@@ -2034,6 +2078,7 @@
 
               <div>
                 <strong>UK Dispatch</strong>
+
                 <span>
                   Dependable domestic order fulfilment.
                 </span>
@@ -2051,6 +2096,7 @@
 
               <div>
                 <strong>Clear Identification</strong>
+
                 <span>
                   Professionally presented product labelling.
                 </span>
@@ -2068,6 +2114,7 @@
 
               <div>
                 <strong>Research Supply</strong>
+
                 <span>
                   Intended exclusively for laboratory research.
                 </span>
@@ -2090,6 +2137,7 @@
     <div class="container">
 
       <div class="section-heading">
+
         <div class="section-kicker">
           Research catalogue
         </div>
@@ -2103,6 +2151,7 @@
           clearly identified and supplied exclusively for controlled
           laboratory research environments.
         </p>
+
       </div>
 
       <div class="row g-4">
@@ -2126,7 +2175,7 @@
             </p>
 
             <a
-              href="/shop.html?category=metabolic"
+              href="#products"
               class="category-link"
             >
               Browse materials
@@ -2155,7 +2204,7 @@
             </p>
 
             <a
-              href="/shop.html?category=cognitive"
+              href="#products"
               class="category-link"
             >
               Browse materials
@@ -2184,7 +2233,7 @@
             </p>
 
             <a
-              href="/shop.html?category=cellular"
+              href="#products"
               class="category-link"
             >
               Browse materials
@@ -2213,7 +2262,7 @@
             </p>
 
             <a
-              href="/shop.html?category=repair"
+              href="#products"
               class="category-link"
             >
               Browse materials
@@ -2255,11 +2304,11 @@
         </div>
 
         <a
-          href="/shop.html"
+          href="mailto:support@axiomresearchpeptides.uk?subject=Axiom%20Research%20Catalogue%20Enquiry"
           class="btn-axiom-primary flex-shrink-0"
         >
-          View Full Catalogue
-          <i class="bi bi-arrow-right"></i>
+          Catalogue Enquiry
+          <i class="bi bi-envelope"></i>
         </a>
 
       </div>
@@ -2277,7 +2326,7 @@
               </span>
 
               <img
-                src="axiom-slu-pp-332-vial.png"
+                src="./images/axiom-slu-pp-332-vial.png"
                 alt="Axiom Research SLU-PP-332 5mg vial"
                 class="product-image"
               >
@@ -2305,11 +2354,11 @@
                 </div>
 
                 <a
-                  href="/product-slu-pp-332.html"
+                  href="mailto:support@axiomresearchpeptides.uk?subject=SLU-PP-332%20Research%20Enquiry"
                   class="product-button"
-                  aria-label="View SLU-PP-332"
+                  aria-label="Enquire about SLU-PP-332"
                 >
-                  <i class="bi bi-arrow-right"></i>
+                  <i class="bi bi-envelope"></i>
                 </a>
 
               </div>
@@ -2330,10 +2379,10 @@
               </span>
 
               <img
-  src="./images/axiom-ss31-vial.png"
-  alt="Axiom Research SS-31 10mg vial"
-  class="product-image"
->
+                src="./images/axiom-ss31-vial.png"
+                alt="Axiom Research SS-31 10mg vial"
+                class="product-image"
+              >
 
             </div>
 
@@ -2358,11 +2407,11 @@
                 </div>
 
                 <a
-                  href="/product-ss31.html"
+                  href="mailto:support@axiomresearchpeptides.uk?subject=SS-31%20Research%20Enquiry"
                   class="product-button"
-                  aria-label="View SS-31"
+                  aria-label="Enquire about SS-31"
                 >
-                  <i class="bi bi-arrow-right"></i>
+                  <i class="bi bi-envelope"></i>
                 </a>
 
               </div>
@@ -2383,10 +2432,10 @@
               </span>
 
               <img
-  src="./images/axiom-ghk-cu-vial.png"
-  alt="Axiom Research GHK-CU 100mg vial"
-  class="product-image"
->
+                src="./images/axiom-ghk-cu-vial.png"
+                alt="Axiom Research GHK-CU 100mg vial"
+                class="product-image"
+              >
 
             </div>
 
@@ -2411,11 +2460,11 @@
                 </div>
 
                 <a
-                  href="/product-ghk-cu.html"
+                  href="mailto:support@axiomresearchpeptides.uk?subject=GHK-CU%20Research%20Enquiry"
                   class="product-button"
-                  aria-label="View GHK-CU"
+                  aria-label="Enquire about GHK-CU"
                 >
-                  <i class="bi bi-arrow-right"></i>
+                  <i class="bi bi-envelope"></i>
                 </a>
 
               </div>
@@ -2436,10 +2485,10 @@
               </span>
 
               <img
-  src="./images/axiom-cjc-ipamorelin-vial.png"
-  alt="Axiom Research CJC and Ipamorelin 10mg vial"
-  class="product-image"
->
+                src="./images/axiom-cjc-ipamorelin-vial.png"
+                alt="Axiom Research CJC and Ipamorelin 10mg vial"
+                class="product-image"
+              >
 
             </div>
 
@@ -2464,11 +2513,11 @@
                 </div>
 
                 <a
-                  href="/product-cjc-ipamorelin.html"
+                  href="mailto:support@axiomresearchpeptides.uk?subject=CJC%20and%20Ipamorelin%20Research%20Enquiry"
                   class="product-button"
-                  aria-label="View CJC and Ipamorelin"
+                  aria-label="Enquire about CJC and Ipamorelin"
                 >
-                  <i class="bi bi-arrow-right"></i>
+                  <i class="bi bi-envelope"></i>
                 </a>
 
               </div>
@@ -2592,11 +2641,13 @@
             <div class="quality-orbit"></div>
 
             <div class="quality-logo-wrap">
+
               <img
-  src="./images/axiom-logo-icon.png"
-  alt="Axiom Research logo"
-  class="quality-logo"
->
+                src="./images/axiom-logo-icon.png"
+                alt="Axiom Research logo"
+                class="quality-logo"
+              >
+
             </div>
 
             <span class="orbit-chip orbit-chip-1">
@@ -2639,11 +2690,10 @@
 
           <div class="about-image-wrap">
 
-            <!-- Replace with a suitable laboratory image -->
             <img
-              src="axiom-laboratory.jpg"
-              alt="Laboratory research environment"
-              class="about-image"
+              src="./images/axiom-logo-icon.png"
+              alt="Axiom Research Peptides"
+              class="about-image about-logo-image"
             >
 
             <div class="about-floating-card">
@@ -2762,9 +2812,11 @@
         <div class="row align-items-center g-4">
 
           <div class="col-md-auto">
+
             <div class="disclaimer-icon">
               <i class="bi bi-exclamation-triangle"></i>
             </div>
+
           </div>
 
           <div class="col">
@@ -2910,8 +2962,8 @@
               >
                 <div class="accordion-body">
                   Orders are fulfilled through our UK dispatch process.
-                  Delivery estimates and available services are displayed
-                  during checkout.
+                  Delivery information is provided during the ordering
+                  process.
                 </div>
               </div>
 
@@ -2929,7 +2981,7 @@
                   aria-expanded="false"
                   aria-controls="faqFour"
                 >
-                  Can I contact you regarding an existing order?
+                  How can I contact Axiom Research?
                 </button>
 
               </h2>
@@ -2940,9 +2992,9 @@
                 data-bs-parent="#axiomFaq"
               >
                 <div class="accordion-body">
-                  Yes. Contact our support team with your order reference and
-                  the email address used during checkout so the order can be
-                  located efficiently.
+                  Email support@axiomresearchpeptides.uk with your enquiry.
+                  Include any relevant order reference so the request can be
+                  handled efficiently.
                 </div>
               </div>
 
@@ -2982,18 +3034,19 @@
             <div class="cta-actions">
 
               <a
-                href="/shop.html"
+                href="#products"
                 class="btn-axiom-primary"
               >
-                View Catalogue
-                <i class="bi bi-arrow-right"></i>
+                View Materials
+                <i class="bi bi-arrow-up"></i>
               </a>
 
               <a
-                href="/contact.html"
+                href="mailto:support@axiomresearchpeptides.uk?subject=Axiom%20Research%20Enquiry"
                 class="btn-axiom-secondary"
               >
                 Contact Support
+                <i class="bi bi-envelope"></i>
               </a>
 
             </div>
@@ -3017,10 +3070,10 @@
           <div class="footer-brand">
 
             <img
-  src="./images/axiom-logo-icon.png"
-  alt="Axiom Research"
-  class="footer-logo"
->
+              src="./images/axiom-logo-icon.png"
+              alt="Axiom Research Peptides"
+              class="footer-logo"
+            >
 
             <div class="footer-brand-text">
               <strong>AXIOM</strong>
@@ -3042,11 +3095,11 @@
           <h3>Catalogue</h3>
 
           <div class="footer-links">
-            <a href="/shop.html">All Materials</a>
-            <a href="/shop.html?category=metabolic">Metabolic</a>
-            <a href="/shop.html?category=cognitive">Cognitive</a>
-            <a href="/shop.html?category=cellular">Cellular</a>
-            <a href="/shop.html?category=repair">Repair</a>
+            <a href="#products">All Materials</a>
+            <a href="#categories">Metabolic</a>
+            <a href="#categories">Cognitive</a>
+            <a href="#categories">Cellular</a>
+            <a href="#categories">Repair</a>
           </div>
 
         </div>
@@ -3056,11 +3109,15 @@
           <h3>Information</h3>
 
           <div class="footer-links">
-            <a href="/about.html">About Axiom</a>
-            <a href="/research-use.html">Research Use</a>
-            <a href="/delivery.html">Delivery</a>
-            <a href="/faq.html">FAQ</a>
-            <a href="/contact.html">Contact</a>
+            <a href="#about">About Axiom</a>
+            <a href="#quality">Our Standards</a>
+            <a href="#faq">FAQ</a>
+
+            <a
+              href="mailto:support@axiomresearchpeptides.uk"
+            >
+              Contact
+            </a>
           </div>
 
         </div>
@@ -3070,29 +3127,33 @@
           <h3>Contact</h3>
 
           <div class="footer-contact-item">
+
             <i class="bi bi-envelope"></i>
 
-            <span>
-              <a href="mailto:support@axiomresearchpeptides.uk">
-  support@axiomresearchpeptides.uk
-</a>
-            </span>
+            <a href="mailto:support@axiomresearchpeptides.uk">
+              support@axiomresearchpeptides.uk
+            </a>
+
           </div>
 
           <div class="footer-contact-item">
+
             <i class="bi bi-clock"></i>
 
             <span>
               Customer support enquiries answered during UK business hours.
             </span>
+
           </div>
 
           <div class="footer-contact-item">
+
             <i class="bi bi-shield-exclamation"></i>
 
             <span>
               We cannot provide medical, dosing or administration advice.
             </span>
+
           </div>
 
         </div>
@@ -3105,14 +3166,17 @@
 
         <div>
           © <span id="currentYear"></span>
-          Axiom Research. All rights reserved.
+          Axiom Research Peptides. All rights reserved.
         </div>
 
         <div class="footer-legal-links">
-          <a href="/terms.html">Terms</a>
-          <a href="/privacy.html">Privacy</a>
-          <a href="/returns.html">Returns</a>
-          <a href="/research-use.html">Research Use Policy</a>
+          <a href="#faq">Research Use</a>
+
+          <a
+            href="mailto:support@axiomresearchpeptides.uk?subject=Terms%20and%20Policies%20Enquiry"
+          >
+            Terms &amp; Policies
+          </a>
         </div>
 
       </div>
@@ -3129,19 +3193,23 @@
     document.getElementById("currentYear").textContent =
       new Date().getFullYear();
 
-    // Close the mobile navigation after clicking an internal navigation link.
-    document.querySelectorAll("#axiomNavigation .nav-link").forEach((link) => {
-      link.addEventListener("click", () => {
-        const navigation = document.getElementById("axiomNavigation");
+    document
+      .querySelectorAll("#axiomNavigation .nav-link, #axiomNavigation .nav-action")
+      .forEach((link) => {
+        link.addEventListener("click", () => {
+          const navigation =
+            document.getElementById("axiomNavigation");
 
-        if (
-          window.innerWidth < 992 &&
-          navigation.classList.contains("show")
-        ) {
-          bootstrap.Collapse.getOrCreateInstance(navigation).hide();
-        }
+          if (
+            window.innerWidth < 992 &&
+            navigation.classList.contains("show")
+          ) {
+            bootstrap.Collapse
+              .getOrCreateInstance(navigation)
+              .hide();
+          }
+        });
       });
-    });
   </script>
 
 </body>
