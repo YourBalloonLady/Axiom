@@ -2412,12 +2412,17 @@
             return `
               <article class="cart-item">
 
-                <img
-                  src="${product.image}"
-                  alt="${product.name}"
-                  class="cart-item-image"
-                  onerror="handleMissingImage(this)"
-                >
+                <a
+  href="./product.html?id=${encodeURIComponent(product.id)}"
+  aria-label="View ${product.name}"
+>
+  <img
+    src="${product.image}"
+    alt="Axiom Research ${product.name} ${product.strength}"
+    class="product-image"
+    onerror="handleMissingImage(this)"
+  >
+</a>
 
                 <div>
 
