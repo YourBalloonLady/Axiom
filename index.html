@@ -1,0 +1,3118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <!-- SEO -->
+  <title>Axiom Research | Laboratory Research Peptides</title>
+
+  <meta
+    name="description"
+    content="Axiom Research supplies laboratory research peptides and specialist research materials. Supplied strictly for professional laboratory research use only."
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <meta
+    property="og:title"
+    content="Axiom Research | Laboratory Research Peptides"
+  >
+
+  <meta
+    property="og:description"
+    content="Precision research materials supplied for laboratory research environments."
+  >
+
+  <meta property="og:type" content="website">
+
+  <!-- Replace with your actual domain -->
+  <meta
+    property="og:url"
+    content="https://axiomresearch.co.uk/"
+  >
+
+  <!-- Replace with your actual social preview image -->
+  <meta
+    property="og:image"
+    content="/images/axiom-social-preview.jpg"
+  >
+
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="/images/axiom-favicon.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="/images/axiom-favicon.png"
+  >
+
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Bootstrap Icons -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --axiom-navy: #071421;
+      --axiom-navy-soft: #0d2233;
+      --axiom-graphite: #17232e;
+      --axiom-teal: #0aa6a6;
+      --axiom-teal-dark: #087f83;
+      --axiom-cyan: #39d4d0;
+      --axiom-aqua-soft: #e8fbfa;
+      --axiom-silver: #d9e1e7;
+      --axiom-light: #f4f7f9;
+      --axiom-white: #ffffff;
+      --axiom-text: #12212d;
+      --axiom-muted: #677783;
+      --axiom-border: #dce5ea;
+      --axiom-success: #18a276;
+      --axiom-warning: #d89a35;
+
+      --axiom-shadow:
+        0 20px 55px rgba(7, 20, 33, 0.11);
+
+      --axiom-shadow-soft:
+        0 10px 30px rgba(7, 20, 33, 0.07);
+
+      --axiom-radius-lg: 28px;
+      --axiom-radius-md: 20px;
+      --axiom-radius-sm: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--axiom-light);
+      color: var(--axiom-text);
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .navbar-brand,
+    .display-font {
+      font-family: "Manrope", sans-serif;
+    }
+
+    .section-padding {
+      padding: 95px 0;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin-bottom: 46px;
+    }
+
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 15px;
+      color: var(--axiom-teal-dark);
+      font-size: 0.79rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        var(--axiom-teal),
+        var(--axiom-cyan)
+      );
+      border-radius: 99px;
+    }
+
+    .section-title {
+      margin-bottom: 16px;
+      color: var(--axiom-navy);
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .section-copy {
+      color: var(--axiom-muted);
+      font-size: 1.04rem;
+      line-height: 1.8;
+    }
+
+    /* Announcement bar */
+
+    .research-bar {
+      position: relative;
+      z-index: 1040;
+      padding: 9px 0;
+      background:
+        linear-gradient(
+          90deg,
+          #081723,
+          #103246,
+          #081723
+        );
+      color: rgba(255, 255, 255, 0.88);
+      border-bottom: 1px solid rgba(57, 212, 208, 0.2);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    .research-bar i {
+      margin-right: 7px;
+      color: var(--axiom-cyan);
+    }
+
+    /* Navigation */
+
+    .axiom-navbar {
+      position: relative;
+      z-index: 1030;
+      padding: 14px 0;
+      background: rgba(255, 255, 255, 0.94);
+      border-bottom: 1px solid rgba(7, 20, 33, 0.07);
+      box-shadow: 0 8px 28px rgba(7, 20, 33, 0.05);
+      backdrop-filter: blur(16px);
+    }
+
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-right: 30px;
+      color: var(--axiom-navy);
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .navbar-brand:hover {
+      color: var(--axiom-navy);
+    }
+
+    .brand-logo {
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+    }
+
+    .brand-subtitle {
+      margin-top: 6px;
+      color: var(--axiom-teal-dark);
+      font-family: "Inter", sans-serif;
+      font-size: 0.61rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .axiom-navbar .nav-link {
+      position: relative;
+      margin: 0 5px;
+      padding: 10px 9px !important;
+      color: #42515c;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .axiom-navbar .nav-link::after {
+      content: "";
+      position: absolute;
+      right: 9px;
+      bottom: 4px;
+      left: 9px;
+      height: 2px;
+      background: var(--axiom-teal);
+      border-radius: 99px;
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+
+    .axiom-navbar .nav-link:hover {
+      color: var(--axiom-navy);
+    }
+
+    .axiom-navbar .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      padding: 0 20px;
+      background:
+        linear-gradient(
+          135deg,
+          var(--axiom-teal-dark),
+          var(--axiom-teal)
+        );
+      color: var(--axiom-white);
+      border: 0;
+      border-radius: 13px;
+      font-size: 0.89rem;
+      font-weight: 800;
+      box-shadow: 0 12px 24px rgba(10, 166, 166, 0.2);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .nav-action:hover {
+      color: var(--axiom-white);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(10, 166, 166, 0.28);
+    }
+
+    .navbar-toggler {
+      border: 1px solid var(--axiom-border);
+      border-radius: 12px;
+      box-shadow: none !important;
+    }
+
+    /* Hero */
+
+    .hero {
+      position: relative;
+      min-height: 760px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 78% 26%,
+          rgba(57, 212, 208, 0.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 14% 80%,
+          rgba(10, 166, 166, 0.12),
+          transparent 26%
+        ),
+        linear-gradient(
+          135deg,
+          #06131f 0%,
+          #0b2232 52%,
+          #0a1a27 100%
+        );
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.13;
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.09) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.09) 1px,
+          transparent 1px
+        );
+      background-size: 52px 52px;
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.8),
+          transparent
+        );
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: -180px;
+      right: -170px;
+      width: 600px;
+      height: 600px;
+      border: 1px solid rgba(57, 212, 208, 0.15);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 75px rgba(57, 212, 208, 0.03),
+        0 0 0 150px rgba(57, 212, 208, 0.025);
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding: 9px 14px;
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(57, 212, 208, 0.27);
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-badge-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--axiom-cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(57, 212, 208, 0.12);
+    }
+
+    .hero-title {
+      max-width: 720px;
+      margin-bottom: 24px;
+      color: var(--axiom-white);
+      font-size: clamp(3rem, 6.5vw, 6.2rem);
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-title span {
+      color: transparent;
+      background:
+        linear-gradient(
+          100deg,
+          #ffffff,
+          var(--axiom-cyan),
+          #ffffff
+        );
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin-bottom: 32px;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(1rem, 1.8vw, 1.18rem);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-bottom: 38px;
+    }
+
+    .btn-axiom-primary,
+    .btn-axiom-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 24px;
+      border-radius: 14px;
+      font-size: 0.94rem;
+      font-weight: 800;
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .btn-axiom-primary {
+      background:
+        linear-gradient(
+          135deg,
+          var(--axiom-cyan),
+          var(--axiom-teal)
+        );
+      color: var(--axiom-navy);
+      border: 1px solid transparent;
+      box-shadow: 0 18px 35px rgba(10, 166, 166, 0.26);
+    }
+
+    .btn-axiom-primary:hover {
+      color: var(--axiom-navy);
+      transform: translateY(-2px);
+    }
+
+    .btn-axiom-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--axiom-white);
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-axiom-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--axiom-white);
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-2px);
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 25px;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .hero-points span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-points i {
+      color: var(--axiom-cyan);
+    }
+
+    /* Hero product display */
+
+    .hero-visual {
+      position: relative;
+      min-height: 590px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      background:
+        radial-gradient(
+          circle,
+          rgba(57, 212, 208, 0.23),
+          rgba(10, 166, 166, 0.05) 52%,
+          transparent 72%
+        );
+      border-radius: 50%;
+      filter: blur(8px);
+    }
+
+    .hero-card {
+      position: relative;
+      width: min(100%, 470px);
+      padding: 34px;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.13),
+          rgba(255, 255, 255, 0.055)
+        );
+      border: 1px solid rgba(255, 255, 255, 0.17);
+      border-radius: 34px;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.32);
+      backdrop-filter: blur(20px);
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      right: -70px;
+      width: 210px;
+      height: 210px;
+      background: rgba(57, 212, 208, 0.15);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .hero-card-top {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+
+    .hero-card-label {
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .hero-card-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      color: var(--axiom-cyan);
+      border: 1px solid rgba(57, 212, 208, 0.24);
+      border-radius: 999px;
+      font-size: 0.69rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-product-img {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: 100%;
+      max-height: 390px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 30px 24px rgba(0, 0, 0, 0.26));
+      transform: translateY(5px);
+    }
+
+    .hero-card-bottom {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .hero-card-bottom h3 {
+      margin-bottom: 5px;
+      color: var(--axiom-white);
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    .hero-card-bottom p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: 0.78rem;
+    }
+
+    .hero-card-mark {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    /* Trust strip */
+
+    .trust-strip-wrap {
+      position: relative;
+      z-index: 10;
+      margin-top: -48px;
+    }
+
+    .trust-strip {
+      padding: 25px;
+      background: var(--axiom-white);
+      border: 1px solid var(--axiom-border);
+      border-radius: var(--axiom-radius-md);
+      box-shadow: var(--axiom-shadow);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 100%;
+      padding: 10px 15px;
+    }
+
+    .trust-icon {
+      flex: 0 0 auto;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      background: var(--axiom-aqua-soft);
+      color: var(--axiom-teal-dark);
+      border: 1px solid rgba(10, 166, 166, 0.15);
+      border-radius: 13px;
+      font-size: 1.25rem;
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--axiom-navy);
+      font-size: 0.9rem;
+    }
+
+    .trust-item span {
+      display: block;
+      color: var(--axiom-muted);
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    /* Product categories */
+
+    .categories-section {
+      background:
+        linear-gradient(
+          180deg,
+          var(--axiom-light),
+          #edf3f5
+        );
+    }
+
+    .category-card {
+      position: relative;
+      height: 100%;
+      min-height: 310px;
+      padding: 30px;
+      overflow: hidden;
+      background: var(--axiom-white);
+      border: 1px solid var(--axiom-border);
+      border-radius: var(--axiom-radius-md);
+      box-shadow: var(--axiom-shadow-soft);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .category-card::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      bottom: -85px;
+      width: 180px;
+      height: 180px;
+      background:
+        radial-gradient(
+          circle,
+          rgba(10, 166, 166, 0.15),
+          transparent 68%
+        );
+      border-radius: 50%;
+    }
+
+    .category-card:hover {
+      border-color: rgba(10, 166, 166, 0.35);
+      box-shadow: var(--axiom-shadow);
+      transform: translateY(-7px);
+    }
+
+    .category-number {
+      margin-bottom: 28px;
+      color: rgba(10, 166, 166, 0.42);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.17em;
+    }
+
+    .category-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 25px;
+      background:
+        linear-gradient(
+          145deg,
+          var(--axiom-aqua-soft),
+          #f8ffff
+        );
+      color: var(--axiom-teal-dark);
+      border: 1px solid rgba(10, 166, 166, 0.14);
+      border-radius: 17px;
+      font-size: 1.55rem;
+    }
+
+    .category-card h3 {
+      margin-bottom: 12px;
+      color: var(--axiom-navy);
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .category-card p {
+      margin-bottom: 22px;
+      color: var(--axiom-muted);
+      font-size: 0.91rem;
+      line-height: 1.7;
+    }
+
+    .category-link {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--axiom-teal-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .category-link i {
+      transition: transform 0.2s ease;
+    }
+
+    .category-card:hover .category-link i {
+      transform: translateX(4px);
+    }
+
+    /* Featured products */
+
+    .featured-section {
+      background: var(--axiom-white);
+    }
+
+    .product-card {
+      height: 100%;
+      overflow: hidden;
+      background: #fbfcfd;
+      border: 1px solid var(--axiom-border);
+      border-radius: var(--axiom-radius-md);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .product-card:hover {
+      border-color: rgba(10, 166, 166, 0.32);
+      box-shadow: var(--axiom-shadow);
+      transform: translateY(-7px);
+    }
+
+    .product-image-wrap {
+      position: relative;
+      min-height: 305px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(57, 212, 208, 0.1),
+          transparent 58%
+        ),
+        linear-gradient(
+          180deg,
+          #f9fbfc,
+          #eef4f5
+        );
+    }
+
+    .product-image-wrap::before {
+      content: "";
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 65px;
+      height: 65px;
+      border-top: 1px solid rgba(10, 166, 166, 0.25);
+      border-right: 1px solid rgba(10, 166, 166, 0.25);
+    }
+
+    .product-image {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 245px;
+      max-height: 260px;
+      object-fit: contain;
+      filter:
+        drop-shadow(0 22px 18px rgba(7, 20, 33, 0.13));
+      transition: transform 0.25s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.035);
+    }
+
+    .product-status {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--axiom-success);
+      border: 1px solid rgba(24, 162, 118, 0.15);
+      border-radius: 999px;
+      font-size: 0.67rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 20px rgba(7, 20, 33, 0.06);
+    }
+
+    .product-status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: var(--axiom-success);
+      border-radius: 50%;
+    }
+
+    .product-body {
+      padding: 25px;
+    }
+
+    .product-category {
+      margin-bottom: 9px;
+      color: var(--axiom-teal-dark);
+      font-size: 0.69rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .product-body h3 {
+      margin-bottom: 10px;
+      color: var(--axiom-navy);
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .product-body p {
+      min-height: 68px;
+      margin-bottom: 22px;
+      color: var(--axiom-muted);
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding-top: 18px;
+      border-top: 1px solid var(--axiom-border);
+    }
+
+    .product-strength {
+      color: var(--axiom-navy);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .product-strength span {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--axiom-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .product-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      background: var(--axiom-navy);
+      color: var(--axiom-white);
+      border-radius: 12px;
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .product-button:hover {
+      background: var(--axiom-teal-dark);
+      color: var(--axiom-white);
+      transform: translateX(2px);
+    }
+
+    /* Quality section */
+
+    .quality-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          135deg,
+          #071421,
+          #0e2c3d
+        );
+      color: var(--axiom-white);
+    }
+
+    .quality-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.09;
+      background-image:
+        linear-gradient(
+          rgba(255, 255, 255, 0.12) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.12) 1px,
+          transparent 1px
+        );
+      background-size: 58px 58px;
+    }
+
+    .quality-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .quality-section .section-title {
+      color: var(--axiom-white);
+    }
+
+    .quality-section .section-copy {
+      color: rgba(255, 255, 255, 0.67);
+    }
+
+    .quality-section .section-kicker {
+      color: var(--axiom-cyan);
+    }
+
+    .quality-card {
+      height: 100%;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      border-radius: var(--axiom-radius-md);
+      backdrop-filter: blur(12px);
+    }
+
+    .quality-card-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 22px;
+      background: rgba(57, 212, 208, 0.11);
+      color: var(--axiom-cyan);
+      border: 1px solid rgba(57, 212, 208, 0.2);
+      border-radius: 16px;
+      font-size: 1.4rem;
+    }
+
+    .quality-card h3 {
+      margin-bottom: 12px;
+      color: var(--axiom-white);
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .quality-card p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.61);
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+
+    .quality-panel {
+      position: relative;
+      min-height: 460px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quality-orbit {
+      position: absolute;
+      width: 390px;
+      height: 390px;
+      border: 1px solid rgba(57, 212, 208, 0.15);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 60px rgba(57, 212, 208, 0.025),
+        0 0 0 120px rgba(57, 212, 208, 0.018);
+    }
+
+    .quality-logo-wrap {
+      position: relative;
+      width: 245px;
+      height: 245px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(
+          circle at top,
+          rgba(255, 255, 255, 0.18),
+          rgba(255, 255, 255, 0.04)
+        );
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      box-shadow:
+        0 30px 70px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(20px);
+    }
+
+    .quality-logo {
+      width: 155px;
+      height: 155px;
+      object-fit: contain;
+    }
+
+    .orbit-chip {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      backdrop-filter: blur(10px);
+    }
+
+    .orbit-chip i {
+      color: var(--axiom-cyan);
+    }
+
+    .orbit-chip-1 {
+      top: 55px;
+      left: 0;
+    }
+
+    .orbit-chip-2 {
+      top: 70px;
+      right: 0;
+    }
+
+    .orbit-chip-3 {
+      right: 16px;
+      bottom: 66px;
+    }
+
+    .orbit-chip-4 {
+      bottom: 52px;
+      left: 5px;
+    }
+
+    /* About section */
+
+    .about-section {
+      background: #eef3f5;
+    }
+
+    .about-image-wrap {
+      position: relative;
+      min-height: 570px;
+      padding: 20px;
+      background:
+        linear-gradient(
+          145deg,
+          #dfecef,
+          #ffffff
+        );
+      border: 1px solid var(--axiom-border);
+      border-radius: 32px;
+      box-shadow: var(--axiom-shadow);
+    }
+
+    .about-image {
+      width: 100%;
+      height: 100%;
+      min-height: 530px;
+      object-fit: cover;
+      border-radius: 22px;
+    }
+
+    .about-floating-card {
+      position: absolute;
+      right: -25px;
+      bottom: 36px;
+      max-width: 240px;
+      padding: 20px;
+      background: var(--axiom-navy);
+      color: var(--axiom-white);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      box-shadow: var(--axiom-shadow);
+    }
+
+    .about-floating-card i {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--axiom-cyan);
+      font-size: 1.5rem;
+    }
+
+    .about-floating-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .about-floating-card span {
+      display: block;
+      color: rgba(255, 255, 255, 0.63);
+      font-size: 0.76rem;
+      line-height: 1.55;
+    }
+
+    .about-list {
+      display: grid;
+      gap: 15px;
+      margin-top: 28px;
+    }
+
+    .about-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+
+    .about-list-icon {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      background: var(--axiom-aqua-soft);
+      color: var(--axiom-teal-dark);
+      border-radius: 10px;
+      font-size: 0.92rem;
+    }
+
+    .about-list-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--axiom-navy);
+      font-size: 0.9rem;
+    }
+
+    .about-list-item span {
+      display: block;
+      color: var(--axiom-muted);
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    /* Research disclaimer */
+
+    .disclaimer-section {
+      background: var(--axiom-white);
+    }
+
+    .disclaimer-box {
+      position: relative;
+      padding: 38px;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          135deg,
+          #f4fbfb,
+          #edf5f6
+        );
+      border: 1px solid rgba(10, 166, 166, 0.2);
+      border-left: 5px solid var(--axiom-teal);
+      border-radius: var(--axiom-radius-md);
+      box-shadow: var(--axiom-shadow-soft);
+    }
+
+    .disclaimer-box::after {
+      content: "RESEARCH";
+      position: absolute;
+      right: 20px;
+      bottom: -20px;
+      color: rgba(10, 166, 166, 0.05);
+      font-family: "Manrope", sans-serif;
+      font-size: clamp(4rem, 11vw, 8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      pointer-events: none;
+    }
+
+    .disclaimer-icon {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      background: var(--axiom-navy);
+      color: var(--axiom-cyan);
+      border-radius: 17px;
+      font-size: 1.45rem;
+    }
+
+    .disclaimer-box h2 {
+      margin-bottom: 10px;
+      color: var(--axiom-navy);
+      font-size: 1.65rem;
+      font-weight: 800;
+    }
+
+    .disclaimer-box p {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      color: var(--axiom-muted);
+      font-size: 0.91rem;
+      line-height: 1.75;
+    }
+
+    /* FAQ */
+
+    .faq-section {
+      background: #edf3f5;
+    }
+
+    .accordion-item {
+      margin-bottom: 13px;
+      overflow: hidden;
+      background: var(--axiom-white);
+      border: 1px solid var(--axiom-border) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 8px 24px rgba(7, 20, 33, 0.045);
+    }
+
+    .accordion-button {
+      padding: 20px 22px;
+      color: var(--axiom-navy);
+      background: var(--axiom-white);
+      font-family: "Manrope", sans-serif;
+      font-size: 0.94rem;
+      font-weight: 800;
+      box-shadow: none !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: var(--axiom-teal-dark);
+      background: #f8ffff;
+    }
+
+    .accordion-button::after {
+      background-size: 1rem;
+    }
+
+    .accordion-body {
+      padding: 0 22px 22px;
+      color: var(--axiom-muted);
+      font-size: 0.87rem;
+      line-height: 1.75;
+    }
+
+    /* CTA */
+
+    .cta-section {
+      padding: 0 0 95px;
+      background: #edf3f5;
+    }
+
+    .cta-panel {
+      position: relative;
+      padding: 55px;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at 85% 20%,
+          rgba(57, 212, 208, 0.22),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #071421,
+          #0e3041
+        );
+      border-radius: 30px;
+      box-shadow: var(--axiom-shadow);
+    }
+
+    .cta-panel::before {
+      content: "";
+      position: absolute;
+      top: -90px;
+      right: -60px;
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(57, 212, 208, 0.14);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 50px rgba(57, 212, 208, 0.025),
+        0 0 0 100px rgba(57, 212, 208, 0.02);
+    }
+
+    .cta-panel h2 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 13px;
+      color: var(--axiom-white);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .cta-panel p {
+      position: relative;
+      z-index: 2;
+      max-width: 690px;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 0.98rem;
+      line-height: 1.75;
+    }
+
+    .cta-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Footer */
+
+    .footer {
+      padding: 70px 0 24px;
+      background: #050f18;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 20px;
+    }
+
+    .footer-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .footer-brand-text strong {
+      display: block;
+      color: var(--axiom-white);
+      font-family: "Manrope", sans-serif;
+      font-size: 1.18rem;
+      letter-spacing: 0.16em;
+    }
+
+    .footer-brand-text span {
+      display: block;
+      margin-top: 5px;
+      color: var(--axiom-cyan);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .footer-copy {
+      max-width: 390px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.82rem;
+      line-height: 1.75;
+    }
+
+    .footer h3 {
+      margin-bottom: 18px;
+      color: var(--axiom-white);
+      font-size: 0.91rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.57);
+      font-size: 0.82rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--axiom-cyan);
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: rgba(255, 255, 255, 0.57);
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .footer-contact-item i {
+      margin-top: 2px;
+      color: var(--axiom-cyan);
+    }
+
+    .footer-divider {
+      margin: 45px 0 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.72rem;
+    }
+
+    .footer-legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-legal-links a {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .footer-legal-links a:hover {
+      color: var(--axiom-cyan);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 1199.98px) {
+      .hero {
+        min-height: auto;
+        padding: 90px 0 120px;
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 7vw, 5.2rem);
+      }
+
+      .hero-visual {
+        min-height: 520px;
+      }
+
+      .quality-panel {
+        margin-top: 45px;
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .axiom-navbar .navbar-collapse {
+        margin-top: 15px;
+        padding: 16px;
+        background: var(--axiom-white);
+        border: 1px solid var(--axiom-border);
+        border-radius: 16px;
+        box-shadow: var(--axiom-shadow-soft);
+      }
+
+      .axiom-navbar .nav-link {
+        margin: 2px 0;
+      }
+
+      .nav-action {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .hero {
+        padding-top: 75px;
+      }
+
+      .hero-copy {
+        max-width: 720px;
+      }
+
+      .hero-visual {
+        min-height: 500px;
+        margin-top: 30px;
+      }
+
+      .trust-strip-wrap {
+        margin-top: -35px;
+      }
+
+      .about-floating-card {
+        right: 35px;
+      }
+
+      .cta-actions {
+        justify-content: flex-start;
+        margin-top: 28px;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .section-padding {
+        padding: 72px 0;
+      }
+
+      .research-bar {
+        padding: 8px 12px;
+        font-size: 0.66rem;
+        line-height: 1.5;
+      }
+
+      .brand-logo {
+        width: 46px;
+        height: 46px;
+      }
+
+      .brand-name {
+        font-size: 1.05rem;
+      }
+
+      .brand-subtitle {
+        font-size: 0.52rem;
+      }
+
+      .hero {
+        padding: 64px 0 105px;
+      }
+
+      .hero-title {
+        font-size: clamp(2.8rem, 13vw, 4.3rem);
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .btn-axiom-primary,
+      .btn-axiom-secondary {
+        width: 100%;
+      }
+
+      .hero-points {
+        display: grid;
+        gap: 12px;
+      }
+
+      .hero-visual {
+        min-height: 430px;
+      }
+
+      .hero-card {
+        padding: 24px;
+        border-radius: 25px;
+      }
+
+      .hero-product-img {
+        max-height: 310px;
+      }
+
+      .trust-strip {
+        padding: 13px;
+      }
+
+      .trust-item {
+        padding: 13px;
+      }
+
+      .category-card {
+        min-height: 285px;
+      }
+
+      .about-image-wrap {
+        min-height: 450px;
+      }
+
+      .about-image {
+        min-height: 410px;
+      }
+
+      .about-floating-card {
+        right: 15px;
+        bottom: 18px;
+        left: 15px;
+        max-width: none;
+      }
+
+      .quality-panel {
+        min-height: 400px;
+      }
+
+      .quality-orbit {
+        width: 300px;
+        height: 300px;
+      }
+
+      .quality-logo-wrap {
+        width: 205px;
+        height: 205px;
+      }
+
+      .quality-logo {
+        width: 128px;
+        height: 128px;
+      }
+
+      .orbit-chip {
+        font-size: 0.61rem;
+      }
+
+      .disclaimer-box {
+        padding: 27px;
+      }
+
+      .cta-panel {
+        padding: 35px 25px;
+        border-radius: 23px;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .container {
+        padding-right: 18px;
+        padding-left: 18px;
+      }
+
+      .hero-card-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero-card-mark {
+        display: none;
+      }
+
+      .product-image-wrap {
+        min-height: 275px;
+      }
+
+      .orbit-chip {
+        display: none;
+      }
+
+      .footer-legal-links {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Research notice -->
+  <div class="research-bar">
+    <i class="bi bi-shield-check"></i>
+    SUPPLIED STRICTLY FOR LABORATORY RESEARCH USE ONLY — NOT FOR HUMAN OR VETERINARY USE
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg axiom-navbar sticky-top">
+    <div class="container">
+
+      <a class="navbar-brand" href="/">
+        <!-- Replace with your Axiom logo -->
+        <img
+          src="/images/axiom-logo-icon.png"
+          alt="Axiom Research"
+          class="brand-logo"
+        >
+
+        <span class="brand-copy">
+          <span class="brand-name">AXIOM</span>
+          <span class="brand-subtitle">Research Peptides</span>
+        </span>
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#axiomNavigation"
+        aria-controls="axiomNavigation"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="collapse navbar-collapse"
+        id="axiomNavigation"
+      >
+
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+
+          <li class="nav-item">
+            <a class="nav-link" href="#products">
+              Research Materials
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#categories">
+              Categories
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#quality">
+              Quality
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#about">
+              About
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#faq">
+              FAQ
+            </a>
+          </li>
+
+        </ul>
+
+        <a
+          class="nav-action ms-lg-3"
+          href="/shop.html"
+        >
+          View Catalogue
+          <i class="bi bi-arrow-up-right"></i>
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <div class="col-xl-7 col-lg-7">
+
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Precision research materials
+          </div>
+
+          <h1 class="hero-title">
+            Built for serious
+            <span>research.</span>
+          </h1>
+
+          <p class="hero-copy">
+            Axiom Research supplies specialist peptides and research
+            compounds for professional laboratory environments, supported
+            by clear product identification, dependable UK dispatch and a
+            clinical standard of presentation.
+          </p>
+
+          <div class="hero-actions">
+
+            <a
+              href="/shop.html"
+              class="btn-axiom-primary"
+            >
+              Explore Research Materials
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+            <a
+              href="#quality"
+              class="btn-axiom-secondary"
+            >
+              Our Quality Standards
+              <i class="bi bi-shield-check"></i>
+            </a>
+
+          </div>
+
+          <div class="hero-points">
+
+            <span>
+              <i class="bi bi-check-circle-fill"></i>
+              Clearly identified materials
+            </span>
+
+            <span>
+              <i class="bi bi-check-circle-fill"></i>
+              Secure UK dispatch
+            </span>
+
+            <span>
+              <i class="bi bi-check-circle-fill"></i>
+              Research use only
+            </span>
+
+          </div>
+
+        </div>
+
+        <div class="col-xl-5 col-lg-5">
+
+          <div class="hero-visual">
+
+            <div class="hero-glow"></div>
+
+            <div class="hero-card">
+
+              <div class="hero-card-top">
+                <span class="hero-card-label">
+                  Featured research material
+                </span>
+
+                <span class="hero-card-code">
+                  <i class="bi bi-bezier2"></i>
+                  AX-R332
+                </span>
+              </div>
+
+              <!-- Replace with one of your Axiom vial images -->
+              <img
+                src="/images/axiom-slu-pp-332-vial.png"
+                alt="Axiom Research SLU-PP-332 research vial"
+                class="hero-product-img"
+              >
+
+              <div class="hero-card-bottom">
+                <div>
+                  <h3>SLU-PP-332</h3>
+                  <p>
+                    Specialist laboratory research compound
+                  </p>
+                </div>
+
+                <img
+                  src="/images/axiom-logo-icon.png"
+                  alt=""
+                  class="hero-card-mark"
+                >
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Trust strip -->
+  <section class="trust-strip-wrap">
+    <div class="container">
+
+      <div class="trust-strip">
+        <div class="row g-2">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="trust-item">
+
+              <div class="trust-icon">
+                <i class="bi bi-box-seam"></i>
+              </div>
+
+              <div>
+                <strong>Secure Packaging</strong>
+                <span>
+                  Carefully prepared for protected delivery.
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="trust-item">
+
+              <div class="trust-icon">
+                <i class="bi bi-truck"></i>
+              </div>
+
+              <div>
+                <strong>UK Dispatch</strong>
+                <span>
+                  Dependable domestic order fulfilment.
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="trust-item">
+
+              <div class="trust-icon">
+                <i class="bi bi-upc-scan"></i>
+              </div>
+
+              <div>
+                <strong>Clear Identification</strong>
+                <span>
+                  Professionally presented product labelling.
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6">
+            <div class="trust-item">
+
+              <div class="trust-icon">
+                <i class="bi bi-flask"></i>
+              </div>
+
+              <div>
+                <strong>Research Supply</strong>
+                <span>
+                  Intended exclusively for laboratory research.
+                </span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section
+    class="categories-section section-padding"
+    id="categories"
+  >
+    <div class="container">
+
+      <div class="section-heading">
+        <div class="section-kicker">
+          Research catalogue
+        </div>
+
+        <h2 class="section-title">
+          Specialist materials organised by research area.
+        </h2>
+
+        <p class="section-copy">
+          Browse the Axiom catalogue by research category. Each material is
+          clearly identified and supplied exclusively for controlled
+          laboratory research environments.
+        </p>
+      </div>
+
+      <div class="row g-4">
+
+        <div class="col-xl-3 col-md-6">
+          <article class="category-card">
+
+            <div class="category-number">
+              CATEGORY 01
+            </div>
+
+            <div class="category-icon">
+              <i class="bi bi-activity"></i>
+            </div>
+
+            <h3>Metabolic Research</h3>
+
+            <p>
+              Research compounds studied in relation to cellular energy,
+              substrate utilisation and metabolic signalling pathways.
+            </p>
+
+            <a
+              href="/shop.html?category=metabolic"
+              class="category-link"
+            >
+              Browse materials
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </article>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <article class="category-card">
+
+            <div class="category-number">
+              CATEGORY 02
+            </div>
+
+            <div class="category-icon">
+              <i class="bi bi-cpu"></i>
+            </div>
+
+            <h3>Cognitive Research</h3>
+
+            <p>
+              Laboratory materials investigated across neurological,
+              behavioural and cognitive research models.
+            </p>
+
+            <a
+              href="/shop.html?category=cognitive"
+              class="category-link"
+            >
+              Browse materials
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </article>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <article class="category-card">
+
+            <div class="category-number">
+              CATEGORY 03
+            </div>
+
+            <div class="category-icon">
+              <i class="bi bi-stars"></i>
+            </div>
+
+            <h3>Cellular Research</h3>
+
+            <p>
+              Specialist compounds used in research concerning cellular
+              signalling, oxidative processes and mitochondrial function.
+            </p>
+
+            <a
+              href="/shop.html?category=cellular"
+              class="category-link"
+            >
+              Browse materials
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </article>
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+          <article class="category-card">
+
+            <div class="category-number">
+              CATEGORY 04
+            </div>
+
+            <div class="category-icon">
+              <i class="bi bi-bounding-box-circles"></i>
+            </div>
+
+            <h3>Repair Research</h3>
+
+            <p>
+              Research materials investigated in controlled laboratory
+              models involving tissue response and repair mechanisms.
+            </p>
+
+            <a
+              href="/shop.html?category=repair"
+              class="category-link"
+            >
+              Browse materials
+              <i class="bi bi-arrow-right"></i>
+            </a>
+
+          </article>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured products -->
+  <section
+    class="featured-section section-padding"
+    id="products"
+  >
+    <div class="container">
+
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-5">
+
+        <div class="section-heading mb-0">
+
+          <div class="section-kicker">
+            Selected materials
+          </div>
+
+          <h2 class="section-title">
+            Featured research compounds.
+          </h2>
+
+          <p class="section-copy mb-0">
+            A selection of materials currently available through the
+            Axiom Research catalogue.
+          </p>
+
+        </div>
+
+        <a
+          href="/shop.html"
+          class="btn-axiom-primary flex-shrink-0"
+        >
+          View Full Catalogue
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+      <div class="row g-4">
+
+        <!-- SLU-PP-332 -->
+        <div class="col-xl-3 col-md-6">
+          <article class="product-card">
+
+            <div class="product-image-wrap">
+
+              <span class="product-status">
+                Available
+              </span>
+
+              <img
+                src="/images/axiom-slu-pp-332-vial.png"
+                alt="Axiom Research SLU-PP-332 5mg vial"
+                class="product-image"
+              >
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-category">
+                Metabolic research
+              </div>
+
+              <h3>SLU-PP-332</h3>
+
+              <p>
+                Synthetic research compound investigated in relation to
+                ERR activity and cellular energy metabolism.
+              </p>
+
+              <div class="product-footer">
+
+                <div class="product-strength">
+                  <span>Research strength</span>
+                  5MG
+                </div>
+
+                <a
+                  href="/product-slu-pp-332.html"
+                  class="product-button"
+                  aria-label="View SLU-PP-332"
+                >
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+        </div>
+
+        <!-- SS-31 -->
+        <div class="col-xl-3 col-md-6">
+          <article class="product-card">
+
+            <div class="product-image-wrap">
+
+              <span class="product-status">
+                Available
+              </span>
+
+              <img
+                src="/images/axiom-ss31-vial.png"
+                alt="Axiom Research SS-31 10mg vial"
+                class="product-image"
+              >
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-category">
+                Cellular research
+              </div>
+
+              <h3>SS-31</h3>
+
+              <p>
+                Research peptide commonly investigated in laboratory models
+                concerning mitochondrial function and oxidative processes.
+              </p>
+
+              <div class="product-footer">
+
+                <div class="product-strength">
+                  <span>Research strength</span>
+                  10MG
+                </div>
+
+                <a
+                  href="/product-ss31.html"
+                  class="product-button"
+                  aria-label="View SS-31"
+                >
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+        </div>
+
+        <!-- GHK-CU -->
+        <div class="col-xl-3 col-md-6">
+          <article class="product-card">
+
+            <div class="product-image-wrap">
+
+              <span class="product-status">
+                Available
+              </span>
+
+              <img
+                src="/images/axiom-ghk-cu-vial.png"
+                alt="Axiom Research GHK-CU 100mg vial"
+                class="product-image"
+              >
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-category">
+                Cellular research
+              </div>
+
+              <h3>GHK-CU</h3>
+
+              <p>
+                Copper-binding peptide investigated in laboratory research
+                relating to cellular signalling and tissue processes.
+              </p>
+
+              <div class="product-footer">
+
+                <div class="product-strength">
+                  <span>Research strength</span>
+                  100MG
+                </div>
+
+                <a
+                  href="/product-ghk-cu.html"
+                  class="product-button"
+                  aria-label="View GHK-CU"
+                >
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+        </div>
+
+        <!-- CJC + Ipamorelin -->
+        <div class="col-xl-3 col-md-6">
+          <article class="product-card">
+
+            <div class="product-image-wrap">
+
+              <span class="product-status">
+                Available
+              </span>
+
+              <img
+                src="/images/axiom-cjc-ipamorelin-vial.png"
+                alt="Axiom Research CJC and Ipamorelin 10mg vial"
+                class="product-image"
+              >
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-category">
+                Peptide research
+              </div>
+
+              <h3>CJC + Ipamorelin</h3>
+
+              <p>
+                Combined research peptides studied in controlled models
+                concerning growth-hormone signalling pathways.
+              </p>
+
+              <div class="product-footer">
+
+                <div class="product-strength">
+                  <span>Research strength</span>
+                  10MG
+                </div>
+
+                <a
+                  href="/product-cjc-ipamorelin.html"
+                  class="product-button"
+                  aria-label="View CJC and Ipamorelin"
+                >
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+
+              </div>
+
+            </div>
+
+          </article>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Quality -->
+  <section
+    class="quality-section section-padding"
+    id="quality"
+  >
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <div class="col-xl-7">
+
+          <div class="section-heading">
+
+            <div class="section-kicker">
+              The Axiom standard
+            </div>
+
+            <h2 class="section-title">
+              A disciplined approach to research supply.
+            </h2>
+
+            <p class="section-copy">
+              Our presentation, fulfilment and customer experience are built
+              around clarity, consistency and responsible research-only
+              supply.
+            </p>
+
+          </div>
+
+          <div class="row g-4">
+
+            <div class="col-md-6">
+              <article class="quality-card">
+
+                <div class="quality-card-icon">
+                  <i class="bi bi-tag"></i>
+                </div>
+
+                <h3>Clear Labelling</h3>
+
+                <p>
+                  Materials are visibly identified by product name and stated
+                  research quantity to reduce ambiguity during storage.
+                </p>
+
+              </article>
+            </div>
+
+            <div class="col-md-6">
+              <article class="quality-card">
+
+                <div class="quality-card-icon">
+                  <i class="bi bi-box2-heart"></i>
+                </div>
+
+                <h3>Careful Fulfilment</h3>
+
+                <p>
+                  Orders are prepared and packaged with attention to
+                  presentation, protection and dispatch accuracy.
+                </p>
+
+              </article>
+            </div>
+
+            <div class="col-md-6">
+              <article class="quality-card">
+
+                <div class="quality-card-icon">
+                  <i class="bi bi-journal-check"></i>
+                </div>
+
+                <h3>Research-Only Supply</h3>
+
+                <p>
+                  Products are marketed and supplied exclusively for
+                  laboratory research, not personal or clinical use.
+                </p>
+
+              </article>
+            </div>
+
+            <div class="col-md-6">
+              <article class="quality-card">
+
+                <div class="quality-card-icon">
+                  <i class="bi bi-chat-square-text"></i>
+                </div>
+
+                <h3>Responsive Support</h3>
+
+                <p>
+                  Straightforward customer support is available for order,
+                  delivery and product-identification queries.
+                </p>
+
+              </article>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-xl-5">
+
+          <div class="quality-panel">
+
+            <div class="quality-orbit"></div>
+
+            <div class="quality-logo-wrap">
+              <img
+                src="/images/axiom-logo-icon.png"
+                alt="Axiom Research logo"
+                class="quality-logo"
+              >
+            </div>
+
+            <span class="orbit-chip orbit-chip-1">
+              <i class="bi bi-check2-circle"></i>
+              Precision
+            </span>
+
+            <span class="orbit-chip orbit-chip-2">
+              <i class="bi bi-shield-check"></i>
+              Responsible supply
+            </span>
+
+            <span class="orbit-chip orbit-chip-3">
+              <i class="bi bi-box-seam"></i>
+              UK fulfilment
+            </span>
+
+            <span class="orbit-chip orbit-chip-4">
+              <i class="bi bi-flask"></i>
+              Laboratory research
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section
+    class="about-section section-padding"
+    id="about"
+  >
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+
+          <div class="about-image-wrap">
+
+            <!-- Replace with a suitable laboratory image -->
+            <img
+              src="/images/axiom-laboratory.jpg"
+              alt="Laboratory research environment"
+              class="about-image"
+            >
+
+            <div class="about-floating-card">
+
+              <i class="bi bi-hexagon"></i>
+
+              <strong>
+                Research. Precision. Trust.
+              </strong>
+
+              <span>
+                The principles behind the Axiom identity and customer
+                experience.
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="section-kicker">
+            About Axiom
+          </div>
+
+          <h2 class="section-title">
+            A modern research supplier with a clinical identity.
+          </h2>
+
+          <p class="section-copy">
+            Axiom Research was created to provide a focused, professional
+            platform for specialist laboratory research materials. Our
+            approach centres on clear presentation, straightforward
+            information and dependable UK order fulfilment.
+          </p>
+
+          <p class="section-copy">
+            We do not provide medical advice, treatment guidance,
+            administration instructions or products intended for personal
+            consumption.
+          </p>
+
+          <div class="about-list">
+
+            <div class="about-list-item">
+
+              <div class="about-list-icon">
+                <i class="bi bi-check2"></i>
+              </div>
+
+              <div>
+                <strong>
+                  Professional presentation
+                </strong>
+
+                <span>
+                  A consistent visual and labelling system across the
+                  research catalogue.
+                </span>
+              </div>
+
+            </div>
+
+            <div class="about-list-item">
+
+              <div class="about-list-icon">
+                <i class="bi bi-check2"></i>
+              </div>
+
+              <div>
+                <strong>
+                  Transparent product identification
+                </strong>
+
+                <span>
+                  Product names and research quantities displayed clearly.
+                </span>
+              </div>
+
+            </div>
+
+            <div class="about-list-item">
+
+              <div class="about-list-icon">
+                <i class="bi bi-check2"></i>
+              </div>
+
+              <div>
+                <strong>
+                  Responsible research positioning
+                </strong>
+
+                <span>
+                  Materials supplied strictly for laboratory research
+                  environments.
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Research disclaimer -->
+  <section class="disclaimer-section section-padding">
+    <div class="container">
+
+      <div class="disclaimer-box">
+        <div class="row align-items-center g-4">
+
+          <div class="col-md-auto">
+            <div class="disclaimer-icon">
+              <i class="bi bi-exclamation-triangle"></i>
+            </div>
+          </div>
+
+          <div class="col">
+
+            <h2>
+              Laboratory research use only
+            </h2>
+
+            <p>
+              All products displayed by Axiom Research are supplied strictly
+              for laboratory research purposes. They are not medicines,
+              supplements or cosmetic products and are not intended for
+              human or veterinary consumption, diagnosis, treatment,
+              administration or therapeutic use. Customers are responsible
+              for ensuring that any purchase, possession and use complies
+              with all applicable laws and institutional requirements.
+            </p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section
+    class="faq-section section-padding"
+    id="faq"
+  >
+    <div class="container">
+
+      <div class="row g-5">
+
+        <div class="col-lg-5">
+
+          <div class="section-kicker">
+            Frequently asked questions
+          </div>
+
+          <h2 class="section-title">
+            Clear answers before you order.
+          </h2>
+
+          <p class="section-copy">
+            Important information concerning research use, ordering and
+            dispatch.
+          </p>
+
+        </div>
+
+        <div class="col-lg-7">
+
+          <div
+            class="accordion"
+            id="axiomFaq"
+          >
+
+            <div class="accordion-item">
+
+              <h2 class="accordion-header">
+
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqOne"
+                  aria-expanded="true"
+                  aria-controls="faqOne"
+                >
+                  Are Axiom products intended for personal use?
+                </button>
+
+              </h2>
+
+              <div
+                id="faqOne"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#axiomFaq"
+              >
+                <div class="accordion-body">
+                  No. Axiom materials are supplied strictly for laboratory
+                  research environments and are not intended for human or
+                  veterinary consumption or administration.
+                </div>
+              </div>
+
+            </div>
+
+            <div class="accordion-item">
+
+              <h2 class="accordion-header">
+
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqTwo"
+                  aria-expanded="false"
+                  aria-controls="faqTwo"
+                >
+                  Do you provide dosing or administration guidance?
+                </button>
+
+              </h2>
+
+              <div
+                id="faqTwo"
+                class="accordion-collapse collapse"
+                data-bs-parent="#axiomFaq"
+              >
+                <div class="accordion-body">
+                  No. Axiom does not provide medical advice, dosing
+                  instructions, reconstitution guidance or administration
+                  protocols.
+                </div>
+              </div>
+
+            </div>
+
+            <div class="accordion-item">
+
+              <h2 class="accordion-header">
+
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqThree"
+                  aria-expanded="false"
+                  aria-controls="faqThree"
+                >
+                  Where are orders dispatched from?
+                </button>
+
+              </h2>
+
+              <div
+                id="faqThree"
+                class="accordion-collapse collapse"
+                data-bs-parent="#axiomFaq"
+              >
+                <div class="accordion-body">
+                  Orders are fulfilled through our UK dispatch process.
+                  Delivery estimates and available services are displayed
+                  during checkout.
+                </div>
+              </div>
+
+            </div>
+
+            <div class="accordion-item">
+
+              <h2 class="accordion-header">
+
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqFour"
+                  aria-expanded="false"
+                  aria-controls="faqFour"
+                >
+                  Can I contact you regarding an existing order?
+                </button>
+
+              </h2>
+
+              <div
+                id="faqFour"
+                class="accordion-collapse collapse"
+                data-bs-parent="#axiomFaq"
+              >
+                <div class="accordion-body">
+                  Yes. Contact our support team with your order reference and
+                  the email address used during checkout so the order can be
+                  located efficiently.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+
+      <div class="cta-panel">
+        <div class="row align-items-center g-4">
+
+          <div class="col-lg-8">
+
+            <h2>
+              Explore the Axiom research catalogue.
+            </h2>
+
+            <p>
+              View the current range of clearly identified specialist
+              materials available for laboratory research environments.
+            </p>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="cta-actions">
+
+              <a
+                href="/shop.html"
+                class="btn-axiom-primary"
+              >
+                View Catalogue
+                <i class="bi bi-arrow-right"></i>
+              </a>
+
+              <a
+                href="/contact.html"
+                class="btn-axiom-secondary"
+              >
+                Contact Support
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+
+      <div class="row g-5">
+
+        <div class="col-lg-5">
+
+          <div class="footer-brand">
+
+            <img
+              src="/images/axiom-logo-icon.png"
+              alt="Axiom Research"
+              class="footer-logo"
+            >
+
+            <div class="footer-brand-text">
+              <strong>AXIOM</strong>
+              <span>Research Peptides</span>
+            </div>
+
+          </div>
+
+          <p class="footer-copy">
+            Specialist research peptides and laboratory materials supplied
+            exclusively for professional research environments. Not for
+            human or veterinary use.
+          </p>
+
+        </div>
+
+        <div class="col-6 col-lg-2">
+
+          <h3>Catalogue</h3>
+
+          <div class="footer-links">
+            <a href="/shop.html">All Materials</a>
+            <a href="/shop.html?category=metabolic">Metabolic</a>
+            <a href="/shop.html?category=cognitive">Cognitive</a>
+            <a href="/shop.html?category=cellular">Cellular</a>
+            <a href="/shop.html?category=repair">Repair</a>
+          </div>
+
+        </div>
+
+        <div class="col-6 col-lg-2">
+
+          <h3>Information</h3>
+
+          <div class="footer-links">
+            <a href="/about.html">About Axiom</a>
+            <a href="/research-use.html">Research Use</a>
+            <a href="/delivery.html">Delivery</a>
+            <a href="/faq.html">FAQ</a>
+            <a href="/contact.html">Contact</a>
+          </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+          <h3>Contact</h3>
+
+          <div class="footer-contact-item">
+            <i class="bi bi-envelope"></i>
+
+            <span>
+              support@axiomresearch.co.uk
+            </span>
+          </div>
+
+          <div class="footer-contact-item">
+            <i class="bi bi-clock"></i>
+
+            <span>
+              Customer support enquiries answered during UK business hours.
+            </span>
+          </div>
+
+          <div class="footer-contact-item">
+            <i class="bi bi-shield-exclamation"></i>
+
+            <span>
+              We cannot provide medical, dosing or administration advice.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+
+        <div>
+          © <span id="currentYear"></span>
+          Axiom Research. All rights reserved.
+        </div>
+
+        <div class="footer-legal-links">
+          <a href="/terms.html">Terms</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/returns.html">Returns</a>
+          <a href="/research-use.html">Research Use Policy</a>
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Bootstrap -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  ></script>
+
+  <script>
+    document.getElementById("currentYear").textContent =
+      new Date().getFullYear();
+
+    // Close the mobile navigation after clicking an internal navigation link.
+    document.querySelectorAll("#axiomNavigation .nav-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        const navigation = document.getElementById("axiomNavigation");
+
+        if (
+          window.innerWidth < 992 &&
+          navigation.classList.contains("show")
+        ) {
+          bootstrap.Collapse.getOrCreateInstance(navigation).hide();
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
