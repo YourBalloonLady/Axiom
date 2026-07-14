@@ -1612,8 +1612,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     /*
       --------------------------------------------------
@@ -1621,6 +1622,14 @@
       --------------------------------------------------
     */
 
+const EMAILJS_CONFIG = {
+  publicKey: "uZOuTrBdIAc6AmKjo",
+  serviceId: "service_vdz5j5b",
+  dispatchTemplateId: "template_fwx3l61",
+  supportEmail: "support@axiomresearchpeptides.uk"
+};
+
+    
     const SUPABASE_CONFIG = {
       url:
         "https://myqrwkynxmxpvstyydjq.supabase.co",
@@ -1634,6 +1643,17 @@
         SUPABASE_CONFIG.url,
         SUPABASE_CONFIG.publishableKey
       );
+
+    if (!window.emailjs) {
+  throw new Error(
+    "EmailJS library failed to load."
+  );
+}
+
+window.emailjs.init({
+  publicKey:
+    EMAILJS_CONFIG.publicKey
+});
 
     /*
       --------------------------------------------------
@@ -2739,72 +2759,246 @@
       orderModal.show();
     }
 
+    
+    function createRoyalMailTrackingUrl(
+  trackingNumber
+) {
+  const cleanTrackingNumber =
+    String(trackingNumber || "")
+      .trim()
+      .toUpperCase();
+
+  return (
+    "https://www.royalmail.com/track-your-item" +
+    "#/tracking-results/" +
+    encodeURIComponent(
+      cleanTrackingNumber
+    )
+  );
+}
+
+async function sendDispatchEmail(
+  order,
+  trackingNumber
+) {
+  if (!window.emailjs) {
+    throw new Error(
+      "EmailJS is not available."
+    );
+  }
+
+  if (!trackingNumber) {
+    throw new Error(
+      "A tracking number is required."
+    );
+  }
+
+  const templateParameters = {
+    customer_email:
+      order.customer_email,
+
+    first_name:
+      order.customer_first_name,
+
+    customer_name:
+      `${order.customer_first_name} ${order.customer_last_name}`,
+
+    order_reference:
+      order.order_reference,
+
+    delivery_method:
+      order.delivery_method,
+
+    tracking_number:
+      trackingNumber,
+
+    tracking_url:
+      createRoyalMailTrackingUrl(
+        trackingNumber
+      ),
+
+    support_email:
+      EMAILJS_CONFIG.supportEmail
+  };
+
+  const response =
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.dispatchTemplateId,
+      templateParameters
+    );
+
+  console.log(
+    "Dispatch email sent:",
+    response
+  );
+
+  return response;
+}
+    
     async function saveActiveOrder() {
-      const order =
-        getOrderById(
-          activeOrderId
-        );
+  const order =
+    getOrderById(
+      activeOrderId
+    );
 
-      if (!order) {
-        return;
-      }
+  if (!order) {
+    return;
+  }
 
-      const button =
-        getElement(
-          "saveOrderButton"
-        );
+  const button =
+    getElement(
+      "saveOrderButton"
+    );
 
-      const newStatus =
-        getElement(
-          "modalStatus"
-        ).value;
+  const newStatus =
+    getElement(
+      "modalStatus"
+    ).value;
 
-      const trackingNumber =
-        getElement(
-          "modalTracking"
-        ).value
-          .trim()
-          .toUpperCase();
+  const trackingNumber =
+    getElement(
+      "modalTracking"
+    ).value
+      .trim()
+      .toUpperCase();
 
-      button.disabled =
-        true;
+  /*
+    A tracking number is compulsory when
+    changing an order to Dispatched.
+  */
 
+  if (
+    newStatus === "dispatched" &&
+    !trackingNumber
+  ) {
+    showToast(
+      "Tracking required",
+      "Enter the Royal Mail tracking number before marking the order as dispatched.",
+      "error"
+    );
+
+    getElement(
+      "modalTracking"
+    ).focus();
+
+    return;
+  }
+
+  /*
+    Send the dispatch email when:
+
+    - the order is marked Dispatched
+    - a tracking number exists
+    - no successful dispatch email has
+      previously been recorded
+  */
+
+  const shouldSendDispatchEmail =
+    newStatus === "dispatched" &&
+    Boolean(trackingNumber) &&
+    !order.dispatch_email_sent_at;
+
+  button.disabled =
+    true;
+
+  button.innerHTML = `
+    <span
+      class="spinner-border spinner-border-sm"
+      aria-hidden="true"
+    ></span>
+    Saving
+  `;
+
+  const updateData = {
+    status:
+      newStatus,
+
+    tracking_number:
+      trackingNumber ||
+      null
+  };
+
+  if (
+    newStatus === "dispatched"
+  ) {
+    updateData.dispatched_at =
+      order.dispatched_at ||
+      new Date().toISOString();
+  } else {
+    updateData.dispatched_at =
+      null;
+  }
+
+  try {
+    /*
+      Save the order update first.
+    */
+
+    const {
+      data: updatedOrder,
+      error: updateError
+    } = await supabaseClient
+      .from("orders")
+      .update(updateData)
+      .eq(
+        "id",
+        order.id
+      )
+      .select()
+      .single();
+
+    if (updateError) {
+      throw updateError;
+    }
+
+    const orderIndex =
+      allOrders.findIndex(
+        (item) =>
+          item.id ===
+          order.id
+      );
+
+    if (orderIndex !== -1) {
+      allOrders[orderIndex] = {
+        ...allOrders[orderIndex],
+        ...updatedOrder
+      };
+    }
+
+    /*
+      Send the customer dispatch email.
+    */
+
+    if (
+      shouldSendDispatchEmail
+    ) {
       button.innerHTML = `
         <span
           class="spinner-border spinner-border-sm"
           aria-hidden="true"
         ></span>
-        Saving
+        Sending dispatch email
       `;
 
-      const updateData = {
-        status:
-          newStatus,
-
-        tracking_number:
-          trackingNumber ||
-          null
-      };
-
-      if (
-        newStatus ===
-        "dispatched"
-      ) {
-        updateData.dispatched_at =
-          order.dispatched_at ||
-          new Date().toISOString();
-      } else {
-        updateData.dispatched_at =
-          null;
-      }
-
       try {
+        await sendDispatchEmail(
+          updatedOrder,
+          trackingNumber
+        );
+
+        const sentAt =
+          new Date().toISOString();
+
         const {
-          data,
-          error
+          data: emailUpdatedOrder,
+          error: emailTimestampError
         } = await supabaseClient
           .from("orders")
-          .update(updateData)
+          .update({
+            dispatch_email_sent_at:
+              sentAt
+          })
           .eq(
             "id",
             order.id
@@ -2812,21 +3006,14 @@
           .select()
           .single();
 
-        if (error) {
-          throw error;
+        if (emailTimestampError) {
+          throw emailTimestampError;
         }
 
-        const index =
-          allOrders.findIndex(
-            (item) =>
-              item.id ===
-              order.id
-          );
-
-        if (index !== -1) {
-          allOrders[index] = {
-            ...allOrders[index],
-            ...data
+        if (orderIndex !== -1) {
+          allOrders[orderIndex] = {
+            ...allOrders[orderIndex],
+            ...emailUpdatedOrder
           };
         }
 
@@ -2836,31 +3023,73 @@
         orderModal.hide();
 
         showToast(
-          "Order updated",
-          `${order.order_reference} is now ${formatStatus(newStatus)}.`
+          "Order dispatched",
+          `${order.order_reference} was updated and the customer received their tracking email.`
         );
-      } catch (error) {
+
+        return;
+      } catch (emailError) {
         console.error(
-          "Unable to update order:",
-          error
+          "Dispatch email failed:",
+          emailError
         );
+
+        renderStatistics();
+        renderOrders();
+
+        /*
+          Keep the modal open.
+
+          Because dispatch_email_sent_at remains
+          empty, clicking Save again will retry
+          the email without creating another order.
+        */
 
         showToast(
-          "Update failed",
-          error.message ||
-          "The order could not be updated.",
+          "Order updated, email failed",
+          `The order is marked as dispatched, but the tracking email failed: ${
+            emailError?.text ||
+            emailError?.message ||
+            "Unknown EmailJS error"
+          }. Press Save again to retry.`,
           "error"
         );
-      } finally {
-        button.disabled =
-          false;
 
-        button.innerHTML = `
-          <i class="bi bi-check2-circle"></i>
-          Save order changes
-        `;
+        return;
       }
     }
+
+    renderStatistics();
+    renderOrders();
+
+    orderModal.hide();
+
+    showToast(
+      "Order updated",
+      `${order.order_reference} is now ${formatStatus(newStatus)}.`
+    );
+  } catch (error) {
+    console.error(
+      "Unable to update order:",
+      error
+    );
+
+    showToast(
+      "Update failed",
+      error?.message ||
+      "The order could not be updated.",
+      "error"
+    );
+  } finally {
+    button.disabled =
+      false;
+
+    button.innerHTML = `
+      <i class="bi bi-check2-circle"></i>
+      Save order changes
+    `;
+  }
+}
 
     /*
       --------------------------------------------------
