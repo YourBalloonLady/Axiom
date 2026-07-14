@@ -1618,370 +1618,779 @@
   </div>
 
   <script>
-    const PRODUCTS = [
+  /*
+    --------------------------------------------------
+    SUPABASE
+    --------------------------------------------------
+  */
+
+  const SUPABASE_CONFIG = {
+    url:
+      "https://myqrwkynxmxpvstyydjq.supabase.co",
+
+    publishableKey:
+      "sb_publishable_ByS5y5ivRwPw69xTo22R3Q_sBpaHz0e"
+  };
+
+  if (!window.supabase) {
+    throw new Error(
+      "Supabase library failed to load."
+    );
+  }
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_CONFIG.url,
+      SUPABASE_CONFIG.publishableKey
+    );
+
+  /*
+    Supabase controls:
+    - price
+    - stock
+    - product name
+    - strength
+    - active/inactive status
+
+    This local information controls:
+    - category
+    - catalogue description
+    - image fallback
+  */
+
+  const PRODUCT_DISPLAY_DATA = {
+    "bpc-tb500-blend-10mg": {
+      category: "repair",
+      categoryLabel: "Repair research",
+      image:
+        "./images/axiom-bpc-tb500-vial.png",
+      description:
+        "Combined research peptides investigated in controlled laboratory models concerning tissue-response pathways."
+    },
+
+    "slu-pp-332-5mg": {
+      category: "metabolic",
+      categoryLabel: "Metabolic research",
+      image:
+        "./images/axiom-slu-pp-332-vial.png",
+      description:
+        "Synthetic research compound investigated in relation to ERR activity and cellular energy metabolism."
+    },
+
+    "ss-31-10mg": {
+      category: "cellular",
+      categoryLabel: "Cellular research",
+      image:
+        "./images/axiom-ss31-vial.png",
+      description:
+        "Research peptide investigated in laboratory models concerning mitochondrial function and oxidative processes."
+    },
+
+    "ghk-cu-100mg": {
+      category: "cellular",
+      categoryLabel: "Cellular research",
+      image:
+        "./images/axiom-ghk-cu-vial.png",
+      description:
+        "Copper-binding peptide investigated in laboratory research relating to cellular signalling and tissue processes."
+    },
+
+    "cjc-ipamorelin-10mg": {
+      category: "peptide",
+      categoryLabel: "Peptide research",
+      image:
+        "./images/axiom-cjc-ipamorelin-vial.png",
+      description:
+        "Combined research peptides studied in controlled models concerning growth-hormone signalling pathways."
+    },
+
+    "epithalon-10mg": {
+      category: "cellular",
+      categoryLabel: "Cellular research",
+      image:
+        "./images/axiom-epithalon-vial.png",
+      description:
+        "Synthetic tetrapeptide investigated in laboratory research involving cellular ageing and regulatory processes."
+    },
+
+    "mots-c-10mg": {
+      category: "metabolic",
+      categoryLabel: "Metabolic research",
+      image:
+        "./images/axiom-mots-c-vial.png",
+      description:
+        "Mitochondrial-derived peptide investigated in laboratory models of metabolic signalling and cellular energy."
+    },
+
+    "mt-2-10mg": {
+      category: "peptide",
+      categoryLabel: "Peptide research",
+      image:
+        "./images/axiom-mt-2-vial.png",
+      description:
+        "Synthetic melanocortin research peptide studied in controlled laboratory receptor-binding models."
+    },
+
+    "selank-10mg": {
+      category: "cognitive",
+      categoryLabel: "Cognitive research",
+      image:
+        "./images/axiom-selank-vial.png",
+      description:
+        "Synthetic peptide investigated across neurological, behavioural and cognitive laboratory research models."
+    },
+
+    "semax-10mg": {
+      category: "cognitive",
+      categoryLabel: "Cognitive research",
+      image:
+        "./images/axiom-semax-vial.png",
+      description:
+        "Synthetic peptide investigated in laboratory research involving neurological and cognitive signalling pathways."
+    },
+
+    "tesamorelin-10mg": {
+      category: "peptide",
+      categoryLabel: "Peptide research",
+      image:
+        "./images/axiom-tesamorelin-vial.png",
+      description:
+        "Research peptide investigated in controlled laboratory models concerning growth-hormone-releasing pathways."
+    },
+
+    "5-amino-1mq-50mg": {
+      category: "metabolic",
+      categoryLabel: "Metabolic research",
+      image:
+        "./images/axiom-5-amino-1mq-vial.png",
+      description:
+        "Small-molecule research compound investigated in relation to NNMT activity and metabolic cellular pathways."
+    },
+
+    "nad-plus-1000mg": {
+      category: "cellular",
+      categoryLabel: "Cellular research",
+      image:
+        "./images/axiom-nad-plus-vial.png",
+      description:
+        "Research material investigated in laboratory models concerning cellular energy transfer and redox processes."
+    }
+  };
+
+  const CART_STORAGE_KEY =
+    "axiomResearchCart";
+
+  /*
+    --------------------------------------------------
+    ELEMENTS
+    --------------------------------------------------
+  */
+
+  const productGrid =
+    document.getElementById(
+      "productGrid"
+    );
+
+  const emptyResults =
+    document.getElementById(
+      "emptyResults"
+    );
+
+  const resultsCount =
+    document.getElementById(
+      "resultsCount"
+    );
+
+  const resultsTitle =
+    document.getElementById(
+      "resultsTitle"
+    );
+
+  const productSearch =
+    document.getElementById(
+      "productSearch"
+    );
+
+  const productSort =
+    document.getElementById(
+      "productSort"
+    );
+
+  const categoryFilters =
+    document.getElementById(
+      "categoryFilters"
+    );
+
+  const cartDrawer =
+    document.getElementById(
+      "cartDrawer"
+    );
+
+  const cartOverlay =
+    document.getElementById(
+      "cartOverlay"
+    );
+
+  const openCartButton =
+    document.getElementById(
+      "openCartButton"
+    );
+
+  const closeCartButton =
+    document.getElementById(
+      "closeCartButton"
+    );
+
+  const cartItemsElement =
+    document.getElementById(
+      "cartItems"
+    );
+
+  const cartCount =
+    document.getElementById(
+      "cartCount"
+    );
+
+  const cartItemTotal =
+    document.getElementById(
+      "cartItemTotal"
+    );
+
+  const cartSubtotal =
+    document.getElementById(
+      "cartSubtotal"
+    );
+
+  const checkoutButton =
+    document.getElementById(
+      "checkoutButton"
+    );
+
+  const cartToast =
+    document.getElementById(
+      "cartToast"
+    );
+
+  const cartToastText =
+    document.getElementById(
+      "cartToastText"
+    );
+
+  const catalogueProductCount =
+    document.getElementById(
+      "catalogueProductCount"
+    );
+
+  /*
+    --------------------------------------------------
+    STATE
+    --------------------------------------------------
+  */
+
+  let PRODUCTS = [];
+
+  let activeCategory =
+    "all";
+
+  let cart =
+    loadCart();
+
+  let toastTimer =
+    null;
+
+  let productsLoaded =
+    false;
+
+  /*
+    --------------------------------------------------
+    HELPERS
+    --------------------------------------------------
+  */
+
+  function escapeHtml(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat(
+      "en-GB",
       {
-        id: "bpc-tb500-blend-10mg",
-        name: "BPC-157 & TB500 Blend",
-        strength: "10MG",
-        price: 35,
-        stock: 5,
-        category: "repair",
-        categoryLabel: "Repair research",
-        image: "./images/axiom-bpc-tb500-vial.png",
-        description:
-          "Combined research peptides investigated in controlled laboratory models concerning tissue-response pathways."
-      },
-      {
-        id: "slu-pp-332-5mg",
-        name: "SLU-PP-332",
-        strength: "5MG",
-        price: 50,
-        stock: 5,
-        category: "metabolic",
-        categoryLabel: "Metabolic research",
-        image: "./images/axiom-slu-pp-332-vial.png",
-        description:
-          "Synthetic research compound investigated in relation to ERR activity and cellular energy metabolism."
-      },
-      {
-        id: "ss-31-10mg",
-        name: "SS-31",
-        strength: "10MG",
-        price: 30,
-        stock: 5,
-        category: "cellular",
-        categoryLabel: "Cellular research",
-        image: "./images/axiom-ss31-vial.png",
-        description:
-          "Research peptide investigated in laboratory models concerning mitochondrial function and oxidative processes."
-      },
-      {
-        id: "ghk-cu-100mg",
-        name: "GHK-CU",
-        strength: "100MG",
-        price: 45,
-        stock: 5,
-        category: "cellular",
-        categoryLabel: "Cellular research",
-        image: "./images/axiom-ghk-cu-vial.png",
-        description:
-          "Copper-binding peptide investigated in laboratory research relating to cellular signalling and tissue processes."
-      },
-      {
-        id: "cjc-ipamorelin-10mg",
-        name: "CJC + Ipamorelin",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        category: "peptide",
-        categoryLabel: "Peptide research",
-        image: "./images/axiom-cjc-ipamorelin-vial.png",
-        description:
-          "Combined research peptides studied in controlled models concerning growth-hormone signalling pathways."
-      },
-      {
-        id: "epithalon-10mg",
-        name: "Epithalon",
-        strength: "10MG",
-        price: 20,
-        stock: 5,
-        category: "cellular",
-        categoryLabel: "Cellular research",
-        image: "./images/axiom-epithalon-vial.png",
-        description:
-          "Synthetic tetrapeptide investigated in laboratory research involving cellular ageing and regulatory processes."
-      },
-      {
-        id: "mots-c-10mg",
-        name: "MOTS-C",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        category: "metabolic",
-        categoryLabel: "Metabolic research",
-        image: "./images/axiom-mots-c-vial.png",
-        description:
-          "Mitochondrial-derived peptide investigated in laboratory models of metabolic signalling and cellular energy."
-      },
-      {
-        id: "mt-2-10mg",
-        name: "MT-2",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        category: "peptide",
-        categoryLabel: "Peptide research",
-        image: "./images/axiom-mt-2-vial.png",
-        description:
-          "Synthetic melanocortin research peptide studied in controlled laboratory receptor-binding models."
-      },
-      {
-        id: "selank-10mg",
-        name: "Selank",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        category: "cognitive",
-        categoryLabel: "Cognitive research",
-        image: "./images/axiom-selank-vial.png",
-        description:
-          "Synthetic peptide investigated across neurological, behavioural and cognitive laboratory research models."
-      },
-      {
-        id: "semax-10mg",
-        name: "Semax",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        category: "cognitive",
-        categoryLabel: "Cognitive research",
-        image: "./images/axiom-semax-vial.png",
-        description:
-          "Synthetic peptide investigated in laboratory research involving neurological and cognitive signalling pathways."
-      },
-      {
-        id: "tesamorelin-10mg",
-        name: "Tesamorelin",
-        strength: "10MG",
-        price: 50,
-        stock: 5,
-        category: "peptide",
-        categoryLabel: "Peptide research",
-        image: "./images/axiom-tesamorelin-vial.png",
-        description:
-          "Research peptide investigated in controlled laboratory models concerning growth-hormone-releasing pathways."
-      },
-      {
-        id: "5-amino-1mq-50mg",
-        name: "5 Amino 1MQ",
-        strength: "50MG",
-        price: 65,
-        stock: 5,
-        category: "metabolic",
-        categoryLabel: "Metabolic research",
-        image: "./images/axiom-5-amino-1mq-vial.png",
-        description:
-          "Small-molecule research compound investigated in relation to NNMT activity and metabolic cellular pathways."
-      },
-      {
-        id: "nad-plus-1000mg",
-        name: "NAD+",
-        strength: "1000MG",
-        price: 130,
-        stock: 5,
-        category: "cellular",
-        categoryLabel: "Cellular research",
-        image: "./images/axiom-nad-plus-vial.png",
-        description:
-          "Research material investigated in laboratory models concerning cellular energy transfer and redox processes."
-      }
-    ];
-
-    const CART_STORAGE_KEY = "axiomResearchCart";
-
-    const productGrid =
-      document.getElementById("productGrid");
-
-    const emptyResults =
-      document.getElementById("emptyResults");
-
-    const resultsCount =
-      document.getElementById("resultsCount");
-
-    const resultsTitle =
-      document.getElementById("resultsTitle");
-
-    const productSearch =
-      document.getElementById("productSearch");
-
-    const productSort =
-      document.getElementById("productSort");
-
-    const categoryFilters =
-      document.getElementById("categoryFilters");
-
-    const cartDrawer =
-      document.getElementById("cartDrawer");
-
-    const cartOverlay =
-      document.getElementById("cartOverlay");
-
-    const openCartButton =
-      document.getElementById("openCartButton");
-
-    const closeCartButton =
-      document.getElementById("closeCartButton");
-
-    const cartItemsElement =
-      document.getElementById("cartItems");
-
-    const cartCount =
-      document.getElementById("cartCount");
-
-    const cartItemTotal =
-      document.getElementById("cartItemTotal");
-
-    const cartSubtotal =
-      document.getElementById("cartSubtotal");
-
-    const checkoutButton =
-      document.getElementById("checkoutButton");
-
-    const cartToast =
-      document.getElementById("cartToast");
-
-    const cartToastText =
-      document.getElementById("cartToastText");
-
-    let activeCategory = "all";
-    let cart = loadCart();
-    let toastTimer = null;
-
-    function formatCurrency(value) {
-      return new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP"
-      }).format(value);
-    }
-
-    function loadCart() {
-      try {
-        const savedCart =
-          JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
-
-        return Array.isArray(savedCart)
-          ? savedCart
-          : [];
-      } catch (error) {
-        console.error("Unable to load basket:", error);
-        return [];
       }
-    }
+    ).format(
+      Number(value) || 0
+    );
+  }
 
-    function saveCart() {
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(cart)
+  function loadCart() {
+    try {
+      const savedCart =
+        JSON.parse(
+          localStorage.getItem(
+            CART_STORAGE_KEY
+          )
+        );
+
+      return Array.isArray(savedCart)
+        ? savedCart
+        : [];
+    } catch (error) {
+      console.error(
+        "Unable to load basket:",
+        error
       );
-    }
 
-    function getProductById(productId) {
-      return PRODUCTS.find(
-        (product) => product.id === productId
+      return [];
+    }
+  }
+
+  function saveCart() {
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify(cart)
+    );
+  }
+
+  function getProductById(productId) {
+    return PRODUCTS.find(
+      (product) =>
+        product.id === productId
+    );
+  }
+
+  function getCartQuantity(productId) {
+    const item =
+      cart.find(
+        (cartItem) =>
+          cartItem.id === productId
       );
-    }
 
-    function getCartQuantity(productId) {
-      const item = cart.find(
-        (cartItem) => cartItem.id === productId
-      );
+    return item
+      ? Number(item.quantity) || 0
+      : 0;
+  }
 
-      return item ? item.quantity : 0;
-    }
+  function handleMissingImage(image) {
+    image.onerror =
+      null;
 
-    function handleMissingImage(image) {
-      image.onerror = null;
-      image.src = "./images/axiom-logo-icon.png";
-      image.style.padding = "35px";
-    }
+    image.src =
+      "./images/axiom-logo-icon.png";
 
-    function createProductCard(product) {
-      const quantityInCart =
-        getCartQuantity(product.id);
+    image.style.padding =
+      "35px";
+  }
 
-      const remainingStock =
-        Math.max(product.stock - quantityInCart, 0);
+  /*
+    --------------------------------------------------
+    SUPABASE PRODUCTS
+    --------------------------------------------------
+  */
 
-      const addDisabled =
-        remainingStock <= 0;
+  function buildCatalogueProduct(
+    databaseProduct
+  ) {
+    const displayData =
+      PRODUCT_DISPLAY_DATA[
+        databaseProduct.id
+      ] || {};
 
-      return `
+    return {
+      id:
+        databaseProduct.id,
+
+      name:
+        databaseProduct.name ||
+        "Unnamed product",
+
+      strength:
+        databaseProduct.strength ||
+        "",
+
+      price:
+        Number(
+          databaseProduct.price
+        ) || 0,
+
+      stock:
+        Math.max(
+          0,
+          Math.floor(
+            Number(
+              databaseProduct.stock
+            ) || 0
+          )
+        ),
+
+      category:
+        databaseProduct.category ||
+        displayData.category ||
+        "peptide",
+
+      categoryLabel:
+        databaseProduct.category_label ||
+        displayData.categoryLabel ||
+        "Peptide research",
+
+      image:
+        databaseProduct.image_url ||
+        displayData.image ||
+        "./images/axiom-logo-icon.png",
+
+      description:
+        databaseProduct.description ||
+        displayData.description ||
+        "Specialist material supplied strictly for controlled laboratory research use."
+    };
+  }
+
+  async function loadProductsFromSupabase() {
+    productGrid.innerHTML = `
+      <div class="col-12">
         <div
-          class="col-xl-3 col-lg-4 col-md-6"
-          data-product-card
-          data-product-id="${product.id}"
+          class="text-center py-5"
+          style="color:var(--axiom-muted);"
         >
-          <article class="product-card">
+          <div
+            class="spinner-border mb-3"
+            role="status"
+            aria-label="Loading catalogue"
+          ></div>
 
-            <div class="product-image-wrap">
+          <div>
+            Loading live catalogue...
+          </div>
+        </div>
+      </div>
+    `;
 
-              <span class="stock-badge">
-                ${
-                  remainingStock > 0
-                    ? `${remainingStock} available`
-                    : "Basket limit reached"
-                }
-              </span>
+    try {
+      const {
+        data,
+        error
+      } = await supabaseClient
+        .from("products")
+        .select(`
+          id,
+          name,
+          strength,
+          price,
+          stock,
+          is_active,
+          image_url
+        `)
+        .eq(
+          "is_active",
+          true
+        )
+        .order(
+          "name",
+          {
+            ascending: true
+          }
+        );
 
-              <img
-                src="${product.image}"
-                alt="Axiom Research ${product.name} ${product.strength}"
-                class="product-image"
-                onerror="handleMissingImage(this)"
-              >
+      if (error) {
+        throw error;
+      }
 
-            </div>
+      PRODUCTS =
+        (data || [])
+          .map(
+            buildCatalogueProduct
+          );
 
-            <div class="product-body">
+      productsLoaded =
+        true;
 
-              <div class="product-category">
-                ${product.categoryLabel}
-              </div>
+      cleanCartAgainstLiveStock();
 
-              <h2 class="product-title">
-                ${product.name}
+      catalogueProductCount.textContent =
+        PRODUCTS.length;
+
+      renderProducts();
+      renderCart();
+    } catch (error) {
+      console.error(
+        "Unable to load catalogue:",
+        error
+      );
+
+      PRODUCTS =
+        [];
+
+      productsLoaded =
+        false;
+
+      catalogueProductCount.textContent =
+        "0";
+
+      resultsCount.textContent =
+        "Catalogue unavailable";
+
+      productGrid.innerHTML = `
+        <div class="col-12">
+
+          <div
+            class="empty-results"
+            style="display:grid;"
+          >
+
+            <div>
+
+              <i class="bi bi-exclamation-triangle"></i>
+
+              <h2>
+                Catalogue temporarily unavailable
               </h2>
 
-              <p class="product-description">
-                ${product.description}
+              <p>
+                Products could not be loaded. Please refresh the page or try again shortly.
               </p>
-
-              <div class="product-info-row">
-
-                <div class="product-price">
-                  <span>Price</span>
-                  ${formatCurrency(product.price)}
-                </div>
-
-                <div class="product-strength">
-                  ${product.strength}
-                </div>
-
-              </div>
-
-              <button
-                type="button"
-                class="add-button"
-                data-add-product="${product.id}"
-                ${addDisabled ? "disabled" : ""}
-              >
-                <i class="bi bi-bag-plus"></i>
-
-                ${
-                  addDisabled
-                    ? "Maximum added"
-                    : "Add to basket"
-                }
-              </button>
 
             </div>
 
-          </article>
+          </div>
+
         </div>
       `;
+
+      renderCart();
+    }
+  }
+
+  function cleanCartAgainstLiveStock() {
+    if (!productsLoaded) {
+      return;
     }
 
-    function getFilteredProducts() {
-      const searchTerm =
-        productSearch.value
-          .trim()
-          .toLowerCase();
+    let cartChanged =
+      false;
 
-      const filteredProducts =
-        PRODUCTS.filter((product) => {
+    cart =
+      cart
+        .map((item) => {
+          const product =
+            getProductById(
+              item.id
+            );
+
+          if (!product) {
+            cartChanged =
+              true;
+
+            return null;
+          }
+
+          const requestedQuantity =
+            Math.max(
+              1,
+              Number(
+                item.quantity
+              ) || 1
+            );
+
+          const allowedQuantity =
+            Math.min(
+              requestedQuantity,
+              product.stock
+            );
+
+          if (
+            allowedQuantity <= 0
+          ) {
+            cartChanged =
+              true;
+
+            return null;
+          }
+
+          if (
+            allowedQuantity !==
+            requestedQuantity
+          ) {
+            cartChanged =
+              true;
+          }
+
+          return {
+            id:
+              product.id,
+
+            quantity:
+              allowedQuantity
+          };
+        })
+        .filter(Boolean);
+
+    if (cartChanged) {
+      saveCart();
+
+      showToast(
+        "Your basket was updated to match current stock."
+      );
+    }
+  }
+
+  /*
+    --------------------------------------------------
+    PRODUCT CARDS
+    --------------------------------------------------
+  */
+
+  function createProductCard(product) {
+    const quantityInCart =
+      getCartQuantity(
+        product.id
+      );
+
+    const remainingStock =
+      Math.max(
+        product.stock -
+        quantityInCart,
+        0
+      );
+
+    const outOfStock =
+      product.stock <= 0;
+
+    const addDisabled =
+      outOfStock ||
+      remainingStock <= 0;
+
+    let stockText =
+      `${remainingStock} available`;
+
+    if (outOfStock) {
+      stockText =
+        "Out of stock";
+    } else if (
+      remainingStock <= 0
+    ) {
+      stockText =
+        "Basket limit reached";
+    }
+
+    let buttonText =
+      "Add to basket";
+
+    if (outOfStock) {
+      buttonText =
+        "Out of stock";
+    } else if (
+      remainingStock <= 0
+    ) {
+      buttonText =
+        "Maximum added";
+    }
+
+    return `
+      <div
+        class="col-xl-3 col-lg-4 col-md-6"
+        data-product-card
+        data-product-id="${escapeHtml(product.id)}"
+      >
+
+        <article class="product-card">
+
+          <div class="product-image-wrap">
+
+            <span
+              class="stock-badge"
+              style="${
+                outOfStock
+                  ? "color:var(--axiom-danger);border-color:rgba(201,77,92,.18);"
+                  : ""
+              }"
+            >
+              ${escapeHtml(stockText)}
+            </span>
+
+            <img
+              src="${escapeHtml(product.image)}"
+              alt="Axiom Research ${escapeHtml(product.name)} ${escapeHtml(product.strength)}"
+              class="product-image"
+              onerror="handleMissingImage(this)"
+            >
+
+          </div>
+
+          <div class="product-body">
+
+            <div class="product-category">
+              ${escapeHtml(product.categoryLabel)}
+            </div>
+
+            <h2 class="product-title">
+              ${escapeHtml(product.name)}
+            </h2>
+
+            <p class="product-description">
+              ${escapeHtml(product.description)}
+            </p>
+
+            <div class="product-info-row">
+
+              <div class="product-price">
+
+                <span>
+                  Price
+                </span>
+
+                ${escapeHtml(
+                  formatCurrency(
+                    product.price
+                  )
+                )}
+
+              </div>
+
+              <div class="product-strength">
+                ${escapeHtml(product.strength)}
+              </div>
+
+            </div>
+
+            <button
+              type="button"
+              class="add-button"
+              data-add-product="${escapeHtml(product.id)}"
+              ${addDisabled ? "disabled" : ""}
+            >
+
+              <i class="bi bi-bag-plus"></i>
+
+              ${escapeHtml(buttonText)}
+
+            </button>
+
+          </div>
+
+        </article>
+
+      </div>
+    `;
+  }
+
+  function getFilteredProducts() {
+    const searchTerm =
+      productSearch.value
+        .trim()
+        .toLowerCase();
+
+    const filteredProducts =
+      PRODUCTS.filter(
+        (product) => {
           const matchesCategory =
             activeCategory === "all" ||
-            product.category === activeCategory;
+            product.category ===
+              activeCategory;
 
           const searchableText =
             [
@@ -1995,502 +2404,667 @@
 
           const matchesSearch =
             !searchTerm ||
-            searchableText.includes(searchTerm);
+            searchableText.includes(
+              searchTerm
+            );
 
-          return matchesCategory && matchesSearch;
-        });
+          return (
+            matchesCategory &&
+            matchesSearch
+          );
+        }
+      );
 
-      const sortValue =
-        productSort.value;
+    const sortValue =
+      productSort.value;
 
-      if (sortValue === "name-asc") {
-        filteredProducts.sort(
-          (a, b) =>
-            a.name.localeCompare(b.name)
-        );
-      }
-
-      if (sortValue === "price-asc") {
-        filteredProducts.sort(
-          (a, b) =>
-            a.price - b.price
-        );
-      }
-
-      if (sortValue === "price-desc") {
-        filteredProducts.sort(
-          (a, b) =>
-            b.price - a.price
-        );
-      }
-
-      return filteredProducts;
+    if (
+      sortValue ===
+      "name-asc"
+    ) {
+      filteredProducts.sort(
+        (a, b) =>
+          a.name.localeCompare(
+            b.name
+          )
+      );
     }
 
-    function renderProducts() {
-      const products =
-        getFilteredProducts();
+    if (
+      sortValue ===
+      "price-asc"
+    ) {
+      filteredProducts.sort(
+        (a, b) =>
+          a.price -
+          b.price
+      );
+    }
 
-      productGrid.innerHTML =
-        products
-          .map(createProductCard)
-          .join("");
+    if (
+      sortValue ===
+      "price-desc"
+    ) {
+      filteredProducts.sort(
+        (a, b) =>
+          b.price -
+          a.price
+      );
+    }
 
-      emptyResults.style.display =
-        products.length
-          ? "none"
-          : "grid";
+    return filteredProducts;
+  }
 
-      resultsCount.textContent =
-        `Showing ${products.length} ${
-          products.length === 1
-            ? "product"
-            : "products"
-        }`;
+  function renderProducts() {
+    const products =
+      getFilteredProducts();
 
-      const activeButton =
-        categoryFilters.querySelector(
+    productGrid.innerHTML =
+      products
+        .map(
+          createProductCard
+        )
+        .join("");
+
+    emptyResults.style.display =
+      products.length
+        ? "none"
+        : "grid";
+
+    resultsCount.textContent =
+      `Showing ${products.length} ${
+        products.length === 1
+          ? "product"
+          : "products"
+      }`;
+
+    const activeButton =
+      categoryFilters
+        .querySelector(
           ".filter-button.active"
         );
 
-      resultsTitle.textContent =
-        activeButton
-          ? activeButton.textContent.trim()
-          : "Research materials";
-    }
+    resultsTitle.textContent =
+      activeButton
+        ? activeButton.textContent.trim()
+        : "Research materials";
+  }
 
-    function addToCart(productId) {
-      const product =
-        getProductById(productId);
+  /*
+    --------------------------------------------------
+    CART
+    --------------------------------------------------
+  */
 
-      if (!product) {
-        return;
-      }
+  function addToCart(productId) {
+    const product =
+      getProductById(
+        productId
+      );
 
-      const currentQuantity =
-        getCartQuantity(productId);
-
-      if (currentQuantity >= product.stock) {
-        showToast(
-          `Maximum available stock for ${product.name} is already in your basket.`
-        );
-
-        return;
-      }
-
-      const existingItem =
-        cart.find(
-          (item) => item.id === productId
-        );
-
-      if (existingItem) {
-        existingItem.quantity += 1;
-      } else {
-        cart.push({
-          id: productId,
-          quantity: 1
-        });
-      }
-
-      saveCart();
-      renderCart();
-      renderProducts();
-
+    if (!product) {
       showToast(
-        `${product.name} added to basket`
+        "This product is no longer available."
       );
+
+      return;
     }
 
-    function updateCartQuantity(
-      productId,
-      change
+    if (
+      product.stock <= 0
     ) {
-      const product =
-        getProductById(productId);
-
-      const item =
-        cart.find(
-          (cartItem) =>
-            cartItem.id === productId
-        );
-
-      if (!product || !item) {
-        return;
-      }
-
-      const nextQuantity =
-        item.quantity + change;
-
-      if (nextQuantity <= 0) {
-        removeFromCart(productId);
-        return;
-      }
-
-      if (nextQuantity > product.stock) {
-        showToast(
-          `Only ${product.stock} available for ${product.name}.`
-        );
-
-        return;
-      }
-
-      item.quantity =
-        nextQuantity;
-
-      saveCart();
-      renderCart();
-      renderProducts();
-    }
-
-    function removeFromCart(productId) {
-      cart =
-        cart.filter(
-          (item) =>
-            item.id !== productId
-        );
-
-      saveCart();
-      renderCart();
-      renderProducts();
-    }
-
-    function calculateCart() {
-      return cart.reduce(
-        (summary, item) => {
-          const product =
-            getProductById(item.id);
-
-          if (!product) {
-            return summary;
-          }
-
-          summary.quantity +=
-            item.quantity;
-
-          summary.subtotal +=
-            product.price *
-            item.quantity;
-
-          return summary;
-        },
-        {
-          quantity: 0,
-          subtotal: 0
-        }
+      showToast(
+        `${product.name} is currently out of stock.`
       );
+
+      return;
     }
 
-    function renderCart() {
-      const summary =
-        calculateCart();
+    const currentQuantity =
+      getCartQuantity(
+        productId
+      );
 
-      cartCount.textContent =
-        summary.quantity;
+    if (
+      currentQuantity >=
+      product.stock
+    ) {
+      showToast(
+        `Only ${product.stock} available for ${product.name}.`
+      );
 
-      cartItemTotal.textContent =
-        summary.quantity;
+      return;
+    }
 
-      cartSubtotal.textContent =
-        formatCurrency(summary.subtotal);
+    const existingItem =
+      cart.find(
+        (item) =>
+          item.id === productId
+      );
 
-      if (!cart.length) {
-        cartItemsElement.innerHTML = `
-          <div class="cart-empty">
-            <div>
-              <i class="bi bi-bag"></i>
+    if (existingItem) {
+      existingItem.quantity +=
+        1;
+    } else {
+      cart.push({
+        id:
+          productId,
 
-              <h3>
-                Your basket is empty
-              </h3>
+        quantity:
+          1
+      });
+    }
 
-              <p>
-                Add a research material from the catalogue to begin your order.
-              </p>
-            </div>
-          </div>
-        `;
+    saveCart();
+    renderCart();
+    renderProducts();
 
-        checkoutButton.setAttribute(
-          "aria-disabled",
-          "true"
-        );
+    showToast(
+      `${product.name} added to basket`
+    );
+  }
 
-        checkoutButton.style.pointerEvents =
-          "none";
+  function updateCartQuantity(
+    productId,
+    change
+  ) {
+    const product =
+      getProductById(
+        productId
+      );
 
-        checkoutButton.style.opacity =
-          "0.55";
+    const item =
+      cart.find(
+        (cartItem) =>
+          cartItem.id ===
+          productId
+      );
 
-        return;
+    if (!product || !item) {
+      removeFromCart(
+        productId
+      );
+
+      return;
+    }
+
+    const nextQuantity =
+      item.quantity +
+      change;
+
+    if (
+      nextQuantity <= 0
+    ) {
+      removeFromCart(
+        productId
+      );
+
+      return;
+    }
+
+    if (
+      nextQuantity >
+      product.stock
+    ) {
+      showToast(
+        `Only ${product.stock} available for ${product.name}.`
+      );
+
+      return;
+    }
+
+    item.quantity =
+      nextQuantity;
+
+    saveCart();
+    renderCart();
+    renderProducts();
+  }
+
+  function removeFromCart(productId) {
+    cart =
+      cart.filter(
+        (item) =>
+          item.id !==
+          productId
+      );
+
+    saveCart();
+    renderCart();
+    renderProducts();
+  }
+
+  function calculateCart() {
+    return cart.reduce(
+      (summary, item) => {
+        const product =
+          getProductById(
+            item.id
+          );
+
+        if (!product) {
+          return summary;
+        }
+
+        summary.quantity +=
+          item.quantity;
+
+        summary.subtotal +=
+          product.price *
+          item.quantity;
+
+        return summary;
+      },
+      {
+        quantity: 0,
+        subtotal: 0
       }
+    );
+  }
 
-      checkoutButton.removeAttribute(
-        "aria-disabled"
+  function renderCart() {
+    const summary =
+      calculateCart();
+
+    cartCount.textContent =
+      summary.quantity;
+
+    cartItemTotal.textContent =
+      summary.quantity;
+
+    cartSubtotal.textContent =
+      formatCurrency(
+        summary.subtotal
+      );
+
+    if (
+      !cart.length ||
+      !productsLoaded
+    ) {
+      cartItemsElement.innerHTML = `
+        <div class="cart-empty">
+
+          <div>
+
+            <i class="bi bi-bag"></i>
+
+            <h3>
+              ${
+                productsLoaded
+                  ? "Your basket is empty"
+                  : "Loading your basket"
+              }
+            </h3>
+
+            <p>
+              ${
+                productsLoaded
+                  ? "Add a research material from the catalogue to begin your order."
+                  : "Current prices and stock are being checked."
+              }
+            </p>
+
+          </div>
+
+        </div>
+      `;
+
+      checkoutButton.setAttribute(
+        "aria-disabled",
+        "true"
       );
 
       checkoutButton.style.pointerEvents =
-        "";
+        "none";
 
       checkoutButton.style.opacity =
-        "";
+        "0.55";
 
-      cartItemsElement.innerHTML =
-        cart
-          .map((item) => {
-            const product =
-              getProductById(item.id);
+      return;
+    }
 
-            if (!product) {
-              return "";
-            }
+    checkoutButton.removeAttribute(
+      "aria-disabled"
+    );
 
-            return `
-              <article class="cart-item">
+    checkoutButton.style.pointerEvents =
+      "";
 
-                <img
-                  src="${product.image}"
-                  alt="${product.name}"
-                  class="cart-item-image"
-                  onerror="handleMissingImage(this)"
-                >
+    checkoutButton.style.opacity =
+      "";
 
-                <div>
+    cartItemsElement.innerHTML =
+      cart
+        .map((item) => {
+          const product =
+            getProductById(
+              item.id
+            );
 
-                  <div class="cart-item-top">
+          if (!product) {
+            return "";
+          }
 
-                    <div>
-                      <div class="cart-item-title">
-                        ${product.name}
-                      </div>
+          const canIncrease =
+            item.quantity <
+            product.stock;
 
-                      <div class="cart-item-strength">
-                        ${product.strength}
-                      </div>
+          return `
+            <article class="cart-item">
+
+              <img
+                src="${escapeHtml(product.image)}"
+                alt="${escapeHtml(product.name)}"
+                class="cart-item-image"
+                onerror="handleMissingImage(this)"
+              >
+
+              <div>
+
+                <div class="cart-item-top">
+
+                  <div>
+
+                    <div class="cart-item-title">
+                      ${escapeHtml(product.name)}
                     </div>
+
+                    <div class="cart-item-strength">
+                      ${escapeHtml(product.strength)}
+                    </div>
+
+                  </div>
+
+                  <button
+                    type="button"
+                    class="remove-item"
+                    data-remove-product="${escapeHtml(product.id)}"
+                    aria-label="Remove ${escapeHtml(product.name)}"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </button>
+
+                </div>
+
+                <div class="cart-item-bottom">
+
+                  <div class="quantity-control">
 
                     <button
                       type="button"
-                      class="remove-item"
-                      data-remove-product="${product.id}"
-                      aria-label="Remove ${product.name}"
+                      class="quantity-button"
+                      data-quantity-change="-1"
+                      data-product-id="${escapeHtml(product.id)}"
+                      aria-label="Reduce ${escapeHtml(product.name)} quantity"
                     >
-                      <i class="bi bi-trash3"></i>
+                      <i class="bi bi-dash"></i>
+                    </button>
+
+                    <span class="quantity-value">
+                      ${item.quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      class="quantity-button"
+                      data-quantity-change="1"
+                      data-product-id="${escapeHtml(product.id)}"
+                      aria-label="Increase ${escapeHtml(product.name)} quantity"
+                      ${canIncrease ? "" : "disabled"}
+                    >
+                      <i class="bi bi-plus"></i>
                     </button>
 
                   </div>
 
-                  <div class="cart-item-bottom">
-
-                    <div class="quantity-control">
-
-                      <button
-                        type="button"
-                        class="quantity-button"
-                        data-quantity-change="-1"
-                        data-product-id="${product.id}"
-                        aria-label="Reduce ${product.name} quantity"
-                      >
-                        <i class="bi bi-dash"></i>
-                      </button>
-
-                      <span class="quantity-value">
-                        ${item.quantity}
-                      </span>
-
-                      <button
-                        type="button"
-                        class="quantity-button"
-                        data-quantity-change="1"
-                        data-product-id="${product.id}"
-                        aria-label="Increase ${product.name} quantity"
-                      >
-                        <i class="bi bi-plus"></i>
-                      </button>
-
-                    </div>
-
-                    <div class="cart-item-price">
-                      ${formatCurrency(
+                  <div class="cart-item-price">
+                    ${escapeHtml(
+                      formatCurrency(
                         product.price *
                         item.quantity
-                      )}
-                    </div>
-
+                      )
+                    )}
                   </div>
 
                 </div>
 
-              </article>
-            `;
-          })
-          .join("");
-    }
+              </div>
 
-    function openCart() {
-      cartDrawer.classList.add("active");
-      cartOverlay.classList.add("active");
-      document.body.classList.add("cart-open");
+            </article>
+          `;
+        })
+        .join("");
+  }
 
-      cartDrawer.setAttribute(
-        "aria-hidden",
-        "false"
+  /*
+    --------------------------------------------------
+    DRAWER AND TOAST
+    --------------------------------------------------
+  */
+
+  function openCart() {
+    cartDrawer.classList.add(
+      "active"
+    );
+
+    cartOverlay.classList.add(
+      "active"
+    );
+
+    document.body.classList.add(
+      "cart-open"
+    );
+
+    cartDrawer.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+  }
+
+  function closeCart() {
+    cartDrawer.classList.remove(
+      "active"
+    );
+
+    cartOverlay.classList.remove(
+      "active"
+    );
+
+    document.body.classList.remove(
+      "cart-open"
+    );
+
+    cartDrawer.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+  }
+
+  function showToast(message) {
+    cartToastText.textContent =
+      message;
+
+    cartToast.classList.add(
+      "active"
+    );
+
+    window.clearTimeout(
+      toastTimer
+    );
+
+    toastTimer =
+      window.setTimeout(
+        () => {
+          cartToast.classList.remove(
+            "active"
+          );
+        },
+        2600
+      );
+  }
+
+  /*
+    --------------------------------------------------
+    EVENTS
+    --------------------------------------------------
+  */
+
+  productGrid.addEventListener(
+    "click",
+    (event) => {
+      const addButton =
+        event.target.closest(
+          "[data-add-product]"
+        );
+
+      if (!addButton) {
+        return;
+      }
+
+      addToCart(
+        addButton.dataset.addProduct
       );
     }
+  );
 
-    function closeCart() {
-      cartDrawer.classList.remove("active");
-      cartOverlay.classList.remove("active");
-      document.body.classList.remove("cart-open");
+  cartItemsElement.addEventListener(
+    "click",
+    (event) => {
+      const removeButton =
+        event.target.closest(
+          "[data-remove-product]"
+        );
 
-      cartDrawer.setAttribute(
-        "aria-hidden",
-        "true"
+      if (removeButton) {
+        removeFromCart(
+          removeButton.dataset.removeProduct
+        );
+
+        return;
+      }
+
+      const quantityButton =
+        event.target.closest(
+          "[data-quantity-change]"
+        );
+
+      if (!quantityButton) {
+        return;
+      }
+
+      updateCartQuantity(
+        quantityButton.dataset.productId,
+        Number(
+          quantityButton.dataset.quantityChange
+        )
       );
     }
+  );
 
-    function showToast(message) {
-      cartToastText.textContent =
-        message;
+  productSearch.addEventListener(
+    "input",
+    renderProducts
+  );
 
-      cartToast.classList.add("active");
+  productSort.addEventListener(
+    "change",
+    renderProducts
+  );
 
-      window.clearTimeout(toastTimer);
-
-      toastTimer =
-        window.setTimeout(() => {
-          cartToast.classList.remove("active");
-        }, 2600);
-    }
-
-    productGrid.addEventListener(
-      "click",
-      (event) => {
-        const addButton =
-          event.target.closest(
-            "[data-add-product]"
-          );
-
-        if (!addButton) {
-          return;
-        }
-
-        addToCart(
-          addButton.dataset.addProduct
+  categoryFilters.addEventListener(
+    "click",
+    (event) => {
+      const button =
+        event.target.closest(
+          ".filter-button"
         );
+
+      if (!button) {
+        return;
       }
-    );
 
-    cartItemsElement.addEventListener(
-      "click",
-      (event) => {
-        const removeButton =
-          event.target.closest(
-            "[data-remove-product]"
-          );
-
-        if (removeButton) {
-          removeFromCart(
-            removeButton.dataset.removeProduct
-          );
-
-          return;
-        }
-
-        const quantityButton =
-          event.target.closest(
-            "[data-quantity-change]"
-          );
-
-        if (!quantityButton) {
-          return;
-        }
-
-        updateCartQuantity(
-          quantityButton.dataset.productId,
-          Number(
-            quantityButton.dataset.quantityChange
-          )
-        );
-      }
-    );
-
-    productSearch.addEventListener(
-      "input",
-      renderProducts
-    );
-
-    productSort.addEventListener(
-      "change",
-      renderProducts
-    );
-
-    categoryFilters.addEventListener(
-      "click",
-      (event) => {
-        const button =
-          event.target.closest(
-            ".filter-button"
-          );
-
-        if (!button) {
-          return;
-        }
-
-        categoryFilters
-          .querySelectorAll(
-            ".filter-button"
-          )
-          .forEach((filterButton) => {
+      categoryFilters
+        .querySelectorAll(
+          ".filter-button"
+        )
+        .forEach(
+          (filterButton) => {
             filterButton.classList.remove(
               "active"
             );
-          });
+          }
+        );
 
-        button.classList.add("active");
+      button.classList.add(
+        "active"
+      );
 
-        activeCategory =
-          button.dataset.category;
+      activeCategory =
+        button.dataset.category;
 
-        renderProducts();
+      renderProducts();
+    }
+  );
+
+  openCartButton.addEventListener(
+    "click",
+    openCart
+  );
+
+  closeCartButton.addEventListener(
+    "click",
+    closeCart
+  );
+
+  cartOverlay.addEventListener(
+    "click",
+    closeCart
+  );
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Escape"
+      ) {
+        closeCart();
       }
-    );
+    }
+  );
 
-    openCartButton.addEventListener(
-      "click",
-      openCart
-    );
+  /*
+    Re-check live inventory when the visitor
+    returns to the tab.
+  */
 
-    closeCartButton.addEventListener(
-      "click",
-      closeCart
-    );
-
-    cartOverlay.addEventListener(
-      "click",
-      closeCart
-    );
-
-    document.addEventListener(
-      "keydown",
-      (event) => {
-        if (event.key === "Escape") {
-          closeCart();
-        }
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+      if (
+        document.visibilityState ===
+        "visible"
+      ) {
+        loadProductsFromSupabase();
       }
-    );
+    }
+  );
 
-    document.getElementById(
-      "currentYear"
-    ).textContent =
-      new Date().getFullYear();
+  /*
+    --------------------------------------------------
+    START
+    --------------------------------------------------
+  */
 
-    document.getElementById(
-      "catalogueProductCount"
-    ).textContent =
-      PRODUCTS.length;
+  document.getElementById(
+    "currentYear"
+  ).textContent =
+    new Date().getFullYear();
 
-    renderProducts();
-    renderCart();
+  renderCart();
+
+  loadProductsFromSupabase();
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </script>
 
 </body>
