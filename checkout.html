@@ -1,2212 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Secure Checkout | Axiom Research Peptides</title>
-
-  <meta
-    name="description"
-    content="Complete your Axiom Research Peptides laboratory research-material order."
-  >
-
-  <meta name="robots" content="noindex, nofollow">
-
-  <link
-    rel="icon"
-    type="image/png"
-    href="./images/axiom-favicon.png"
-  >
-
-  <link
-    rel="apple-touch-icon"
-    href="./images/axiom-favicon.png"
-  >
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  >
-
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    rel="stylesheet"
-  >
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --axiom-navy: #071421;
-      --axiom-navy-soft: #0d2233;
-      --axiom-teal: #0aa6a6;
-      --axiom-teal-dark: #087f83;
-      --axiom-cyan: #39d4d0;
-      --axiom-aqua-soft: #e8fbfa;
-      --axiom-light: #f4f7f9;
-      --axiom-white: #ffffff;
-      --axiom-text: #12212d;
-      --axiom-muted: #677783;
-      --axiom-border: #dce5ea;
-      --axiom-success: #18a276;
-      --axiom-danger: #c94d5c;
-      --axiom-warning: #c58a25;
-
-      --axiom-shadow:
-        0 20px 55px rgba(7, 20, 33, 0.11);
-
-      --axiom-shadow-soft:
-        0 10px 30px rgba(7, 20, 33, 0.07);
-
-      --axiom-radius-lg: 28px;
-      --axiom-radius-md: 20px;
-      --axiom-radius-sm: 14px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--axiom-light);
-      color: var(--axiom-text);
-      font-family: "Inter", sans-serif;
-      overflow-x: hidden;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    a {
-      text-decoration: none;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    .navbar-brand {
-      font-family: "Manrope", sans-serif;
-    }
-
-    /* Research notice */
-
-    .research-bar {
-      padding: 9px 14px;
-      background:
-        linear-gradient(
-          90deg,
-          #081723,
-          #103246,
-          #081723
-        );
-      color: rgba(255, 255, 255, 0.88);
-      border-bottom: 1px solid rgba(57, 212, 208, 0.2);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-align: center;
-    }
-
-    .research-bar i {
-      margin-right: 7px;
-      color: var(--axiom-cyan);
-    }
-
-    /* Navigation */
-
-    .axiom-navbar {
-      padding: 13px 0;
-      background: rgba(255, 255, 255, 0.96);
-      border-bottom: 1px solid rgba(7, 20, 33, 0.07);
-      box-shadow: 0 8px 28px rgba(7, 20, 33, 0.05);
-      backdrop-filter: blur(16px);
-    }
-
-    .navbar-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--axiom-navy);
-      font-weight: 800;
-    }
-
-    .navbar-brand:hover {
-      color: var(--axiom-navy);
-    }
-
-    .brand-logo {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
-      flex-shrink: 0;
-    }
-
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
-      line-height: 1;
-    }
-
-    .brand-name {
-      font-size: 1.18rem;
-      letter-spacing: 0.18em;
-    }
-
-    .brand-subtitle {
-      margin-top: 6px;
-      color: var(--axiom-teal-dark);
-      font-family: "Inter", sans-serif;
-      font-size: 0.57rem;
-      font-weight: 800;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .secure-checkout-mark {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--axiom-muted);
-      font-size: 0.77rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .secure-checkout-mark i {
-      color: var(--axiom-teal-dark);
-    }
-
-    /* Checkout hero */
-
-    .checkout-hero {
-      position: relative;
-      overflow: hidden;
-      padding: 65px 0;
-      background:
-        radial-gradient(
-          circle at 86% 20%,
-          rgba(57, 212, 208, 0.18),
-          transparent 27%
-        ),
-        linear-gradient(
-          135deg,
-          #06131f,
-          #0d2b3c
-        );
-    }
-
-    .checkout-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: 0.1;
-      background-image:
-        linear-gradient(
-          rgba(255, 255, 255, 0.12) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.12) 1px,
-          transparent 1px
-        );
-      background-size: 52px 52px;
-    }
-
-    .checkout-hero .container {
-      position: relative;
-      z-index: 2;
-    }
-
-    .checkout-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 17px;
-      color: var(--axiom-cyan);
-      font-size: 0.74rem;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-
-    .checkout-kicker::before {
-      content: "";
-      width: 32px;
-      height: 2px;
-      background: var(--axiom-cyan);
-      border-radius: 999px;
-    }
-
-    .checkout-hero h1 {
-      margin-bottom: 14px;
-      color: var(--axiom-white);
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1;
-      letter-spacing: -0.05em;
-    }
-
-    .checkout-hero p {
-      max-width: 680px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.67);
-      font-size: 0.98rem;
-      line-height: 1.75;
-    }
-
-    .checkout-progress {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 18px;
-      backdrop-filter: blur(14px);
-    }
-
-    .progress-step {
-      position: relative;
-      padding: 20px 14px;
-      text-align: center;
-    }
-
-    .progress-step:not(:last-child)::after {
-      content: "";
-      position: absolute;
-      top: 25%;
-      right: 0;
-      width: 1px;
-      height: 50%;
-      background: rgba(255, 255, 255, 0.13);
-    }
-
-    .progress-step span {
-      width: 31px;
-      height: 31px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 8px;
-      background: rgba(255, 255, 255, 0.09);
-      color: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 50%;
-      font-size: 0.72rem;
-      font-weight: 800;
-    }
-
-    .progress-step.active span {
-      background: var(--axiom-cyan);
-      color: var(--axiom-navy);
-      border-color: var(--axiom-cyan);
-    }
-
-    .progress-step strong {
-      display: block;
-      color: rgba(255, 255, 255, 0.64);
-      font-size: 0.66rem;
-      font-weight: 800;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-    }
-
-    .progress-step.active strong {
-      color: var(--axiom-white);
-    }
-
-    /* Main layout */
-
-    .checkout-main {
-      padding: 65px 0 95px;
-    }
-
-    .checkout-card {
-      margin-bottom: 24px;
-      padding: 28px;
-      background: var(--axiom-white);
-      border: 1px solid var(--axiom-border);
-      border-radius: var(--axiom-radius-md);
-      box-shadow: var(--axiom-shadow-soft);
-    }
-
-    .card-heading {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 25px;
-    }
-
-    .card-heading-icon {
-      flex: 0 0 auto;
-      width: 45px;
-      height: 45px;
-      display: grid;
-      place-items: center;
-      background: var(--axiom-aqua-soft);
-      color: var(--axiom-teal-dark);
-      border: 1px solid rgba(10, 166, 166, 0.14);
-      border-radius: 13px;
-      font-size: 1.1rem;
-    }
-
-    .card-heading h2 {
-      margin-bottom: 4px;
-      color: var(--axiom-navy);
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .card-heading p {
-      margin: 0;
-      color: var(--axiom-muted);
-      font-size: 0.77rem;
-      line-height: 1.5;
-    }
-
-    .form-label {
-      margin-bottom: 7px;
-      color: var(--axiom-navy);
-      font-size: 0.76rem;
-      font-weight: 800;
-    }
-
-    .required-mark {
-      color: var(--axiom-danger);
-    }
-
-    .form-control,
-    .form-select {
-      min-height: 49px;
-      padding: 11px 14px;
-      background: #f8fafb;
-      color: var(--axiom-text);
-      border: 1px solid var(--axiom-border);
-      border-radius: 12px;
-      font-size: 0.85rem;
-      box-shadow: none;
-    }
-
-    textarea.form-control {
-      min-height: 105px;
-      resize: vertical;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-      background: var(--axiom-white);
-      border-color: rgba(10, 166, 166, 0.55);
-      box-shadow: 0 0 0 4px rgba(10, 166, 166, 0.09);
-    }
-
-    .form-control.is-invalid,
-    .form-select.is-invalid {
-      border-color: var(--axiom-danger);
-      box-shadow: 0 0 0 4px rgba(201, 77, 92, 0.07);
-    }
-
-    .invalid-feedback {
-      font-size: 0.7rem;
-    }
-
-    .field-help {
-      margin-top: 6px;
-      color: var(--axiom-muted);
-      font-size: 0.67rem;
-      line-height: 1.45;
-    }
-
-    /* Delivery choices */
-
-    .delivery-options {
-      display: grid;
-      gap: 12px;
-    }
-
-    .delivery-option {
-      position: relative;
-      display: block;
-      cursor: pointer;
-    }
-
-    .delivery-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .delivery-option-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 17px;
-      background: #f8fafb;
-      border: 1px solid var(--axiom-border);
-      border-radius: 14px;
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .delivery-option input:checked +
-    .delivery-option-content {
-      background: var(--axiom-aqua-soft);
-      border-color: rgba(10, 166, 166, 0.5);
-      box-shadow: 0 0 0 4px rgba(10, 166, 166, 0.07);
-    }
-
-    .delivery-copy {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .delivery-radio {
-      flex: 0 0 auto;
-      width: 20px;
-      height: 20px;
-      display: grid;
-      place-items: center;
-      background: var(--axiom-white);
-      border: 2px solid var(--axiom-border);
-      border-radius: 50%;
-    }
-
-    .delivery-radio::after {
-      content: "";
-      width: 9px;
-      height: 9px;
-      background: transparent;
-      border-radius: 50%;
-    }
-
-    .delivery-option input:checked +
-    .delivery-option-content
-    .delivery-radio {
-      border-color: var(--axiom-teal);
-    }
-
-    .delivery-option input:checked +
-    .delivery-option-content
-    .delivery-radio::after {
-      background: var(--axiom-teal);
-    }
-
-    .delivery-copy strong {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--axiom-navy);
-      font-size: 0.83rem;
-    }
-
-    .delivery-copy span {
-      display: block;
-      color: var(--axiom-muted);
-      font-size: 0.7rem;
-      line-height: 1.45;
-    }
-
-    .delivery-price {
-      flex-shrink: 0;
-      color: var(--axiom-navy);
-      font-size: 0.83rem;
-      font-weight: 800;
-    }
-
-    /* Declaration */
-
-    .declaration-box {
-      padding: 18px;
-      background:
-        linear-gradient(
-          135deg,
-          #f3fbfb,
-          #edf5f6
-        );
-      border: 1px solid rgba(10, 166, 166, 0.2);
-      border-radius: 15px;
-    }
-
-    .declaration-check {
-      display: grid;
-      grid-template-columns: 23px 1fr;
-      gap: 11px;
-      cursor: pointer;
-    }
-
-    .declaration-check input {
-      width: 19px;
-      height: 19px;
-      margin-top: 2px;
-      accent-color: var(--axiom-teal-dark);
-    }
-
-    .declaration-check strong {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--axiom-navy);
-      font-size: 0.8rem;
-    }
-
-    .declaration-check span {
-      display: block;
-      color: var(--axiom-muted);
-      font-size: 0.72rem;
-      line-height: 1.58;
-    }
-
-    .declaration-error {
-      display: none;
-      margin-top: 9px;
-      color: var(--axiom-danger);
-      font-size: 0.7rem;
-      font-weight: 700;
-    }
-
-    .declaration-error.visible {
-      display: block;
-    }
-
-    /* Order summary */
-
-    .summary-column {
-      position: sticky;
-      top: 24px;
-    }
-
-    .order-summary {
-      overflow: hidden;
-      background: var(--axiom-white);
-      border: 1px solid var(--axiom-border);
-      border-radius: var(--axiom-radius-md);
-      box-shadow: var(--axiom-shadow);
-    }
-
-    .summary-header {
-      padding: 22px 23px;
-      background:
-        linear-gradient(
-          135deg,
-          var(--axiom-navy),
-          var(--axiom-navy-soft)
-        );
-      color: var(--axiom-white);
-    }
-
-    .summary-header h2 {
-      margin: 0;
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .summary-items {
-      max-height: 430px;
-      overflow-y: auto;
-      padding: 18px;
-    }
-
-    .summary-item {
-      display: grid;
-      grid-template-columns: 68px 1fr auto;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--axiom-border);
-    }
-
-    .summary-item:last-child {
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: 0;
-    }
-
-    .summary-item-image {
-      width: 68px;
-      height: 68px;
-      padding: 6px;
-      background: #f8fafb;
-      border: 1px solid var(--axiom-border);
-      border-radius: 11px;
-      object-fit: contain;
-    }
-
-    .summary-item-name {
-      margin-bottom: 3px;
-      color: var(--axiom-navy);
-      font-size: 0.77rem;
-      font-weight: 800;
-      line-height: 1.35;
-    }
-
-    .summary-item-meta {
-      color: var(--axiom-muted);
-      font-size: 0.66rem;
-      font-weight: 700;
-    }
-
-    .summary-item-price {
-      color: var(--axiom-navy);
-      font-size: 0.76rem;
-      font-weight: 800;
-      text-align: right;
-    }
-
-    .summary-totals {
-      padding: 20px 22px;
-      background: #f8fafb;
-      border-top: 1px solid var(--axiom-border);
-    }
-
-    .summary-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 10px;
-      color: var(--axiom-muted);
-      font-size: 0.78rem;
-    }
-
-    .summary-row strong {
-      color: var(--axiom-navy);
-    }
-
-    .summary-row.total {
-      margin-top: 16px;
-      margin-bottom: 0;
-      padding-top: 16px;
-      color: var(--axiom-navy);
-      border-top: 1px solid var(--axiom-border);
-      font-size: 1rem;
-      font-weight: 800;
-    }
-
-    .place-order-button {
-      width: calc(100% - 40px);
-      min-height: 55px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      margin: 20px;
-      background:
-        linear-gradient(
-          135deg,
-          var(--axiom-teal-dark),
-          var(--axiom-teal)
-        );
-      color: var(--axiom-white);
-      border: 0;
-      border-radius: 14px;
-      font-size: 0.9rem;
-      font-weight: 800;
-      box-shadow: 0 15px 28px rgba(10, 166, 166, 0.22);
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .place-order-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 18px 32px rgba(10, 166, 166, 0.27);
-    }
-
-    .place-order-button:disabled {
-      background: #98a8b2;
-      box-shadow: none;
-      cursor: wait;
-      transform: none;
-    }
-
-    .summary-security {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      margin: 0 20px 20px;
-      padding: 13px;
-      background: var(--axiom-aqua-soft);
-      color: var(--axiom-muted);
-      border: 1px solid rgba(10, 166, 166, 0.14);
-      border-radius: 12px;
-      font-size: 0.68rem;
-      line-height: 1.5;
-    }
-
-    .summary-security i {
-      color: var(--axiom-teal-dark);
-    }
-
-    /* Empty checkout */
-
-    .empty-checkout {
-      display: none;
-      min-height: 590px;
-      align-items: center;
-      justify-content: center;
-      padding: 80px 20px;
-      text-align: center;
-    }
-
-    .empty-checkout i {
-      display: block;
-      margin-bottom: 16px;
-      color: var(--axiom-teal);
-      font-size: 3rem;
-    }
-
-    .empty-checkout h1 {
-      margin-bottom: 9px;
-      color: var(--axiom-navy);
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    .empty-checkout p {
-      margin-bottom: 22px;
-      color: var(--axiom-muted);
-    }
-
-    .catalogue-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      min-height: 50px;
-      padding: 0 21px;
-      background: var(--axiom-navy);
-      color: var(--axiom-white);
-      border-radius: 13px;
-      font-size: 0.84rem;
-      font-weight: 800;
-    }
-
-    /* Confirmation */
-
-    .confirmation-section {
-      display: none;
-      padding: 70px 0 95px;
-    }
-
-    .confirmation-card {
-      overflow: hidden;
-      background: var(--axiom-white);
-      border: 1px solid var(--axiom-border);
-      border-radius: 28px;
-      box-shadow: var(--axiom-shadow);
-    }
-
-    .confirmation-top {
-      padding: 48px 35px 38px;
-      background:
-        radial-gradient(
-          circle at 84% 20%,
-          rgba(57, 212, 208, 0.22),
-          transparent 28%
-        ),
-        linear-gradient(
-          135deg,
-          #071421,
-          #0e3041
-        );
-      color: var(--axiom-white);
-      text-align: center;
-    }
-
-    .confirmation-icon {
-      width: 68px;
-      height: 68px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 18px;
-      background: var(--axiom-cyan);
-      color: var(--axiom-navy);
-      border-radius: 50%;
-      font-size: 1.8rem;
-      box-shadow: 0 0 0 10px rgba(57, 212, 208, 0.1);
-    }
-
-    .confirmation-top h1 {
-      margin-bottom: 10px;
-      color: var(--axiom-white);
-      font-size: clamp(2rem, 4vw, 3.1rem);
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .confirmation-top p {
-      max-width: 620px;
-      margin: 0 auto;
-      color: rgba(255, 255, 255, 0.66);
-      font-size: 0.87rem;
-      line-height: 1.7;
-    }
-
-    .confirmation-body {
-      padding: 35px;
-    }
-
-    .order-reference-box {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 25px;
-      padding: 20px;
-      background: var(--axiom-aqua-soft);
-      border: 1px solid rgba(10, 166, 166, 0.2);
-      border-radius: 16px;
-    }
-
-    .order-reference-box span {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--axiom-muted);
-      font-size: 0.67rem;
-      font-weight: 800;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-    }
-
-    .order-reference-box strong {
-      display: block;
-      color: var(--axiom-navy);
-      font-family: "Manrope", sans-serif;
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    .copy-button {
-      flex-shrink: 0;
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 0 14px;
-      background: var(--axiom-white);
-      color: var(--axiom-teal-dark);
-      border: 1px solid rgba(10, 166, 166, 0.25);
-      border-radius: 11px;
-      font-size: 0.74rem;
-      font-weight: 800;
-    }
-
-    .payment-panel {
-      margin-bottom: 25px;
-      padding: 25px;
-      background: #f8fafb;
-      border: 1px solid var(--axiom-border);
-      border-radius: 18px;
-    }
-
-    .payment-panel h2 {
-      margin-bottom: 8px;
-      color: var(--axiom-navy);
-      font-size: 1.2rem;
-      font-weight: 800;
-    }
-
-    .payment-panel > p {
-      margin-bottom: 22px;
-      color: var(--axiom-muted);
-      font-size: 0.78rem;
-      line-height: 1.65;
-    }
-
-    .bank-details {
-      display: grid;
-      gap: 10px;
-    }
-
-    .bank-detail-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 13px 15px;
-      background: var(--axiom-white);
-      border: 1px solid var(--axiom-border);
-      border-radius: 12px;
-    }
-
-    .bank-detail-row span {
-      color: var(--axiom-muted);
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-
-    .bank-detail-row strong {
-      color: var(--axiom-navy);
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-align: right;
-      overflow-wrap: anywhere;
-    }
-
-    .payment-warning {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 16px;
-      padding: 14px;
-      background: rgba(197, 138, 37, 0.08);
-      color: #76551c;
-      border: 1px solid rgba(197, 138, 37, 0.18);
-      border-radius: 12px;
-      font-size: 0.7rem;
-      line-height: 1.55;
-    }
-
-    .confirmation-summary {
-      padding: 24px;
-      background: var(--axiom-white);
-      border: 1px solid var(--axiom-border);
-      border-radius: 18px;
-    }
-
-    .confirmation-summary h2 {
-      margin-bottom: 17px;
-      color: var(--axiom-navy);
-      font-size: 1.1rem;
-      font-weight: 800;
-    }
-
-    .confirmation-summary-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 10px;
-      color: var(--axiom-muted);
-      font-size: 0.76rem;
-    }
-
-    .confirmation-summary-row strong {
-      max-width: 65%;
-      color: var(--axiom-navy);
-      text-align: right;
-    }
-
-    .confirmation-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 11px;
-      margin-top: 24px;
-    }
-
-    .confirmation-action-primary,
-    .confirmation-action-secondary {
-      min-height: 49px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      padding: 0 19px;
-      border-radius: 13px;
-      font-size: 0.8rem;
-      font-weight: 800;
-    }
-
-    .confirmation-action-primary {
-      background: var(--axiom-navy);
-      color: var(--axiom-white);
-    }
-
-    .confirmation-action-secondary {
-      background: var(--axiom-white);
-      color: var(--axiom-navy);
-      border: 1px solid var(--axiom-border);
-    }
-
-    /* Footer */
-
-    .footer {
-      padding: 50px 0 23px;
-      background: #050f18;
-      color: rgba(255, 255, 255, 0.65);
-    }
-
-    .footer-brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 17px;
-    }
-
-    .footer-logo {
-      width: 53px;
-      height: 53px;
-      object-fit: contain;
-    }
-
-    .footer-brand strong {
-      display: block;
-      color: var(--axiom-white);
-      font-family: "Manrope", sans-serif;
-      font-size: 1.06rem;
-      letter-spacing: 0.15em;
-    }
-
-    .footer-brand span {
-      display: block;
-      margin-top: 5px;
-      color: var(--axiom-cyan);
-      font-size: 0.55rem;
-      font-weight: 800;
-      letter-spacing: 0.17em;
-      text-transform: uppercase;
-    }
-
-    .footer-copy {
-      max-width: 480px;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.47);
-      font-size: 0.78rem;
-      line-height: 1.7;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 17px;
-    }
-
-    .footer-links a {
-      color: rgba(255, 255, 255, 0.54);
-      font-size: 0.77rem;
-    }
-
-    .footer-links a:hover {
-      color: var(--axiom-cyan);
-    }
-
-    .footer-divider {
-      margin: 32px 0 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      color: rgba(255, 255, 255, 0.35);
-      font-size: 0.68rem;
-    }
-
-    @media (max-width: 991.98px) {
-      .checkout-progress {
-        margin-top: 25px;
-      }
-
-      .summary-column {
-        position: static;
-      }
-
-      .footer-links {
-        justify-content: flex-start;
-        margin-top: 23px;
-      }
-    }
-
-    @media (max-width: 767.98px) {
-      .research-bar {
-        font-size: 0.63rem;
-        line-height: 1.5;
-      }
-
-      .brand-logo {
-        width: 43px;
-        height: 43px;
-      }
-
-      .brand-name {
-        font-size: 0.98rem;
-      }
-
-      .brand-subtitle {
-        font-size: 0.49rem;
-      }
-
-      .secure-checkout-mark span {
-        display: none;
-      }
-
-      .checkout-hero {
-        padding: 52px 0;
-      }
-
-      .checkout-main {
-        padding: 43px 0 70px;
-      }
-
-      .checkout-card {
-        padding: 22px;
-      }
-
-      .confirmation-body {
-        padding: 24px;
-      }
-
-      .order-reference-box {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .bank-detail-row {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 5px;
-      }
-
-      .bank-detail-row strong {
-        text-align: left;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 575.98px) {
-      .container {
-        padding-right: 18px;
-        padding-left: 18px;
-      }
-
-      .brand-copy {
-        display: none;
-      }
-
-      .checkout-progress {
-        grid-template-columns: 1fr;
-      }
-
-      .progress-step {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 12px 15px;
-        text-align: left;
-      }
-
-      .progress-step span {
-        flex: 0 0 auto;
-        margin: 0;
-      }
-
-      .progress-step:not(:last-child)::after {
-        top: auto;
-        right: 15px;
-        bottom: 0;
-        left: 15px;
-        width: auto;
-        height: 1px;
-      }
-
-      .summary-item {
-        grid-template-columns: 58px 1fr;
-      }
-
-      .summary-item-image {
-        width: 58px;
-        height: 58px;
-      }
-
-      .summary-item-price {
-        grid-column: 2;
-        text-align: left;
-      }
-
-      .confirmation-actions {
-        display: grid;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="research-bar">
-    <i class="bi bi-shield-check"></i>
-    SUPPLIED STRICTLY FOR LABORATORY RESEARCH USE ONLY — NOT FOR HUMAN OR VETERINARY USE
-  </div>
-
-  <nav class="axiom-navbar">
-    <div class="container">
-
-      <div class="d-flex align-items-center justify-content-between gap-3">
-
-        <a
-          class="navbar-brand"
-          href="./index.html"
-        >
-          <img
-            src="./images/axiom-logo-icon.png"
-            alt="Axiom Research Peptides"
-            class="brand-logo"
-          >
-
-          <span class="brand-copy">
-            <span class="brand-name">AXIOM</span>
-            <span class="brand-subtitle">Research Peptides</span>
-          </span>
-        </a>
-
-        <div class="secure-checkout-mark">
-          <i class="bi bi-lock-fill"></i>
-          <span>Secure checkout</span>
-        </div>
-
-      </div>
-
-    </div>
-  </nav>
-
-  <header
-    class="checkout-hero"
-    id="checkoutHero"
-  >
-    <div class="container">
-
-      <div class="row align-items-center g-4">
-
-        <div class="col-lg-8">
-
-          <div class="checkout-kicker">
-            Complete your order
-          </div>
-
-          <h1>
-            Research checkout.
-          </h1>
-
-          <p>
-            Enter your customer and delivery information below. Once your
-            order is submitted, you will receive an Axiom order reference
-            and the bank-transfer information required to complete payment.
-          </p>
-
-        </div>
-
-        <div class="col-lg-4">
-
-          <div class="checkout-progress">
-
-            <div class="progress-step active">
-              <span>1</span>
-              <strong>Details</strong>
-            </div>
-
-            <div class="progress-step">
-              <span>2</span>
-              <strong>Submit</strong>
-            </div>
-
-            <div class="progress-step">
-              <span>3</span>
-              <strong>Payment</strong>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </header>
-
-  <main
-    class="checkout-main"
-    id="checkoutMain"
-  >
-    <div class="container">
-
-      <form
-        id="checkoutForm"
-        novalidate
-      >
-
-        <div class="row g-4">
-
-          <div class="col-lg-7">
-
-            <section class="checkout-card">
-
-              <div class="card-heading">
-
-                <div class="card-heading-icon">
-                  <i class="bi bi-person"></i>
-                </div>
-
-                <div>
-                  <h2>Customer details</h2>
-
-                  <p>
-                    We will use these details for your order confirmation
-                    and delivery updates.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="row g-3">
-
-                <div class="col-md-6">
-
-                  <label
-                    for="firstName"
-                    class="form-label"
-                  >
-                    First name
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="firstName"
-                    name="firstName"
-                    autocomplete="given-name"
-                    required
-                    maxlength="60"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter your first name.
-                  </div>
-
-                </div>
-
-                <div class="col-md-6">
-
-                  <label
-                    for="lastName"
-                    class="form-label"
-                  >
-                    Last name
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastName"
-                    name="lastName"
-                    autocomplete="family-name"
-                    required
-                    maxlength="60"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter your last name.
-                  </div>
-
-                </div>
-
-                <div class="col-md-7">
-
-                  <label
-                    for="email"
-                    class="form-label"
-                  >
-                    Email address
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    autocomplete="email"
-                    required
-                    maxlength="120"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter a valid email address.
-                  </div>
-
-                </div>
-
-                <div class="col-md-5">
-
-                  <label
-                    for="phone"
-                    class="form-label"
-                  >
-                    Mobile number
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="tel"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    autocomplete="tel"
-                    required
-                    maxlength="25"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter a valid mobile number.
-                  </div>
-
-                </div>
-
-              </div>
-
-            </section>
-
-            <section class="checkout-card">
-
-              <div class="card-heading">
-
-                <div class="card-heading-icon">
-                  <i class="bi bi-geo-alt"></i>
-                </div>
-
-                <div>
-                  <h2>Delivery address</h2>
-
-                  <p>
-                    Enter the address exactly as it should appear on the
-                    parcel.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="row g-3">
-
-                <div class="col-12">
-
-                  <label
-                    for="addressLine1"
-                    class="form-label"
-                  >
-                    Address line 1
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="addressLine1"
-                    name="addressLine1"
-                    autocomplete="address-line1"
-                    required
-                    maxlength="100"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter the first line of your address.
-                  </div>
-
-                </div>
-
-                <div class="col-12">
-
-                  <label
-                    for="addressLine2"
-                    class="form-label"
-                  >
-                    Address line 2
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="addressLine2"
-                    name="addressLine2"
-                    autocomplete="address-line2"
-                    maxlength="100"
-                  >
-
-                </div>
-
-                <div class="col-md-7">
-
-                  <label
-                    for="townCity"
-                    class="form-label"
-                  >
-                    Town or city
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="townCity"
-                    name="townCity"
-                    autocomplete="address-level2"
-                    required
-                    maxlength="80"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter your town or city.
-                  </div>
-
-                </div>
-
-                <div class="col-md-5">
-
-                  <label
-                    for="county"
-                    class="form-label"
-                  >
-                    County
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="county"
-                    name="county"
-                    autocomplete="address-level1"
-                    maxlength="80"
-                  >
-
-                </div>
-
-                <div class="col-md-5">
-
-                  <label
-                    for="postcode"
-                    class="form-label"
-                  >
-                    Postcode
-                    <span class="required-mark">*</span>
-                  </label>
-
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="postcode"
-                    name="postcode"
-                    autocomplete="postal-code"
-                    required
-                    maxlength="10"
-                  >
-
-                  <div class="invalid-feedback">
-                    Enter a valid UK postcode.
-                  </div>
-
-                </div>
-
-                <div class="col-md-7">
-
-                  <label
-                    for="country"
-                    class="form-label"
-                  >
-                    Country
-                  </label>
-
-                  <select
-                    class="form-select"
-                    id="country"
-                    name="country"
-                  >
-                    <option value="United Kingdom">
-                      United Kingdom
-                    </option>
-                  </select>
-
-                </div>
-
-                <div class="col-12">
-
-                  <label
-                    for="deliveryNotes"
-                    class="form-label"
-                  >
-                    Delivery notes
-                  </label>
-
-                  <textarea
-                    class="form-control"
-                    id="deliveryNotes"
-                    name="deliveryNotes"
-                    maxlength="300"
-                    placeholder="Optional safe-place or delivery information"
-                  ></textarea>
-
-                  <div class="field-help">
-                    Do not include confidential, medical or payment
-                    information here.
-                  </div>
-
-                </div>
-
-              </div>
-
-            </section>
-
-            <section class="checkout-card">
-
-              <div class="card-heading">
-
-                <div class="card-heading-icon">
-                  <i class="bi bi-truck"></i>
-                </div>
-
-                <div>
-                  <h2>Delivery service</h2>
-
-                  <p>
-                    Choose your preferred Royal Mail delivery service.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="delivery-options">
-
-                <label class="delivery-option">
-
-                  <input
-                    type="radio"
-                    name="deliveryMethod"
-                    value="tracked48"
-                    data-name="Royal Mail Tracked 48"
-                    data-price="3.99"
-                    checked
-                  >
-
-                  <span class="delivery-option-content">
-
-                    <span class="delivery-copy">
-
-                      <span class="delivery-radio"></span>
-
-                      <span>
-                        <strong>Royal Mail Tracked 48</strong>
-                        <span>
-                          Typically delivered within 2–3 working days
-                          following dispatch.
-                        </span>
-                      </span>
-
-                    </span>
-
-                    <span class="delivery-price">
-                      £3.99
-                    </span>
-
-                  </span>
-
-                </label>
-
-                <label class="delivery-option">
-
-                  <input
-                    type="radio"
-                    name="deliveryMethod"
-                    value="tracked24"
-                    data-name="Royal Mail Tracked 24"
-                    data-price="4.99"
-                  >
-
-                  <span class="delivery-option-content">
-
-                    <span class="delivery-copy">
-
-                      <span class="delivery-radio"></span>
-
-                      <span>
-                        <strong>Royal Mail Tracked 24</strong>
-                        <span>
-                          Typically delivered on the next working day
-                          following dispatch.
-                        </span>
-                      </span>
-
-                    </span>
-
-                    <span class="delivery-price">
-                      £4.99
-                    </span>
-
-                  </span>
-
-                </label>
-
-              </div>
-
-            </section>
-
-            <section class="checkout-card">
-
-              <div class="card-heading">
-
-                <div class="card-heading-icon">
-                  <i class="bi bi-flask"></i>
-                </div>
-
-                <div>
-                  <h2>Research-use declaration</h2>
-
-                  <p>
-                    This declaration must be accepted before an order can
-                    be submitted.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="declaration-box">
-
-                <label class="declaration-check">
-
-                  <input
-                    type="checkbox"
-                    id="researchDeclaration"
-                    name="researchDeclaration"
-                    required
-                  >
-
-                  <span>
-                    <strong>
-                      I confirm that these materials are being purchased
-                      solely for legitimate laboratory research.
-                    </strong>
-
-                    <span>
-                      I understand that the products are not medicines,
-                      supplements or cosmetic products and are not intended
-                      for human or veterinary consumption, diagnosis,
-                      treatment, administration or therapeutic use. I also
-                      confirm that I am responsible for ensuring that the
-                      purchase, possession and use of the materials complies
-                      with all applicable laws and institutional requirements.
-                    </span>
-                  </span>
-
-                </label>
-
-                <div
-                  class="declaration-error"
-                  id="declarationError"
-                >
-                  You must accept the research-use declaration before
-                  submitting the order.
-                </div>
-
-              </div>
-
-            </section>
-
-          </div>
-
-          <div class="col-lg-5">
-
-            <div class="summary-column">
-
-              <aside class="order-summary">
-
-                <div class="summary-header">
-                  <h2>Your order</h2>
-                </div>
-
-                <div
-                  class="summary-items"
-                  id="summaryItems"
-                ></div>
-
-                <div class="summary-totals">
-
-                  <div class="summary-row">
-                    <span>Subtotal</span>
-                    <strong id="summarySubtotal">£0.00</strong>
-                  </div>
-
-                  <div class="summary-row">
-                    <span>Delivery</span>
-                    <strong id="summaryDelivery">£3.99</strong>
-                  </div>
-
-                  <div class="summary-row total">
-                    <span>Total</span>
-                    <strong id="summaryTotal">£0.00</strong>
-                  </div>
-
-                </div>
-
-                <button
-                  type="submit"
-                  class="place-order-button"
-                  id="placeOrderButton"
-                >
-                  Submit order
-                  <i class="bi bi-arrow-right"></i>
-                </button>
-
-                <div class="summary-security">
-
-                  <i class="bi bi-lock-fill"></i>
-
-                  <span>
-                    No card or bank details are collected on this page.
-                    Payment instructions are shown only after the order has
-                    been submitted.
-                  </span>
-
-                </div>
-
-              </aside>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </form>
-
-    </div>
-  </main>
-
-  <section
-    class="empty-checkout"
-    id="emptyCheckout"
-  >
-    <div>
-
-      <i class="bi bi-bag"></i>
-
-      <h1>Your basket is empty</h1>
-
-      <p>
-        Add a research material to your basket before continuing to checkout.
-      </p>
-
-      <a
-        href="./shop.html"
-        class="catalogue-button"
-      >
-        <i class="bi bi-arrow-left"></i>
-        Return to catalogue
-      </a>
-
-    </div>
-  </section>
-
-  <section
-    class="confirmation-section"
-    id="confirmationSection"
-  >
-    <div class="container">
-
-      <div class="confirmation-card">
-
-        <div class="confirmation-top">
-
-          <div class="confirmation-icon">
-            <i class="bi bi-check-lg"></i>
-          </div>
-
-          <h1>Order received.</h1>
-
-          <p>
-            Your order has been recorded as awaiting payment. Use the exact
-            Axiom order reference below when making the bank transfer so the
-            payment can be matched correctly.
-          </p>
-
-        </div>
-
-        <div class="confirmation-body">
-
-          <div class="row g-4">
-
-            <div class="col-lg-7">
-
-              <div class="order-reference-box">
-
-                <div>
-                  <span>Payment reference</span>
-                  <strong id="confirmationReference">AX-000000</strong>
-                </div>
-
-                <button
-                  type="button"
-                  class="copy-button"
-                  id="copyReferenceButton"
-                >
-                  <i class="bi bi-copy"></i>
-                  Copy reference
-                </button>
-
-              </div>
-
-              <div class="payment-panel">
-
-                <h2>Bank-transfer details</h2>
-
-                <p>
-                  Transfer the exact order total using the order reference
-                  shown above. Your order will remain awaiting payment until
-                  the transfer has been received and matched.
-                </p>
-
-                <div class="bank-details">
-
-                  <div class="bank-detail-row">
-                    <span>Account name</span>
-                    <strong id="bankAccountName">REPLACE THIS</strong>
-                  </div>
-
-                  <div class="bank-detail-row">
-                    <span>Sort code</span>
-                    <strong id="bankSortCode">00-00-00</strong>
-                  </div>
-
-                  <div class="bank-detail-row">
-                    <span>Account number</span>
-                    <strong id="bankAccountNumber">00000000</strong>
-                  </div>
-
-                  <div class="bank-detail-row">
-                    <span>Amount</span>
-                    <strong id="confirmationAmount">£0.00</strong>
-                  </div>
-
-                  <div class="bank-detail-row">
-                    <span>Reference</span>
-                    <strong id="confirmationReferenceDuplicate">
-                      AX-000000
-                    </strong>
-                  </div>
-
-                </div>
-
-                <div class="payment-warning">
-
-                  <i class="bi bi-exclamation-triangle"></i>
-
-                  <span>
-                    Use only the order reference displayed above. Do not
-                    include product names or research-material names in the
-                    bank-transfer reference.
-                  </span>
-
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="col-lg-5">
-
-              <div class="confirmation-summary">
-
-                <h2>Order summary</h2>
-
-                <div class="confirmation-summary-row">
-                  <span>Customer</span>
-                  <strong id="confirmationCustomer">—</strong>
-                </div>
-
-                <div class="confirmation-summary-row">
-                  <span>Email</span>
-                  <strong id="confirmationEmail">—</strong>
-                </div>
-
-                <div class="confirmation-summary-row">
-                  <span>Delivery service</span>
-                  <strong id="confirmationDeliveryMethod">—</strong>
-                </div>
-
-                <div class="confirmation-summary-row">
-                  <span>Delivery address</span>
-                  <strong id="confirmationAddress">—</strong>
-                </div>
-
-                <div class="confirmation-summary-row">
-                  <span>Order total</span>
-                  <strong id="confirmationTotal">£0.00</strong>
-                </div>
-
-              </div>
-
-              <div class="confirmation-actions">
-
-                <a
-                  href="./shop.html"
-                  class="confirmation-action-primary"
-                >
-                  Return to catalogue
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-
-                <a
-                  href="mailto:support@axiomresearchpeptides.uk"
-                  class="confirmation-action-secondary"
-                >
-                  Contact support
-                  <i class="bi bi-envelope"></i>
-                </a>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-
-      <div class="row align-items-center">
-
-        <div class="col-lg-7">
-
-          <div class="footer-brand">
-
-            <img
-              src="./images/axiom-logo-icon.png"
-              alt="Axiom Research Peptides"
-              class="footer-logo"
-            >
-
-            <div>
-              <strong>AXIOM</strong>
-              <span>Research Peptides</span>
-            </div>
-
-          </div>
-
-          <p class="footer-copy">
-            Specialist research materials supplied exclusively for
-            professional laboratory research environments.
-          </p>
-
-        </div>
-
-        <div class="col-lg-5">
-
-          <div class="footer-links">
-            <a href="./index.html">Home</a>
-            <a href="./shop.html">Catalogue</a>
-            <a href="./index.html#quality">Our Standards</a>
-            <a href="./index.html#faq">FAQ</a>
-
-            <a href="mailto:support@axiomresearchpeptides.uk">
-              Contact
-            </a>
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="footer-divider"></div>
-
-      <div class="footer-bottom">
-
-        <div>
-          © <span id="currentYear"></span>
-          Axiom Research Peptides. All rights reserved.
-        </div>
-
-        <div>
-          Research use only. Not for human or veterinary use.
-        </div>
-
-      </div>
-
-    </div>
-  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <script>
-    /*
-      ==========================================================
-      IMPORTANT: REPLACE THESE BEFORE THE WEBSITE GOES LIVE
-      ==========================================================
-    */
-
     const EMAILJS_CONFIG = {
-  publicKey: "YOUR_PUBLIC_KEY",
-  serviceId: "YOUR_SERVICE_ID",
-  customerTemplateId: "YOUR_CUSTOMER_TEMPLATE_ID",
-  adminTemplateId: "YOUR_ADMIN_TEMPLATE_ID",
-  adminEmail: "support@axiomresearchpeptides.uk"
-};
+      publicKey: "uZOuTrBdIAc6AmKjo",
+      serviceId: "service_vdz5j5b",
+      customerTemplateId: "template_piitdtl",
+      adminTemplateId: "template_o4eneh5",
+      adminEmail: "support@axiomresearchpeptides.uk"
+    };
 
-emailjs.init({
-  publicKey: EMAILJS_CONFIG.publicKey
-});
-    
-    
+    emailjs.init({
+      publicKey: EMAILJS_CONFIG.publicKey
+    });
+
     const BANK_DETAILS = {
-      accountName: "Axiom (Name Wont Match)",
+      accountName: "Axiom (Name Won't Match)",
       sortCode: "04-06-05",
       accountNumber: "31588150"
     };
-
-    /*
-      Delivery prices can be changed here.
-    */
 
     const DELIVERY_PRICES = {
       tracked48: 3.99,
       tracked24: 4.99
     };
-
-    /*
-      Shared catalogue data.
-      These IDs must match shop.html and product.html.
-    */
 
     const PRODUCTS = [
       {
@@ -2315,11 +131,8 @@ emailjs.init({
       }
     ];
 
-    const CART_STORAGE_KEY =
-      "axiomResearchCart";
-
-    const LAST_ORDER_STORAGE_KEY =
-      "axiomLastOrder";
+    const CART_STORAGE_KEY = "axiomResearchCart";
+    const LAST_ORDER_STORAGE_KEY = "axiomLastOrder";
 
     const checkoutHero =
       document.getElementById("checkoutHero");
@@ -2377,28 +190,21 @@ emailjs.init({
       try {
         const savedCart =
           JSON.parse(
-            localStorage.getItem(
-              CART_STORAGE_KEY
-            )
+            localStorage.getItem(CART_STORAGE_KEY)
           );
 
         return Array.isArray(savedCart)
           ? savedCart
           : [];
       } catch (error) {
-        console.error(
-          "Unable to load basket:",
-          error
-        );
-
+        console.error("Unable to load basket:", error);
         return [];
       }
     }
 
     function getProductById(productId) {
       return PRODUCTS.find(
-        (product) =>
-          product.id === productId
+        (product) => product.id === productId
       );
     }
 
@@ -2452,33 +258,26 @@ emailjs.init({
         id: selectedOption.value,
         name: selectedOption.dataset.name,
         price:
-          DELIVERY_PRICES[
-            selectedOption.value
-          ] ??
-          Number(
-            selectedOption.dataset.price
-          ) ??
+          DELIVERY_PRICES[selectedOption.value] ??
+          Number(selectedOption.dataset.price) ??
           0
       };
     }
 
     function calculateOrder() {
       const subtotal =
-        cart.reduce(
-          (total, item) => {
-            const product =
-              getProductById(item.id);
+        cart.reduce((total, item) => {
+          const product =
+            getProductById(item.id);
 
-            if (!product) {
-              return total;
-            }
+          if (!product) {
+            return total;
+          }
 
-            return total +
-              product.price *
-              item.quantity;
-          },
-          0
-        );
+          return total +
+            product.price *
+            item.quantity;
+        }, 0);
 
       const delivery =
         getSelectedDelivery();
@@ -2486,9 +285,7 @@ emailjs.init({
       return {
         subtotal,
         delivery,
-        total:
-          subtotal +
-          delivery.price
+        total: subtotal + delivery.price
       };
     }
 
@@ -2496,9 +293,7 @@ emailjs.init({
       image.onerror = null;
       image.src =
         "./images/axiom-logo-icon.png";
-
-      image.style.padding =
-        "14px";
+      image.style.padding = "14px";
     }
 
     function renderSummary() {
@@ -2517,7 +312,6 @@ emailjs.init({
 
             return `
               <article class="summary-item">
-
                 <img
                   src="${product.image}"
                   alt="${product.name}"
@@ -2526,7 +320,6 @@ emailjs.init({
                 >
 
                 <div>
-
                   <div class="summary-item-name">
                     ${product.name}
                   </div>
@@ -2534,7 +327,6 @@ emailjs.init({
                   <div class="summary-item-meta">
                     ${product.strength} × ${item.quantity}
                   </div>
-
                 </div>
 
                 <div class="summary-item-price">
@@ -2543,26 +335,19 @@ emailjs.init({
                     item.quantity
                   )}
                 </div>
-
               </article>
             `;
           })
           .join("");
 
       summarySubtotal.textContent =
-        formatCurrency(
-          order.subtotal
-        );
+        formatCurrency(order.subtotal);
 
       summaryDelivery.textContent =
-        formatCurrency(
-          order.delivery.price
-        );
+        formatCurrency(order.delivery.price);
 
       summaryTotal.textContent =
-        formatCurrency(
-          order.total
-        );
+        formatCurrency(order.total);
     }
 
     function isValidUkPostcode(postcode) {
@@ -2594,9 +379,6 @@ emailjs.init({
     }
 
     function validateForm() {
-      let valid =
-        checkoutForm.checkValidity();
-
       normalisePostcode();
 
       if (
@@ -2607,13 +389,12 @@ emailjs.init({
         postcodeInput.setCustomValidity(
           "Enter a valid UK postcode."
         );
-
-        valid = false;
       } else {
-        postcodeInput.setCustomValidity(
-          ""
-        );
+        postcodeInput.setCustomValidity("");
       }
+
+      let valid =
+        checkoutForm.checkValidity();
 
       if (!researchDeclaration.checked) {
         declarationError.classList.add(
@@ -2638,18 +419,11 @@ emailjs.init({
       const now =
         new Date();
 
-      const datePart =
-        [
-          String(
-            now.getFullYear()
-          ).slice(-2),
-          String(
-            now.getMonth() + 1
-          ).padStart(2, "0"),
-          String(
-            now.getDate()
-          ).padStart(2, "0")
-        ].join("");
+      const datePart = [
+        String(now.getFullYear()).slice(-2),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+      ].join("");
 
       const randomPart =
         Math.floor(
@@ -2662,9 +436,7 @@ emailjs.init({
 
     function formValue(fieldName) {
       const field =
-        checkoutForm.elements[
-          fieldName
-        ];
+        checkoutForm.elements[fieldName];
 
       return field
         ? field.value.trim()
@@ -2741,44 +513,31 @@ emailjs.init({
         },
 
         delivery: {
-          id:
-            totals.delivery.id,
-
-          name:
-            totals.delivery.name,
-
-          price:
-            totals.delivery.price
+          id: totals.delivery.id,
+          name: totals.delivery.name,
+          price: totals.delivery.price
         },
 
-        items:
-          orderItems,
-
-        subtotal:
-          totals.subtotal,
-
-        total:
-          totals.total,
-
-        researchDeclarationAccepted:
-          true
+        items: orderItems,
+        subtotal: totals.subtotal,
+        total: totals.total,
+        researchDeclarationAccepted: true
       };
     }
 
-   function formatOrderItemsForEmail(items) {
-  return items
-    .map((item) => {
-      return [
-        `${item.name} ${item.strength}`,
-        `Quantity: ${item.quantity}`,
-        `Price each: ${formatCurrency(item.price)}`,
-        `Line total: ${formatCurrency(item.lineTotal)}`
-      ].join("\n");
-    })
-    .join("\n\n");
-} 
-    
-    
+    function formatOrderItemsForEmail(items) {
+      return items
+        .map((item) => {
+          return [
+            `${item.name} ${item.strength}`,
+            `Quantity: ${item.quantity}`,
+            `Price each: ${formatCurrency(item.price)}`,
+            `Line total: ${formatCurrency(item.lineTotal)}`
+          ].join("\n");
+        })
+        .join("\n\n");
+    }
+
     function formatAddress(address) {
       return [
         address.addressLine1,
@@ -2793,190 +552,189 @@ emailjs.init({
     }
 
     async function sendOrderEmails(order) {
-  const formattedItems =
-    formatOrderItemsForEmail(order.items);
+      const formattedItems =
+        formatOrderItemsForEmail(order.items);
 
-  const formattedAddress =
-    formatAddress(order.deliveryAddress);
+      const formattedAddress =
+        formatAddress(order.deliveryAddress);
 
-  const customerTemplateParameters = {
-    to_email: order.customer.email,
-    customer_email: order.customer.email,
-    customer_name:
-      `${order.customer.firstName} ${order.customer.lastName}`,
+      const customerTemplateParameters = {
+        to_email:
+          order.customer.email,
 
-    first_name:
-      order.customer.firstName,
+        customer_email:
+          order.customer.email,
 
-    order_reference:
-      order.reference,
+        customer_name:
+          `${order.customer.firstName} ${order.customer.lastName}`,
 
-    order_status:
-      "Awaiting payment",
+        first_name:
+          order.customer.firstName,
 
-    order_items:
-      formattedItems,
+        order_reference:
+          order.reference,
 
-    subtotal:
-      formatCurrency(order.subtotal),
+        order_status:
+          "Awaiting payment",
 
-    delivery_method:
-      order.delivery.name,
+        order_items:
+          formattedItems,
 
-    delivery_price:
-      formatCurrency(order.delivery.price),
+        subtotal:
+          formatCurrency(order.subtotal),
 
-    order_total:
-      formatCurrency(order.total),
+        delivery_method:
+          order.delivery.name,
 
-    delivery_address:
-      formattedAddress,
+        delivery_price:
+          formatCurrency(order.delivery.price),
 
-    delivery_notes:
-      order.deliveryAddress.deliveryNotes || "None",
+        order_total:
+          formatCurrency(order.total),
 
-    bank_account_name:
-      BANK_DETAILS.accountName,
+        delivery_address:
+          formattedAddress,
 
-    bank_sort_code:
-      BANK_DETAILS.sortCode,
+        delivery_notes:
+          order.deliveryAddress.deliveryNotes || "None",
 
-    bank_account_number:
-      BANK_DETAILS.accountNumber,
+        bank_account_name:
+          BANK_DETAILS.accountName,
 
-    payment_reference:
-      order.reference,
+        bank_sort_code:
+          BANK_DETAILS.sortCode,
 
-    support_email:
-      EMAILJS_CONFIG.adminEmail
-  };
+        bank_account_number:
+          BANK_DETAILS.accountNumber,
 
-  const adminTemplateParameters = {
-    to_email:
-      EMAILJS_CONFIG.adminEmail,
+        payment_reference:
+          order.reference,
 
-    customer_name:
-      `${order.customer.firstName} ${order.customer.lastName}`,
+        support_email:
+          EMAILJS_CONFIG.adminEmail
+      };
 
-    first_name:
-      order.customer.firstName,
+      const adminTemplateParameters = {
+        to_email:
+          EMAILJS_CONFIG.adminEmail,
 
-    last_name:
-      order.customer.lastName,
+        customer_name:
+          `${order.customer.firstName} ${order.customer.lastName}`,
 
-    customer_email:
-      order.customer.email,
+        first_name:
+          order.customer.firstName,
 
-    customer_phone:
-      order.customer.phone,
+        last_name:
+          order.customer.lastName,
 
-    order_reference:
-      order.reference,
+        customer_email:
+          order.customer.email,
 
-    order_status:
-      "Awaiting payment",
+        customer_phone:
+          order.customer.phone,
 
-    order_items:
-      formattedItems,
+        order_reference:
+          order.reference,
 
-    subtotal:
-      formatCurrency(order.subtotal),
+        order_status:
+          "Awaiting payment",
 
-    delivery_method:
-      order.delivery.name,
+        order_items:
+          formattedItems,
 
-    delivery_price:
-      formatCurrency(order.delivery.price),
+        subtotal:
+          formatCurrency(order.subtotal),
 
-    order_total:
-      formatCurrency(order.total),
+        delivery_method:
+          order.delivery.name,
 
-    delivery_address:
-      formattedAddress,
+        delivery_price:
+          formatCurrency(order.delivery.price),
 
-    address_line_1:
-      order.deliveryAddress.addressLine1,
+        order_total:
+          formatCurrency(order.total),
 
-    address_line_2:
-      order.deliveryAddress.addressLine2 || "",
+        delivery_address:
+          formattedAddress,
 
-    town_city:
-      order.deliveryAddress.townCity,
+        address_line_1:
+          order.deliveryAddress.addressLine1,
 
-    county:
-      order.deliveryAddress.county || "",
+        address_line_2:
+          order.deliveryAddress.addressLine2 || "",
 
-    postcode:
-      order.deliveryAddress.postcode,
+        town_city:
+          order.deliveryAddress.townCity,
 
-    country:
-      order.deliveryAddress.country,
+        county:
+          order.deliveryAddress.county || "",
 
-    delivery_notes:
-      order.deliveryAddress.deliveryNotes || "None",
+        postcode:
+          order.deliveryAddress.postcode,
 
-    research_declaration:
-      order.researchDeclarationAccepted
-        ? "Accepted"
-        : "Not accepted",
+        country:
+          order.deliveryAddress.country,
 
-    created_at:
-      new Date(order.createdAt).toLocaleString(
-        "en-GB",
-        {
-          dateStyle: "full",
-          timeStyle: "short"
-        }
-      )
-  };
+        delivery_notes:
+          order.deliveryAddress.deliveryNotes || "None",
 
-  const customerEmailPromise =
-    emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.customerTemplateId,
-      customerTemplateParameters
-    );
+        research_declaration:
+          order.researchDeclarationAccepted
+            ? "Accepted"
+            : "Not accepted",
 
-  const adminEmailPromise =
-    emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.adminTemplateId,
-      adminTemplateParameters
-    );
+        created_at:
+          new Date(
+            order.createdAt
+          ).toLocaleString(
+            "en-GB",
+            {
+              dateStyle: "full",
+              timeStyle: "short"
+            }
+          )
+      };
 
-  const results =
-    await Promise.allSettled([
-      customerEmailPromise,
-      adminEmailPromise
-    ]);
+      const results =
+        await Promise.allSettled([
+          emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.customerTemplateId,
+            customerTemplateParameters
+          ),
 
-  const customerEmailResult =
-    results[0];
+          emailjs.send(
+            EMAILJS_CONFIG.serviceId,
+            EMAILJS_CONFIG.adminTemplateId,
+            adminTemplateParameters
+          )
+        ]);
 
-  const adminEmailResult =
-    results[1];
+      const customerEmailResult =
+        results[0];
 
-  if (
-    customerEmailResult.status === "rejected" ||
-    adminEmailResult.status === "rejected"
-  ) {
-    console.error(
-      "Customer email result:",
-      customerEmailResult
-    );
+      const adminEmailResult =
+        results[1];
 
-    console.error(
-      "Admin email result:",
-      adminEmailResult
-    );
+      if (
+        customerEmailResult.status === "rejected" ||
+        adminEmailResult.status === "rejected"
+      ) {
+        console.error(
+          "Customer email result:",
+          customerEmailResult
+        );
 
-    throw new Error(
-      "One or more order emails could not be sent."
-    );
-  }
+        console.error(
+          "Admin email result:",
+          adminEmailResult
+        );
 
-  return true;
-}
+        throw new Error(
+          "One or more order emails could not be sent."
+        );
+      }
+    }
 
     function showConfirmation(order) {
       checkoutHero.style.display =
@@ -3004,9 +762,7 @@ emailjs.init({
       document.getElementById(
         "confirmationAmount"
       ).textContent =
-        formatCurrency(
-          order.total
-        );
+        formatCurrency(order.total);
 
       document.getElementById(
         "confirmationCustomer"
@@ -3033,9 +789,7 @@ emailjs.init({
       document.getElementById(
         "confirmationTotal"
       ).textContent =
-        formatCurrency(
-          order.total
-        );
+        formatCurrency(order.total);
 
       document.getElementById(
         "bankAccountName"
@@ -3059,90 +813,79 @@ emailjs.init({
     }
 
     async function submitOrder(event) {
-  event.preventDefault();
+      event.preventDefault();
 
-  if (orderSubmitted) {
-    return;
-  }
+      if (orderSubmitted) {
+        return;
+      }
 
-  if (!validateForm()) {
-    const firstInvalid =
-      checkoutForm.querySelector(":invalid");
+      if (!validateForm()) {
+        const firstInvalid =
+          checkoutForm.querySelector(
+            ":invalid"
+          );
 
-    if (firstInvalid) {
-      firstInvalid.focus();
+        if (firstInvalid) {
+          firstInvalid.focus();
 
-      firstInvalid.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
+          firstInvalid.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
+
+        return;
+      }
+
+      placeOrderButton.disabled =
+        true;
+
+      placeOrderButton.innerHTML = `
+        <span
+          class="spinner-border spinner-border-sm"
+          aria-hidden="true"
+        ></span>
+        Submitting order
+      `;
+
+      try {
+        const order =
+          createOrderObject();
+
+        await sendOrderEmails(order);
+
+        localStorage.setItem(
+          LAST_ORDER_STORAGE_KEY,
+          JSON.stringify(order)
+        );
+
+        localStorage.removeItem(
+          CART_STORAGE_KEY
+        );
+
+        cart = [];
+        orderSubmitted = true;
+
+        showConfirmation(order);
+      } catch (error) {
+        console.error(
+          "Unable to submit order:",
+          error
+        );
+
+        placeOrderButton.disabled =
+          false;
+
+        placeOrderButton.innerHTML = `
+          Submit order
+          <i class="bi bi-arrow-right"></i>
+        `;
+
+        alert(
+          "Your order could not be submitted because the confirmation email service did not respond. Your basket has not been cleared. Please try again."
+        );
+      }
     }
-
-    return;
-  }
-
-  placeOrderButton.disabled = true;
-
-  placeOrderButton.innerHTML = `
-    <span
-      class="spinner-border spinner-border-sm"
-      aria-hidden="true"
-    ></span>
-    Submitting order
-  `;
-
-  try {
-    const order =
-      createOrderObject();
-
-    /*
-      Send both the customer email and your admin notification
-      before clearing the basket.
-    */
-
-    await sendOrderEmails(order);
-
-    /*
-      Temporary browser backup.
-
-      Supabase will replace this in Step 5.
-    */
-
-    localStorage.setItem(
-      LAST_ORDER_STORAGE_KEY,
-      JSON.stringify(order)
-    );
-
-    /*
-      Clear the basket only after both emails have sent.
-    */
-
-    localStorage.removeItem(
-      CART_STORAGE_KEY
-    );
-
-    cart = [];
-    orderSubmitted = true;
-
-    showConfirmation(order);
-  } catch (error) {
-    console.error(
-      "Unable to submit order:",
-      error
-    );
-
-    placeOrderButton.disabled = false;
-
-    placeOrderButton.innerHTML = `
-      Submit order
-      <i class="bi bi-arrow-right"></i>
-    `;
-
-    alert(
-      "Your order could not be submitted because the confirmation email service did not respond. Your basket has not been cleared. Please try again."
-    );
-  }
-}
 
     function initialiseCheckout() {
       cleanCart();
@@ -3195,12 +938,9 @@ emailjs.init({
       "input",
       () => {
         postcodeInput.value =
-          postcodeInput.value
-            .toUpperCase();
+          postcodeInput.value.toUpperCase();
 
-        postcodeInput.setCustomValidity(
-          ""
-        );
+        postcodeInput.setCustomValidity("");
       }
     );
 
@@ -3258,7 +998,6 @@ emailjs.init({
       new Date().getFullYear();
 
     initialiseCheckout();
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   </script>
 
 </body>
