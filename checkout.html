@@ -1214,807 +1214,1433 @@
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    // Run UI currentYear update right away in isolation so simple failures don't brick the footer
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  /*
+    --------------------------------------------------
+    CONFIGURATION
+    --------------------------------------------------
+  */
+
+  const EMAILJS_CONFIG = {
+    publicKey: "uZOuTrBdIAc6AmKjo",
+    serviceId: "service_vdz5j5b",
+    adminTemplateId: "template_o4eneh5",
+    adminEmail: "support@axiomresearchpeptides.uk"
+  };
+
+  const SUPABASE_CONFIG = {
+    url: "https://myqrwkynxmxpvstyydjq.supabase.co",
+    publishableKey:
+      "sb_publishable_ByS5y5ivRwPw69xTo22R3Q_sBpaHz0e"
+  };
+
+  const BANK_DETAILS = {
+    accountName: "Axiom (Name Won't Match)",
+    sortCode: "04-06-05",
+    accountNumber: "31588150"
+  };
+
+  const DELIVERY_PRICES = {
+    tracked48: 3.99,
+    tracked24: 4.99
+  };
+
+  const PRODUCTS = [
+    {
+      id: "bpc-tb500-blend-10mg",
+      name: "BPC-157 & TB500 Blend",
+      strength: "10MG",
+      price: 35,
+      stock: 5,
+      image: "./images/axiom-bpc-tb500-vial.png"
+    },
+    {
+      id: "slu-pp-332-5mg",
+      name: "SLU-PP-332",
+      strength: "5MG",
+      price: 50,
+      stock: 5,
+      image: "./images/axiom-slu-pp-332-vial.png"
+    },
+    {
+      id: "ss-31-10mg",
+      name: "SS-31",
+      strength: "10MG",
+      price: 30,
+      stock: 5,
+      image: "./images/axiom-ss31-vial.png"
+    },
+    {
+      id: "ghk-cu-100mg",
+      name: "GHK-CU",
+      strength: "100MG",
+      price: 45,
+      stock: 5,
+      image: "./images/axiom-ghk-cu-vial.png"
+    },
+    {
+      id: "cjc-ipamorelin-10mg",
+      name: "CJC + Ipamorelin",
+      strength: "10MG",
+      price: 55,
+      stock: 5,
+      image: "./images/axiom-cjc-ipamorelin-vial.png"
+    },
+    {
+      id: "epithalon-10mg",
+      name: "Epithalon",
+      strength: "10MG",
+      price: 20,
+      stock: 5,
+      image: "./images/axiom-epithalon-vial.png"
+    },
+    {
+      id: "mots-c-10mg",
+      name: "MOTS-C",
+      strength: "10MG",
+      price: 55,
+      stock: 5,
+      image: "./images/axiom-mots-c-vial.png"
+    },
+    {
+      id: "mt-2-10mg",
+      name: "MT-2",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-mt-2-vial.png"
+    },
+    {
+      id: "selank-10mg",
+      name: "Selank",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-selank-vial.png"
+    },
+    {
+      id: "semax-10mg",
+      name: "Semax",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-semax-vial.png"
+    },
+    {
+      id: "tesamorelin-10mg",
+      name: "Tesamorelin",
+      strength: "10MG",
+      price: 50,
+      stock: 5,
+      image: "./images/axiom-tesamorelin-vial.png"
+    },
+    {
+      id: "5-amino-1mq-50mg",
+      name: "5 Amino 1MQ",
+      strength: "50MG",
+      price: 65,
+      stock: 5,
+      image: "./images/axiom-5-amino-1mq-vial.png"
+    },
+    {
+      id: "nad-plus-1000mg",
+      name: "NAD+",
+      strength: "1000MG",
+      price: 130,
+      stock: 5,
+      image: "./images/axiom-nad-plus-vial.png"
+    }
+  ];
+
+  const CART_STORAGE_KEY =
+    "axiomResearchCart";
+
+  const LAST_ORDER_STORAGE_KEY =
+    "axiomLastOrder";
+
+  /*
+    --------------------------------------------------
+    SUPABASE CLIENT
+    --------------------------------------------------
+  */
+
+  if (!window.supabase) {
+    throw new Error(
+      "Supabase library failed to load."
+    );
+  }
+
+  const supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_CONFIG.url,
+      SUPABASE_CONFIG.publishableKey
+    );
+
+  /*
+    --------------------------------------------------
+    PAGE ELEMENTS
+    --------------------------------------------------
+  */
+
+  const getElement = (id) =>
+    document.getElementById(id);
+
+  const checkoutHero =
+    getElement("checkoutHero");
+
+  const checkoutMain =
+    getElement("checkoutMain");
+
+  const checkoutForm =
+    getElement("checkoutForm");
+
+  const emptyCheckout =
+    getElement("emptyCheckout");
+
+  const loadError =
+    getElement("loadError");
+
+  const loadErrorMessage =
+    getElement("loadErrorMessage");
+
+  const confirmationSection =
+    getElement("confirmationSection");
+
+  const summaryItems =
+    getElement("summaryItems");
+
+  const summarySubtotal =
+    getElement("summarySubtotal");
+
+  const summaryDelivery =
+    getElement("summaryDelivery");
+
+  const summaryTotal =
+    getElement("summaryTotal");
+
+  const placeOrderButton =
+    getElement("placeOrderButton");
+
+  const researchDeclaration =
+    getElement("researchDeclaration");
+
+  const declarationError =
+    getElement("declarationError");
+
+  const postcodeInput =
+    getElement("postcode");
+
+  const copyReferenceButton =
+    getElement("copyReferenceButton");
+
+  /*
+    --------------------------------------------------
+    STATE
+    --------------------------------------------------
+  */
+
+  let cart =
+    loadCart();
+
+  let orderSubmitted =
+    false;
+
+  let currentOrder =
+    null;
+
+  let databaseOrderSaved =
+    false;
+
+  /*
+    --------------------------------------------------
+    BASIC HELPERS
+    --------------------------------------------------
+  */
+
+  function formatCurrency(value) {
+    return new Intl.NumberFormat(
+      "en-GB",
+      {
+        style: "currency",
+        currency: "GBP"
+      }
+    ).format(value);
+  }
+
+  function loadCart() {
     try {
-      document.getElementById("currentYear").textContent = new Date().getFullYear();
-    } catch (e) {
-      console.error("Year update failed", e);
+      const savedCart =
+        JSON.parse(
+          localStorage.getItem(
+            CART_STORAGE_KEY
+          )
+        );
+
+      return Array.isArray(savedCart)
+        ? savedCart
+        : [];
+    } catch (error) {
+      console.error(
+        "Unable to load basket:",
+        error
+      );
+
+      return [];
+    }
+  }
+
+  function getProductById(productId) {
+    return PRODUCTS.find(
+      (product) =>
+        product.id === productId
+    );
+  }
+
+  function cleanCart() {
+    cart = cart
+      .map((item) => {
+        const product =
+          getProductById(item.id);
+
+        if (!product) {
+          return null;
+        }
+
+        return {
+          id: product.id,
+
+          quantity: Math.max(
+            1,
+            Math.min(
+              Number(item.quantity) || 1,
+              product.stock
+            )
+          )
+        };
+      })
+      .filter(Boolean);
+
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify(cart)
+    );
+  }
+
+  function getSelectedDelivery() {
+    const selected =
+      document.querySelector(
+        'input[name="deliveryMethod"]:checked'
+      );
+
+    if (!selected) {
+      return {
+        id: "tracked48",
+        name: "Royal Mail Tracked 48",
+        price: DELIVERY_PRICES.tracked48
+      };
     }
 
-    const EMAILJS_CONFIG = {
-      publicKey: "uZOuTrBdIAc6AmKjo",
-      serviceId: "service_vdz5j5b",
-      adminTemplateId: "template_o4eneh5", // This template should link template_piitdtl via EmailJS's linked template setting!
-      adminEmail: "support@axiomresearchpeptides.uk"
+    return {
+      id:
+        selected.value,
+
+      name:
+        selected.dataset.name ||
+        "Royal Mail delivery",
+
+      price:
+        DELIVERY_PRICES[selected.value] ??
+        Number(selected.dataset.price) ??
+        0
     };
-    const BANK_DETAILS = {
-      accountName: "Axiom (Name Won't Match)",
-      sortCode: "04-06-05",
-      accountNumber: "31588150"
-    };
-    const DELIVERY_PRICES = {
-      tracked48: 3.99,
-      tracked24: 4.99
-    };
-    const PRODUCTS = [
-      {
-        id: "bpc-tb500-blend-10mg",
-        name: "BPC-157 & TB500 Blend",
-        strength: "10MG",
-        price: 35,
-        stock: 5,
-        image: "./images/axiom-bpc-tb500-vial.png"
-      },
-      {
-        id: "slu-pp-332-5mg",
-        name: "SLU-PP-332",
-        strength: "5MG",
-        price: 50,
-        stock: 5,
-        image: "./images/axiom-slu-pp-332-vial.png"
-      },
-      {
-        id: "ss-31-10mg",
-        name: "SS-31",
-        strength: "10MG",
-        price: 30,
-        stock: 5,
-        image: "./images/axiom-ss31-vial.png"
-      },
-      {
-        id: "ghk-cu-100mg",
-        name: "GHK-CU",
-        strength: "100MG",
-        price: 45,
-        stock: 5,
-        image: "./images/axiom-ghk-cu-vial.png"
-      },
-      {
-        id: "cjc-ipamorelin-10mg",
-        name: "CJC + Ipamorelin",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        image: "./images/axiom-cjc-ipamorelin-vial.png"
-      },
-      {
-        id: "epithalon-10mg",
-        name: "Epithalon",
-        strength: "10MG",
-        price: 20,
-        stock: 5,
-        image: "./images/axiom-epithalon-vial.png"
-      },
-      {
-        id: "mots-c-10mg",
-        name: "MOTS-C",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        image: "./images/axiom-mots-c-vial.png"
-      },
-      {
-        id: "mt-2-10mg",
-        name: "MT-2",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-mt-2-vial.png"
-      },
-      {
-        id: "selank-10mg",
-        name: "Selank",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-selank-vial.png"
-      },
-      {
-        id: "semax-10mg",
-        name: "Semax",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-semax-vial.png"
-      },
-      {
-        id: "tesamorelin-10mg",
-        name: "Tesamorelin",
-        strength: "10MG",
-        price: 50,
-        stock: 5,
-        image: "./images/axiom-tesamorelin-vial.png"
-      },
-      {
-        id: "5-amino-1mq-50mg",
-        name: "5 Amino 1MQ",
-        strength: "50MG",
-        price: 65,
-        stock: 5,
-        image: "./images/axiom-5-amino-1mq-vial.png"
-      },
-      {
-        id: "nad-plus-1000mg",
-        name: "NAD+",
-        strength: "1000MG",
-        price: 130,
-        stock: 5,
-        image: "./images/axiom-nad-plus-vial.png"
-      }
-    ];
-    const CART_STORAGE_KEY = "axiomResearchCart";
-    const LAST_ORDER_STORAGE_KEY = "axiomLastOrder";
-    const getElement = (id) =>
-      document.getElementById(id);
-    const checkoutHero =
-      getElement("checkoutHero");
-    const checkoutMain =
-      getElement("checkoutMain");
-    const checkoutForm =
-      getElement("checkoutForm");
-    const emptyCheckout =
-      getElement("emptyCheckout");
-    const loadError =
-      getElement("loadError");
-    const loadErrorMessage =
-      getElement("loadErrorMessage");
-    const confirmationSection =
-      getElement("confirmationSection");
-    const summaryItems =
-      getElement("summaryItems");
-    const summarySubtotal =
-      getElement("summarySubtotal");
-    const summaryDelivery =
-      getElement("summaryDelivery");
-    const summaryTotal =
-      getElement("summaryTotal");
-    const placeOrderButton =
-      getElement("placeOrderButton");
-    const researchDeclaration =
-      getElement("researchDeclaration");
-    const declarationError =
-      getElement("declarationError");
-    const postcodeInput =
-      getElement("postcode");
-    const copyReferenceButton =
-      getElement("copyReferenceButton");
-    let cart =
-      loadCart();
-    let orderSubmitted =
-      false;
-    function formatCurrency(value) {
-      return new Intl.NumberFormat(
-        "en-GB",
-        {
-          style: "currency",
-          currency: "GBP"
-        }
-      ).format(value);
-    }
-    function loadCart() {
-      try {
-        const savedCart =
-          JSON.parse(
-            localStorage.getItem(
-              CART_STORAGE_KEY
-            )
-          );
-        return Array.isArray(savedCart)
-          ? savedCart
-          : [];
-      } catch (error) {
-        console.error(
-          "Unable to load basket:",
-          error
-        );
-        return [];
-      }
-    }
-    function getProductById(productId) {
-      return PRODUCTS.find(
-        (product) =>
-          product.id === productId
+  }
+
+  function calculateOrder() {
+    const subtotal =
+      cart.reduce(
+        (total, item) => {
+          const product =
+            getProductById(item.id);
+
+          if (!product) {
+            return total;
+          }
+
+          return total +
+            product.price *
+            item.quantity;
+        },
+        0
       );
-    }
-    function cleanCart() {
-      cart = cart
+
+    const delivery =
+      getSelectedDelivery();
+
+    return {
+      subtotal,
+      delivery,
+
+      total:
+        subtotal +
+        delivery.price
+    };
+  }
+
+  function handleMissingImage(image) {
+    image.onerror =
+      null;
+
+    image.src =
+      "./images/axiom-logo-icon.png";
+
+    image.style.padding =
+      "14px";
+  }
+
+  /*
+    --------------------------------------------------
+    ORDER SUMMARY
+    --------------------------------------------------
+  */
+
+  function renderSummary() {
+    const order =
+      calculateOrder();
+
+    summaryItems.innerHTML =
+      cart
         .map((item) => {
           const product =
             getProductById(item.id);
+
           if (!product) {
-            return null;
+            return "";
           }
-          return {
-            id: product.id,
-            quantity: Math.max(
-              1,
-              Math.min(
-                Number(item.quantity) || 1,
-                product.stock
-              )
-            )
-          };
+
+          return `
+            <article class="summary-item">
+
+              <img
+                src="${product.image}"
+                alt="${product.name}"
+                class="summary-item-image"
+                onerror="handleMissingImage(this)"
+              >
+
+              <div>
+
+                <div class="summary-item-name">
+                  ${product.name}
+                </div>
+
+                <div class="summary-item-meta">
+                  ${product.strength} × ${item.quantity}
+                </div>
+
+              </div>
+
+              <div class="summary-item-price">
+                ${formatCurrency(
+                  product.price *
+                  item.quantity
+                )}
+              </div>
+
+            </article>
+          `;
         })
-        .filter(Boolean);
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(cart)
+        .join("");
+
+    summarySubtotal.textContent =
+      formatCurrency(
+        order.subtotal
+      );
+
+    summaryDelivery.textContent =
+      formatCurrency(
+        order.delivery.price
+      );
+
+    summaryTotal.textContent =
+      formatCurrency(
+        order.total
+      );
+  }
+
+  /*
+    --------------------------------------------------
+    FORM VALIDATION
+    --------------------------------------------------
+  */
+
+  function normalisePostcode() {
+    const raw =
+      postcodeInput.value
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    postcodeInput.value =
+      raw.length > 3
+        ? `${raw.slice(0, -3)} ${raw.slice(-3)}`
+        : raw;
+  }
+
+  function isValidUkPostcode(postcode) {
+    const postcodePattern =
+      /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/;
+
+    return postcodePattern.test(
+      postcode
+        .trim()
+        .toUpperCase()
+    );
+  }
+
+  function validateForm() {
+    normalisePostcode();
+
+    postcodeInput.setCustomValidity(
+      isValidUkPostcode(
+        postcodeInput.value
+      )
+        ? ""
+        : "Enter a valid UK postcode."
+    );
+
+    let valid =
+      checkoutForm.checkValidity();
+
+    declarationError.classList.toggle(
+      "visible",
+      !researchDeclaration.checked
+    );
+
+    if (!researchDeclaration.checked) {
+      valid =
+        false;
+    }
+
+    checkoutForm.classList.add(
+      "was-validated"
+    );
+
+    return valid;
+  }
+
+  /*
+    --------------------------------------------------
+    ORDER CREATION
+    --------------------------------------------------
+  */
+
+  function generateOrderReference() {
+    const now =
+      new Date();
+
+    const datePart = [
+      String(
+        now.getFullYear()
+      ).slice(-2),
+
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0"),
+
+      String(
+        now.getDate()
+      ).padStart(2, "0")
+    ].join("");
+
+    const randomPart =
+      Math.floor(
+        1000 +
+        Math.random() *
+        9000
+      );
+
+    return `AX-${datePart}-${randomPart}`;
+  }
+
+  function formValue(fieldName) {
+    const field =
+      checkoutForm.elements[
+        fieldName
+      ];
+
+    return field
+      ? field.value.trim()
+      : "";
+  }
+
+  function createOrderObject() {
+    const totals =
+      calculateOrder();
+
+    return {
+      reference:
+        generateOrderReference(),
+
+      status:
+        "awaiting_payment",
+
+      createdAt:
+        new Date().toISOString(),
+
+      customer: {
+        firstName:
+          formValue("firstName"),
+
+        lastName:
+          formValue("lastName"),
+
+        email:
+          formValue("email")
+            .toLowerCase(),
+
+        phone:
+          formValue("phone")
+      },
+
+      deliveryAddress: {
+        addressLine1:
+          formValue("addressLine1"),
+
+        addressLine2:
+          formValue("addressLine2"),
+
+        townCity:
+          formValue("townCity"),
+
+        county:
+          formValue("county"),
+
+        postcode:
+          formValue("postcode")
+            .toUpperCase(),
+
+        country:
+          formValue("country"),
+
+        deliveryNotes:
+          formValue("deliveryNotes")
+      },
+
+      delivery:
+        totals.delivery,
+
+      items:
+        cart.map((item) => {
+          const product =
+            getProductById(item.id);
+
+          if (!product) {
+            throw new Error(
+              `Product not found: ${item.id}`
+            );
+          }
+
+          return {
+            productId:
+              product.id,
+
+            name:
+              product.name,
+
+            strength:
+              product.strength,
+
+            price:
+              product.price,
+
+            quantity:
+              item.quantity,
+
+            lineTotal:
+              product.price *
+              item.quantity
+          };
+        }),
+
+      subtotal:
+        totals.subtotal,
+
+      total:
+        totals.total,
+
+      researchDeclarationAccepted:
+        true
+    };
+  }
+
+  /*
+    --------------------------------------------------
+    SUPABASE ORDER SAVE
+    --------------------------------------------------
+  */
+
+  async function saveOrderToSupabase(order) {
+    const databaseItems =
+      order.items.map((item) => {
+        return {
+          product_id:
+            item.productId,
+
+          quantity:
+            item.quantity
+        };
+      });
+
+    const {
+      data,
+      error
+    } = await supabaseClient.rpc(
+      "create_checkout_order",
+      {
+        p_order_reference:
+          order.reference,
+
+        p_customer_first_name:
+          order.customer.firstName,
+
+        p_customer_last_name:
+          order.customer.lastName,
+
+        p_customer_email:
+          order.customer.email,
+
+        p_customer_phone:
+          order.customer.phone,
+
+        p_address_line_1:
+          order.deliveryAddress
+            .addressLine1,
+
+        p_address_line_2:
+          order.deliveryAddress
+            .addressLine2 ||
+          "",
+
+        p_town_city:
+          order.deliveryAddress
+            .townCity,
+
+        p_county:
+          order.deliveryAddress
+            .county ||
+          "",
+
+        p_postcode:
+          order.deliveryAddress
+            .postcode,
+
+        p_country:
+          order.deliveryAddress
+            .country,
+
+        p_delivery_notes:
+          order.deliveryAddress
+            .deliveryNotes ||
+          "",
+
+        p_delivery_method:
+          order.delivery.name,
+
+        p_delivery_price:
+          order.delivery.price,
+
+        p_subtotal:
+          order.subtotal,
+
+        p_total:
+          order.total,
+
+        p_research_declaration_accepted:
+          order
+            .researchDeclarationAccepted,
+
+        p_items:
+          databaseItems
+      }
+    );
+
+    if (error) {
+      console.error(
+        "Supabase order error:",
+        error
+      );
+
+      const databaseError =
+        new Error(
+          error.message ||
+          "The order could not be saved."
+        );
+
+      databaseError.code =
+        error.code;
+
+      databaseError.details =
+        error.details;
+
+      databaseError.hint =
+        error.hint;
+
+      throw databaseError;
+    }
+
+    order.databaseId =
+      data;
+
+    databaseOrderSaved =
+      true;
+
+    return data;
+  }
+
+  /*
+    --------------------------------------------------
+    EMAIL FORMATTING
+    --------------------------------------------------
+  */
+
+  function formatOrderItemsForEmail(items) {
+    return items
+      .map((item) => {
+        return [
+          `${item.name} ${item.strength}`,
+          `Quantity: ${item.quantity}`,
+          `Price each: ${formatCurrency(item.price)}`,
+          `Line total: ${formatCurrency(item.lineTotal)}`
+        ].join("\n");
+      })
+      .join("\n\n");
+  }
+
+  function formatAddress(address) {
+    return [
+      address.addressLine1,
+      address.addressLine2,
+      address.townCity,
+      address.county,
+      address.postcode,
+      address.country
+    ]
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  /*
+    --------------------------------------------------
+    EMAILJS SEND
+
+    This uses your current single admin template.
+    Your linked EmailJS customer reply should send
+    the customer confirmation.
+    --------------------------------------------------
+  */
+
+  async function sendOrderEmails(order) {
+    if (!window.emailjs) {
+      throw new Error(
+        "EmailJS failed to load."
       );
     }
-    function getSelectedDelivery() {
-      const selected =
-        document.querySelector(
-          'input[name="deliveryMethod"]:checked'
-        );
-      if (!selected) {
-        return {
-          id: "tracked48",
-          name: "Royal Mail Tracked 48",
-          price: DELIVERY_PRICES.tracked48
-        };
-      }
-      return {
-        id: selected.value,
-        name:
-          selected.dataset.name ||
-          "Royal Mail delivery",
-        price:
-          DELIVERY_PRICES[selected.value] ??
-          Number(selected.dataset.price) ??
-          0
-      };
-    }
-    function calculateOrder() {
-      const subtotal =
-        cart.reduce(
-          (total, item) => {
-            const product =
-              getProductById(item.id);
-            if (!product) {
-              return total;
-            }
-            return total +
-              product.price *
-              item.quantity;
-          },
-          0
-        );
-      const delivery =
-        getSelectedDelivery();
-      return {
-        subtotal,
-        delivery,
-        total:
-          subtotal +
-          delivery.price
-      };
-    }
-    function handleMissingImage(image) {
-      image.onerror =
-        null;
-      image.src =
-        "./images/axiom-logo-icon.png";
-      image.style.padding =
-        "14px";
-    }
-    function renderSummary() {
-      const order =
-        calculateOrder();
-      summaryItems.innerHTML =
-        cart
-          .map((item) => {
-            const product =
-              getProductById(item.id);
-            if (!product) {
-              return "";
-            }
-            return `
-              <article class="summary-item">
-                <img
-                  src="${product.image}"
-                  alt="${product.name}"
-                  class="summary-item-image"
-                  onerror="handleMissingImage(this)"
-                >
-                <div>
-                  <div class="summary-item-name">
-                    ${product.name}
-                  </div>
-                  <div class="summary-item-meta">
-                    ${product.strength} × ${item.quantity}
-                  </div>
-                </div>
-                <div class="summary-item-price">
-                  ${formatCurrency(
-                    product.price *
-                    item.quantity
-                  )}
-                </div>
-              </article>
-            `;
-          })
-          .join("");
-      summarySubtotal.textContent =
+
+    const formattedItems =
+      formatOrderItemsForEmail(
+        order.items
+      );
+
+    const formattedAddress =
+      formatAddress(
+        order.deliveryAddress
+      );
+
+    const unifiedParameters = {
+      to_email:
+        EMAILJS_CONFIG.adminEmail,
+
+      customer_email:
+        order.customer.email,
+
+      customer_name:
+        `${order.customer.firstName} ${order.customer.lastName}`,
+
+      first_name:
+        order.customer.firstName,
+
+      last_name:
+        order.customer.lastName,
+
+      customer_phone:
+        order.customer.phone,
+
+      order_reference:
+        order.reference,
+
+      order_status:
+        "Awaiting payment",
+
+      order_items:
+        formattedItems,
+
+      subtotal:
         formatCurrency(
           order.subtotal
-        );
-      summaryDelivery.textContent =
+        ),
+
+      delivery_method:
+        order.delivery.name,
+
+      delivery_price:
         formatCurrency(
           order.delivery.price
-        );
-      summaryTotal.textContent =
+        ),
+
+      order_total:
         formatCurrency(
           order.total
-        );
-    }
-    function normalisePostcode() {
-      const raw =
-        postcodeInput.value
-          .trim()
-          .toUpperCase()
-          .replace(/\s+/g, "");
-      postcodeInput.value =
-        raw.length > 3
-          ? `${raw.slice(0, -3)} ${raw.slice(-3)}`
-          : raw;
-    }
-    function isValidUkPostcode(postcode) {
-      const postcodePattern =
-        /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/;
-      return postcodePattern.test(
-        postcode
-          .trim()
-          .toUpperCase()
-      );
-    }
-    function validateForm() {
-      normalisePostcode();
-      postcodeInput.setCustomValidity(
-        isValidUkPostcode(
-          postcodeInput.value
-        )
-          ? ""
-          : "Enter a valid UK postcode."
-      );
-      let valid =
-        checkoutForm.checkValidity();
-      declarationError.classList.toggle(
-        "visible",
-        !researchDeclaration.checked
-      );
-      if (!researchDeclaration.checked) {
-        valid =
-          false;
-      }
-      checkoutForm.classList.add(
-        "was-validated"
-      );
-      return valid;
-    }
-    function generateOrderReference() {
-      const now =
-        new Date();
-      const datePart = [
-        String(
-          now.getFullYear()
-        ).slice(-2),
-        String(
-          now.getMonth() + 1
-        ).padStart(2, "0"),
-        String(
-          now.getDate()
-        ).padStart(2, "0")
-      ].join("");
-      const randomPart =
-        Math.floor(
-          1000 +
-          Math.random() * 9000
-        );
-      return `AX-${datePart}-${randomPart}`;
-    }
-    function formValue(fieldName) {
-      const field =
-        checkoutForm.elements[
-          fieldName
-        ];
-      return field
-        ? field.value.trim()
-        : "";
-    }
-    function createOrderObject() {
-      const totals =
-        calculateOrder();
-      return {
-        reference:
-          generateOrderReference(),
-        status:
-          "awaiting_payment",
-        createdAt:
-          new Date().toISOString(),
-        customer: {
-          firstName:
-            formValue("firstName"),
-          lastName:
-            formValue("lastName"),
-          email:
-            formValue("email")
-              .toLowerCase(),
-          phone:
-            formValue("phone")
-        },
-        deliveryAddress: {
-          addressLine1:
-            formValue("addressLine1"),
-          addressLine2:
-            formValue("addressLine2"),
-          townCity:
-            formValue("townCity"),
-          county:
-            formValue("county"),
-          postcode:
-            formValue("postcode")
-              .toUpperCase(),
-          country:
-            formValue("country"),
-          deliveryNotes:
-            formValue("deliveryNotes")
-        },
-        delivery:
-          totals.delivery,
-        items:
-          cart.map((item) => {
-            const product =
-              getProductById(item.id);
-            return {
-              productId:
-                product.id,
-              name:
-                product.name,
-              strength:
-                product.strength,
-              price:
-                product.price,
-              quantity:
-                item.quantity,
-              lineTotal:
-                product.price *
-                item.quantity
-            };
-          }),
-        subtotal:
-          totals.subtotal,
-        total:
-          totals.total,
-        researchDeclarationAccepted:
-          true
-      };
-    }
-    function formatOrderItemsForEmail(items) {
-      return items
-        .map((item) => {
-          return [
-            `${item.name} ${item.strength}`,
-            `Quantity: ${item.quantity}`,
-            `Price each: ${formatCurrency(item.price)}`,
-            `Line total: ${formatCurrency(item.lineTotal)}`
-          ].join("\n");
-        })
-        .join("\n\n");
-    }
-    function formatAddress(address) {
-      return [
-        address.addressLine1,
-        address.addressLine2,
-        address.townCity,
-        address.county,
-        address.postcode,
-        address.country
-      ]
-        .filter(Boolean)
-        .join(", ");
-    }
-    async function sendOrderEmails(order) {
-      if (!window.emailjs) {
-        throw new Error("EmailJS failed to load.");
-      }
-      const formattedItems =
-        formatOrderItemsForEmail(order.items);
-      const formattedAddress =
-        formatAddress(order.deliveryAddress);
+        ),
 
-      // This unified dynamic parameter object covers keys needed for BOTH your admin and customer templates!
-      const unifiedParams = {
-        to_email: EMAILJS_CONFIG.adminEmail,
-        customer_email: order.customer.email,
-        customer_name: `${order.customer.firstName} ${order.customer.lastName}`,
-        first_name: order.customer.firstName,
-        last_name: order.customer.lastName,
-        customer_phone: order.customer.phone,
-        order_reference: order.reference,
-        order_status: "Awaiting payment",
-        order_items: formattedItems,
-        subtotal: formatCurrency(order.subtotal),
-        delivery_method: order.delivery.name,
-        delivery_price: formatCurrency(order.delivery.price),
-        order_total: formatCurrency(order.total),
-        delivery_address: formattedAddress,
-        address_line_1: order.deliveryAddress.addressLine1,
-        address_line_2: order.deliveryAddress.addressLine2 || "",
-        town_city: order.deliveryAddress.townCity,
-        county: order.deliveryAddress.county || "",
-        postcode: order.deliveryAddress.postcode,
-        country: order.deliveryAddress.country,
-        delivery_notes: order.deliveryAddress.deliveryNotes || "None",
-        bank_account_name: BANK_DETAILS.accountName,
-        bank_sort_code: BANK_DETAILS.sortCode,
-        bank_account_number: BANK_DETAILS.accountNumber,
-        payment_reference: order.reference,
-        support_email: EMAILJS_CONFIG.adminEmail,
-        research_declaration: "Accepted",
-        created_at: new Date(order.createdAt).toLocaleString(
+      delivery_address:
+        formattedAddress,
+
+      address_line_1:
+        order.deliveryAddress
+          .addressLine1,
+
+      address_line_2:
+        order.deliveryAddress
+          .addressLine2 ||
+        "",
+
+      town_city:
+        order.deliveryAddress
+          .townCity,
+
+      county:
+        order.deliveryAddress
+          .county ||
+        "",
+
+      postcode:
+        order.deliveryAddress
+          .postcode,
+
+      country:
+        order.deliveryAddress
+          .country,
+
+      delivery_notes:
+        order.deliveryAddress
+          .deliveryNotes ||
+        "None",
+
+      bank_account_name:
+        BANK_DETAILS.accountName,
+
+      bank_sort_code:
+        BANK_DETAILS.sortCode,
+
+      bank_account_number:
+        BANK_DETAILS.accountNumber,
+
+      payment_reference:
+        order.reference,
+
+      support_email:
+        EMAILJS_CONFIG.adminEmail,
+
+      research_declaration:
+        "Accepted",
+
+      database_order_id:
+        order.databaseId ||
+        "",
+
+      created_at:
+        new Date(
+          order.createdAt
+        ).toLocaleString(
           "en-GB",
           {
             dateStyle: "full",
             timeStyle: "short"
           }
         )
-      };
+    };
+
+    await window.emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.adminTemplateId,
+      unifiedParameters
+    );
+  }
+
+  /*
+    --------------------------------------------------
+    CONFIRMATION SCREEN
+    --------------------------------------------------
+  */
+
+  function showConfirmation(order) {
+    checkoutHero.style.display =
+      "none";
+
+    checkoutMain.style.display =
+      "none";
+
+    emptyCheckout.style.display =
+      "none";
+
+    loadError.style.display =
+      "none";
+
+    confirmationSection.style.display =
+      "block";
+
+    getElement(
+      "confirmationReference"
+    ).textContent =
+      order.reference;
+
+    getElement(
+      "confirmationReferenceDuplicate"
+    ).textContent =
+      order.reference;
+
+    getElement(
+      "confirmationAmount"
+    ).textContent =
+      formatCurrency(
+        order.total
+      );
+
+    getElement(
+      "confirmationCustomer"
+    ).textContent =
+      `${order.customer.firstName} ${order.customer.lastName}`;
+
+    getElement(
+      "confirmationEmail"
+    ).textContent =
+      order.customer.email;
+
+    getElement(
+      "confirmationDeliveryMethod"
+    ).textContent =
+      order.delivery.name;
+
+    getElement(
+      "confirmationAddress"
+    ).textContent =
+      formatAddress(
+        order.deliveryAddress
+      );
+
+    getElement(
+      "confirmationTotal"
+    ).textContent =
+      formatCurrency(
+        order.total
+      );
+
+    getElement(
+      "bankAccountName"
+    ).textContent =
+      BANK_DETAILS.accountName;
+
+    getElement(
+      "bankSortCode"
+    ).textContent =
+      BANK_DETAILS.sortCode;
+
+    getElement(
+      "bankAccountNumber"
+    ).textContent =
+      BANK_DETAILS.accountNumber;
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  /*
+    --------------------------------------------------
+    ORDER SUBMISSION
+    --------------------------------------------------
+  */
+
+  async function submitOrder(event) {
+    event.preventDefault();
+
+    if (orderSubmitted) {
+      return;
+    }
+
+    if (!validateForm()) {
+      const invalidField =
+        checkoutForm.querySelector(
+          ":invalid"
+        );
+
+      if (invalidField) {
+        invalidField.focus();
+
+        invalidField.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+
+      return;
+    }
+
+    placeOrderButton.disabled =
+      true;
+
+    placeOrderButton.innerHTML = `
+      <span
+        class="spinner-border spinner-border-sm"
+        aria-hidden="true"
+      ></span>
+      Submitting order
+    `;
+
+    try {
+      /*
+        Create the order object only once.
+
+        This prevents a new reference being generated
+        if an email failure happens after Supabase saved
+        the original order.
+      */
+
+      if (!currentOrder) {
+        currentOrder =
+          createOrderObject();
+      }
 
       /*
-        Send just ONE request using the Admin Template.
-        EmailJS linked auto-reply will handle sending the customer copy safely on the server side!
+        Save to Supabase first.
+
+        The database function checks:
+        - product existence
+        - current prices
+        - available stock
+        - totals
+
+        It then:
+        - creates the order
+        - creates its item rows
+        - reduces stock
       */
-      await window.emailjs.send(
-        EMAILJS_CONFIG.serviceId,
-        EMAILJS_CONFIG.adminTemplateId,
-        unifiedParams
+
+      if (!databaseOrderSaved) {
+        await saveOrderToSupabase(
+          currentOrder
+        );
+      }
+
+      /*
+        Send the order notification.
+
+        If this fails, pressing Submit again will retry
+        the email without saving a second order or
+        reducing stock twice.
+      */
+
+      await sendOrderEmails(
+        currentOrder
       );
-    }
-    function showConfirmation(order) {
-      checkoutHero.style.display =
-        "none";
-      checkoutMain.style.display =
-        "none";
-      emptyCheckout.style.display =
-        "none";
-      loadError.style.display =
-        "none";
-      confirmationSection.style.display =
-        "block";
-      getElement(
-        "confirmationReference"
-      ).textContent =
-        order.reference;
-      getElement(
-        "confirmationReferenceDuplicate"
-      ).textContent =
-        order.reference;
-      getElement(
-        "confirmationAmount"
-      ).textContent =
-        formatCurrency(
-          order.total
-        );
-      getElement(
-        "confirmationCustomer"
-      ).textContent =
-        `${order.customer.firstName} ${order.customer.lastName}`;
-      getElement(
-        "confirmationEmail"
-      ).textContent =
-        order.customer.email;
-      getElement(
-        "confirmationDeliveryMethod"
-      ).textContent =
-        order.delivery.name;
-      getElement(
-        "confirmationAddress"
-      ).textContent =
-        formatAddress(
-          order.deliveryAddress
-        );
-      getElement(
-        "confirmationTotal"
-      ).textContent =
-        formatCurrency(
-          order.total
-        );
-      getElement(
-        "bankAccountName"
-      ).textContent =
-        BANK_DETAILS.accountName;
-      getElement(
-        "bankSortCode"
-      ).textContent =
-        BANK_DETAILS.sortCode;
-      getElement(
-        "bankAccountNumber"
-      ).textContent =
-        BANK_DETAILS.accountNumber;
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-    async function submitOrder(event) {
-      event.preventDefault();
-      if (orderSubmitted) {
-        return;
-      }
-      if (!validateForm()) {
-        const invalidField =
-          checkoutForm.querySelector(
-            ":invalid"
-          );
-        if (invalidField) {
-          invalidField.focus();
-        }
-        return;
-      }
-      placeOrderButton.disabled =
+
+      localStorage.setItem(
+        LAST_ORDER_STORAGE_KEY,
+        JSON.stringify(currentOrder)
+      );
+
+      localStorage.removeItem(
+        CART_STORAGE_KEY
+      );
+
+      cart =
+        [];
+
+      orderSubmitted =
         true;
-      placeOrderButton.innerHTML = `
-        <span
-          class="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
-        Submitting order
-      `;
-      try {
-        const order =
-          createOrderObject();
-        await sendOrderEmails(order);
-        localStorage.setItem(
-          LAST_ORDER_STORAGE_KEY,
-          JSON.stringify(order)
-        );
-        localStorage.removeItem(
-          CART_STORAGE_KEY
-        );
-        cart =
-          [];
-        orderSubmitted =
-          true;
-        showConfirmation(order);
-      } catch (error) {
-        console.error(
-          "Unable to submit order:",
-          error
-        );
-        // Cleanly reset button UI on error so they can try again
-        placeOrderButton.disabled =
-          false;
-        placeOrderButton.innerHTML = `
-          Submit order
-          <i class="bi bi-arrow-right"></i>
-        `;
-        alert(
-          "Your order could not be submitted. Your basket has not been cleared. Please try again."
-        );
-      }
-    }
-    function showLoadError(error) {
+
+      showConfirmation(
+        currentOrder
+      );
+    } catch (error) {
       console.error(
-        "Checkout failed to initialise:",
+        "Unable to submit order:",
         error
       );
-      checkoutHero.style.display =
-        "none";
-      checkoutMain.style.display =
-        "none";
-      emptyCheckout.style.display =
-        "none";
-      confirmationSection.style.display =
-        "none";
-      loadError.style.display =
-        "flex";
-      loadErrorMessage.textContent =
-        error && error.message
-          ? error.message
-          : "The checkout encountered an unknown error.";
-    }
-    function initialiseCheckout() {
-      if (!window.emailjs) {
-        throw new Error(
-          "EmailJS library did not load."
+
+      placeOrderButton.disabled =
+        false;
+
+      placeOrderButton.innerHTML = `
+        Submit order
+        <i class="bi bi-arrow-right"></i>
+      `;
+
+      const errorStatus =
+        error?.status ||
+        error?.code ||
+        "No status";
+
+      const errorText =
+        error?.text ||
+        error?.message ||
+        "Unknown error";
+
+      /*
+        If Supabase already accepted the order but the
+        email failed, tell the user the order exists.
+
+        Pressing Submit again safely retries the email.
+      */
+
+      if (databaseOrderSaved) {
+        alert(
+          `Your order was saved, but the confirmation email could not be sent.\n\nOrder reference: ${currentOrder.reference}\n\nPress Submit order again to retry the email.\n\nStatus: ${errorStatus}\nMessage: ${errorText}`
         );
-      }
-      window.emailjs.init({
-        publicKey:
-          EMAILJS_CONFIG.publicKey
-      });
-      cleanCart();
-      if (!cart.length) {
-        checkoutHero.style.display =
-          "none";
-        checkoutMain.style.display =
-          "none";
-        confirmationSection.style.display =
-          "none";
-        loadError.style.display =
-          "none";
-        emptyCheckout.style.display =
-          "flex";
+
         return;
       }
-      renderSummary();
+
+      alert(
+        `Your order could not be submitted.\n\nYour basket has not been cleared.\n\nStatus: ${errorStatus}\nMessage: ${errorText}`
+      );
     }
-    document
-      .querySelectorAll(
-        'input[name="deliveryMethod"]'
-      )
-      .forEach((input) => {
-        input.addEventListener(
-          "change",
-          renderSummary
-        );
-      });
-    postcodeInput.addEventListener(
-      "input",
-      () => {
-        postcodeInput.value =
-          postcodeInput.value
-            .toUpperCase();
-        postcodeInput.setCustomValidity(
-          ""
-        );
-      }
+  }
+
+  /*
+    --------------------------------------------------
+    LOAD ERROR
+    --------------------------------------------------
+  */
+
+  function showLoadError(error) {
+    console.error(
+      "Checkout failed to initialise:",
+      error
     );
-    postcodeInput.addEventListener(
-      "blur",
-      normalisePostcode
-    );
-    researchDeclaration.addEventListener(
-      "change",
-      () => {
-        declarationError.classList.toggle(
-          "visible",
-          !researchDeclaration.checked
-        );
-      }
-    );
-    checkoutForm.addEventListener(
-      "submit",
-      submitOrder
-    );
-    copyReferenceButton.addEventListener(
-      "click",
-      async () => {
-        const reference =
-          getElement(
-            "confirmationReference"
-          ).textContent;
-        try {
-          await navigator.clipboard.writeText(
-            reference
-          );
-          copyReferenceButton.innerHTML = `
-            <i class="bi bi-check2"></i>
-            Copied
-          `;
-          window.setTimeout(
-            () => {
-              copyReferenceButton.innerHTML = `
-                <i class="bi bi-copy"></i>
-                Copy reference
-              `;
-            },
-            1800
-          );
-        } catch (error) {
-          console.error(
-            "Unable to copy reference:",
-            error
-          );
+
+    checkoutHero.style.display =
+      "none";
+
+    checkoutMain.style.display =
+      "none";
+
+    emptyCheckout.style.display =
+      "none";
+
+    confirmationSection.style.display =
+      "none";
+
+    loadError.style.display =
+      "flex";
+
+    loadErrorMessage.textContent =
+      error && error.message
+        ? error.message
+        : "The checkout encountered an unknown error.";
+  }
+
+  /*
+    --------------------------------------------------
+    INITIALISATION
+    --------------------------------------------------
+  */
+
+  function initialiseCheckout() {
+    if (!window.emailjs) {
+      throw new Error(
+        "EmailJS library did not load."
+      );
+    }
+
+    if (!supabaseClient) {
+      throw new Error(
+        "Supabase could not be initialised."
+      );
+    }
+
+    window.emailjs.init({
+      publicKey:
+        EMAILJS_CONFIG.publicKey
+    });
+
+    cleanCart();
+
+    if (!cart.length) {
+      checkoutHero.style.display =
+        "none";
+
+      checkoutMain.style.display =
+        "none";
+
+      confirmationSection.style.display =
+        "none";
+
+      loadError.style.display =
+        "none";
+
+      emptyCheckout.style.display =
+        "flex";
+
+      return;
+    }
+
+    renderSummary();
+  }
+
+  /*
+    --------------------------------------------------
+    EVENT LISTENERS
+    --------------------------------------------------
+  */
+
+  document
+    .querySelectorAll(
+      'input[name="deliveryMethod"]'
+    )
+    .forEach((input) => {
+      input.addEventListener(
+        "change",
+        () => {
+          /*
+            A delivery change means any pending
+            unsaved order object should be rebuilt.
+          */
+
+          if (!databaseOrderSaved) {
+            currentOrder =
+              null;
+          }
+
+          renderSummary();
         }
+      );
+    });
+
+  postcodeInput.addEventListener(
+    "input",
+    () => {
+      postcodeInput.value =
+        postcodeInput.value
+          .toUpperCase();
+
+      postcodeInput.setCustomValidity(
+        ""
+      );
+
+      if (!databaseOrderSaved) {
+        currentOrder =
+          null;
       }
-    );
-    try {
-      initialiseCheckout();
-    } catch (error) {
-      showLoadError(error);
     }
-  </script>
+  );
+
+  postcodeInput.addEventListener(
+    "blur",
+    normalisePostcode
+  );
+
+  researchDeclaration.addEventListener(
+    "change",
+    () => {
+      declarationError.classList.toggle(
+        "visible",
+        !researchDeclaration.checked
+      );
+
+      if (!databaseOrderSaved) {
+        currentOrder =
+          null;
+      }
+    }
+  );
+
+  checkoutForm.addEventListener(
+    "input",
+    () => {
+      /*
+        Before the database save, any customer edit
+        should rebuild the order object on submit.
+      */
+
+      if (!databaseOrderSaved) {
+        currentOrder =
+          null;
+      }
+    }
+  );
+
+  checkoutForm.addEventListener(
+    "submit",
+    submitOrder
+  );
+
+  copyReferenceButton.addEventListener(
+    "click",
+    async () => {
+      const reference =
+        getElement(
+          "confirmationReference"
+        ).textContent;
+
+      try {
+        await navigator.clipboard.writeText(
+          reference
+        );
+
+        copyReferenceButton.innerHTML = `
+          <i class="bi bi-check2"></i>
+          Copied
+        `;
+
+        window.setTimeout(
+          () => {
+            copyReferenceButton.innerHTML = `
+              <i class="bi bi-copy"></i>
+              Copy reference
+            `;
+          },
+          1800
+        );
+      } catch (error) {
+        console.error(
+          "Unable to copy reference:",
+          error
+        );
+      }
+    }
+  );
+
+  /*
+    --------------------------------------------------
+    START
+    --------------------------------------------------
+  */
+
+  try {
+    getElement(
+      "currentYear"
+    ).textContent =
+      new Date().getFullYear();
+
+    initialiseCheckout();
+  } catch (error) {
+    showLoadError(error);
+  }
+</script>
+
 </body>
 </html>
