@@ -8,7 +8,9 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Axiom Research Catalogue | Laboratory Research Materials</title>
+  <title>
+    Axiom Research Catalogue | Laboratory Research Materials
+  </title>
 
   <meta
     name="description"
@@ -78,9 +80,7 @@
       --axiom-shadow-soft:
         0 10px 30px rgba(7, 20, 33, 0.07);
 
-      --axiom-radius-lg: 28px;
       --axiom-radius-md: 20px;
-      --axiom-radius-sm: 14px;
     }
 
     * {
@@ -93,10 +93,10 @@
 
     body {
       margin: 0;
+      overflow-x: hidden;
       background: var(--axiom-light);
       color: var(--axiom-text);
       font-family: "Inter", sans-serif;
-      overflow-x: hidden;
     }
 
     body.cart-open {
@@ -128,8 +128,6 @@
       font-family: "Manrope", sans-serif;
     }
 
-    /* Research notice */
-
     .research-bar {
       padding: 9px 14px;
       background:
@@ -151,8 +149,6 @@
       margin-right: 7px;
       color: var(--axiom-cyan);
     }
-
-    /* Navigation */
 
     .axiom-navbar {
       position: sticky;
@@ -217,11 +213,11 @@
 
     .cart-button {
       position: relative;
+      min-height: 46px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 9px;
-      min-height: 46px;
       padding: 0 18px;
       background:
         linear-gradient(
@@ -253,8 +249,6 @@
       font-size: 0.7rem;
       font-weight: 800;
     }
-
-    /* Hero */
 
     .shop-hero {
       position: relative;
@@ -363,8 +357,6 @@
       text-transform: uppercase;
     }
 
-    /* Shop controls */
-
     .shop-main {
       padding: 65px 0 95px;
     }
@@ -462,8 +454,6 @@
       font-size: 0.78rem;
     }
 
-    /* Product cards */
-
     .product-card {
       height: 100%;
       overflow: hidden;
@@ -557,6 +547,11 @@
       height: 7px;
       background: currentColor;
       border-radius: 50%;
+    }
+
+    .stock-badge.out {
+      color: var(--axiom-danger);
+      border-color: rgba(201, 77, 92, 0.2);
     }
 
     .product-body {
@@ -685,8 +680,6 @@
       font-size: 0.85rem;
     }
 
-    /* Disclaimer */
-
     .shop-disclaimer {
       margin-top: 65px;
       padding: 30px;
@@ -714,8 +707,6 @@
       font-size: 0.84rem;
       line-height: 1.72;
     }
-
-    /* Cart drawer */
 
     .cart-overlay {
       position: fixed;
@@ -894,6 +885,11 @@
       font-size: 0.9rem;
     }
 
+    .quantity-button:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
     .quantity-value {
       min-width: 32px;
       text-align: center;
@@ -959,12 +955,6 @@
       color: var(--axiom-white);
     }
 
-    .checkout-button:disabled {
-      background: #98a8b2;
-      box-shadow: none;
-      cursor: not-allowed;
-    }
-
     .cart-research-note {
       margin: 13px 0 0;
       color: var(--axiom-muted);
@@ -972,8 +962,6 @@
       line-height: 1.5;
       text-align: center;
     }
-
-    /* Toast */
 
     .cart-toast {
       position: fixed;
@@ -1005,8 +993,6 @@
     .cart-toast i {
       color: var(--axiom-cyan);
     }
-
-    /* Footer */
 
     .footer {
       padding: 55px 0 24px;
@@ -1082,8 +1068,6 @@
       font-size: 0.7rem;
     }
 
-    /* Responsive */
-
     @media (max-width: 991.98px) {
       .shop-hero {
         padding: 70px 0;
@@ -1139,10 +1123,7 @@
         flex-direction: column;
       }
 
-      .product-title {
-        min-height: auto;
-      }
-
+      .product-title,
       .product-description {
         min-height: auto;
       }
@@ -1158,20 +1139,14 @@
         padding-left: 18px;
       }
 
-      .brand-copy {
-        display: none;
-      }
-
-      .navbar-link {
+      .brand-copy,
+      .navbar-link,
+      .cart-button-text {
         display: none;
       }
 
       .cart-button {
         padding: 0 13px;
-      }
-
-      .cart-button-text {
-        display: none;
       }
 
       .product-image-wrap {
@@ -1210,8 +1185,13 @@
           >
 
           <span class="brand-copy">
-            <span class="brand-name">AXIOM</span>
-            <span class="brand-subtitle">Research Peptides</span>
+            <span class="brand-name">
+              AXIOM
+            </span>
+
+            <span class="brand-subtitle">
+              Research Peptides
+            </span>
           </span>
         </a>
 
@@ -1281,24 +1261,51 @@
             <div class="row g-2">
 
               <div class="col-4">
+
                 <div class="hero-stat">
-                  <strong id="catalogueProductCount">13</strong>
-                  <span>Materials</span>
+
+                  <strong id="catalogueProductCount">
+                    —
+                  </strong>
+
+                  <span>
+                    Materials
+                  </span>
+
                 </div>
+
               </div>
 
               <div class="col-4">
+
                 <div class="hero-stat">
-                  <strong>UK</strong>
-                  <span>Dispatch</span>
+
+                  <strong>
+                    UK
+                  </strong>
+
+                  <span>
+                    Dispatch
+                  </span>
+
                 </div>
+
               </div>
 
               <div class="col-4">
+
                 <div class="hero-stat">
-                  <strong>R&amp;D</strong>
-                  <span>Use only</span>
+
+                  <strong>
+                    R&amp;D
+                  </strong>
+
+                  <span>
+                    Use only
+                  </span>
+
                 </div>
+
               </div>
 
             </div>
@@ -1322,6 +1329,7 @@
           <div class="col-lg-8">
 
             <div class="search-wrap">
+
               <i class="bi bi-search"></i>
 
               <input
@@ -1331,6 +1339,7 @@
                 placeholder="Search research materials..."
                 aria-label="Search research materials"
               >
+
             </div>
 
           </div>
@@ -1367,6 +1376,7 @@
           class="category-filters"
           id="categoryFilters"
         >
+
           <button
             type="button"
             class="filter-button active"
@@ -1414,6 +1424,7 @@
           >
             Peptide Research
           </button>
+
         </div>
 
       </section>
@@ -1425,7 +1436,7 @@
         </strong>
 
         <span id="resultsCount">
-          Showing 13 products
+          Loading products...
         </span>
 
       </div>
@@ -1440,7 +1451,9 @@
         class="empty-results"
         id="emptyResults"
       >
+
         <div>
+
           <i class="bi bi-search"></i>
 
           <h2>
@@ -1450,7 +1463,9 @@
           <p>
             Try changing your search term or selecting another category.
           </p>
+
         </div>
+
       </section>
 
       <section class="shop-disclaimer">
@@ -1489,8 +1504,15 @@
             >
 
             <div>
-              <strong>AXIOM</strong>
-              <span>Research Peptides</span>
+
+              <strong>
+                AXIOM
+              </strong>
+
+              <span>
+                Research Peptides
+              </span>
+
             </div>
 
           </div>
@@ -1505,13 +1527,23 @@
         <div class="col-lg-5">
 
           <div class="footer-links">
-            <a href="./index.html">Home</a>
-            <a href="./index.html#quality">Our Standards</a>
-            <a href="./index.html#faq">FAQ</a>
+
+            <a href="./index.html">
+              Home
+            </a>
+
+            <a href="./index.html#quality">
+              Our Standards
+            </a>
+
+            <a href="./index.html#faq">
+              FAQ
+            </a>
 
             <a href="mailto:support@axiomresearchpeptides.uk">
               Contact
             </a>
+
           </div>
 
         </div>
@@ -1612,548 +1644,545 @@
     aria-live="polite"
   >
     <i class="bi bi-check-circle-fill"></i>
+
     <span id="cartToastText">
       Added to basket
     </span>
   </div>
 
+  <!-- Supabase must be loaded BEFORE your own code -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-  /*
-    --------------------------------------------------
-    SUPABASE
-    --------------------------------------------------
-  */
+    /*
+      --------------------------------------------------
+      SUPABASE CONFIGURATION
+      --------------------------------------------------
+    */
 
-  const SUPABASE_CONFIG = {
-    url:
-      "https://myqrwkynxmxpvstyydjq.supabase.co",
+    const SUPABASE_CONFIG = {
+      url:
+        "https://myqrwkynxmxpvstyydjq.supabase.co",
 
-    publishableKey:
-      "sb_publishable_ByS5y5ivRwPw69xTo22R3Q_sBpaHz0e"
-  };
+      publishableKey:
+        "sb_publishable_ByS5y5ivRwPw69xTo22R3Q_sBpaHz0e"
+    };
 
-  if (!window.supabase) {
-    throw new Error(
-      "Supabase library failed to load."
-    );
-  }
-
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_CONFIG.url,
-      SUPABASE_CONFIG.publishableKey
-    );
-
-  /*
-    Supabase controls:
-    - price
-    - stock
-    - product name
-    - strength
-    - active/inactive status
-
-    This local information controls:
-    - category
-    - catalogue description
-    - image fallback
-  */
-
-  const PRODUCT_DISPLAY_DATA = {
-    "bpc-tb500-blend-10mg": {
-      category: "repair",
-      categoryLabel: "Repair research",
-      image:
-        "./images/axiom-bpc-tb500-vial.png",
-      description:
-        "Combined research peptides investigated in controlled laboratory models concerning tissue-response pathways."
-    },
-
-    "slu-pp-332-5mg": {
-      category: "metabolic",
-      categoryLabel: "Metabolic research",
-      image:
-        "./images/axiom-slu-pp-332-vial.png",
-      description:
-        "Synthetic research compound investigated in relation to ERR activity and cellular energy metabolism."
-    },
-
-    "ss-31-10mg": {
-      category: "cellular",
-      categoryLabel: "Cellular research",
-      image:
-        "./images/axiom-ss31-vial.png",
-      description:
-        "Research peptide investigated in laboratory models concerning mitochondrial function and oxidative processes."
-    },
-
-    "ghk-cu-100mg": {
-      category: "cellular",
-      categoryLabel: "Cellular research",
-      image:
-        "./images/axiom-ghk-cu-vial.png",
-      description:
-        "Copper-binding peptide investigated in laboratory research relating to cellular signalling and tissue processes."
-    },
-
-    "cjc-ipamorelin-10mg": {
-      category: "peptide",
-      categoryLabel: "Peptide research",
-      image:
-        "./images/axiom-cjc-ipamorelin-vial.png",
-      description:
-        "Combined research peptides studied in controlled models concerning growth-hormone signalling pathways."
-    },
-
-    "epithalon-10mg": {
-      category: "cellular",
-      categoryLabel: "Cellular research",
-      image:
-        "./images/axiom-epithalon-vial.png",
-      description:
-        "Synthetic tetrapeptide investigated in laboratory research involving cellular ageing and regulatory processes."
-    },
-
-    "mots-c-10mg": {
-      category: "metabolic",
-      categoryLabel: "Metabolic research",
-      image:
-        "./images/axiom-mots-c-vial.png",
-      description:
-        "Mitochondrial-derived peptide investigated in laboratory models of metabolic signalling and cellular energy."
-    },
-
-    "mt-2-10mg": {
-      category: "peptide",
-      categoryLabel: "Peptide research",
-      image:
-        "./images/axiom-mt-2-vial.png",
-      description:
-        "Synthetic melanocortin research peptide studied in controlled laboratory receptor-binding models."
-    },
-
-    "selank-10mg": {
-      category: "cognitive",
-      categoryLabel: "Cognitive research",
-      image:
-        "./images/axiom-selank-vial.png",
-      description:
-        "Synthetic peptide investigated across neurological, behavioural and cognitive laboratory research models."
-    },
-
-    "semax-10mg": {
-      category: "cognitive",
-      categoryLabel: "Cognitive research",
-      image:
-        "./images/axiom-semax-vial.png",
-      description:
-        "Synthetic peptide investigated in laboratory research involving neurological and cognitive signalling pathways."
-    },
-
-    "tesamorelin-10mg": {
-      category: "peptide",
-      categoryLabel: "Peptide research",
-      image:
-        "./images/axiom-tesamorelin-vial.png",
-      description:
-        "Research peptide investigated in controlled laboratory models concerning growth-hormone-releasing pathways."
-    },
-
-    "5-amino-1mq-50mg": {
-      category: "metabolic",
-      categoryLabel: "Metabolic research",
-      image:
-        "./images/axiom-5-amino-1mq-vial.png",
-      description:
-        "Small-molecule research compound investigated in relation to NNMT activity and metabolic cellular pathways."
-    },
-
-    "nad-plus-1000mg": {
-      category: "cellular",
-      categoryLabel: "Cellular research",
-      image:
-        "./images/axiom-nad-plus-vial.png",
-      description:
-        "Research material investigated in laboratory models concerning cellular energy transfer and redox processes."
+    if (!window.supabase) {
+      throw new Error(
+        "Supabase library failed to load."
+      );
     }
-  };
 
-  const CART_STORAGE_KEY =
-    "axiomResearchCart";
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_CONFIG.url,
+        SUPABASE_CONFIG.publishableKey
+      );
 
-  /*
-    --------------------------------------------------
-    ELEMENTS
-    --------------------------------------------------
-  */
+    /*
+      Supabase provides:
 
-  const productGrid =
-    document.getElementById(
-      "productGrid"
-    );
+      - product name
+      - strength
+      - price
+      - stock
+      - active status
 
-  const emptyResults =
-    document.getElementById(
-      "emptyResults"
-    );
+      Local display data provides:
 
-  const resultsCount =
-    document.getElementById(
-      "resultsCount"
-    );
+      - category
+      - description
+      - product image
+    */
 
-  const resultsTitle =
-    document.getElementById(
-      "resultsTitle"
-    );
+    const PRODUCT_DISPLAY_DATA = {
+      "bpc-tb500-blend-10mg": {
+        category:
+          "repair",
 
-  const productSearch =
-    document.getElementById(
-      "productSearch"
-    );
+        categoryLabel:
+          "Repair research",
 
-  const productSort =
-    document.getElementById(
-      "productSort"
-    );
+        image:
+          "./images/axiom-bpc-tb500-vial.png",
 
-  const categoryFilters =
-    document.getElementById(
-      "categoryFilters"
-    );
+        description:
+          "Combined research peptides investigated in controlled laboratory models concerning tissue-response pathways."
+      },
 
-  const cartDrawer =
-    document.getElementById(
-      "cartDrawer"
-    );
+      "slu-pp-332-5mg": {
+        category:
+          "metabolic",
 
-  const cartOverlay =
-    document.getElementById(
-      "cartOverlay"
-    );
+        categoryLabel:
+          "Metabolic research",
 
-  const openCartButton =
-    document.getElementById(
-      "openCartButton"
-    );
+        image:
+          "./images/axiom-slu-pp-332-vial.png",
 
-  const closeCartButton =
-    document.getElementById(
-      "closeCartButton"
-    );
+        description:
+          "Synthetic research compound investigated in relation to ERR activity and cellular energy metabolism."
+      },
 
-  const cartItemsElement =
-    document.getElementById(
-      "cartItems"
-    );
+      "ss-31-10mg": {
+        category:
+          "cellular",
 
-  const cartCount =
-    document.getElementById(
-      "cartCount"
-    );
+        categoryLabel:
+          "Cellular research",
 
-  const cartItemTotal =
-    document.getElementById(
-      "cartItemTotal"
-    );
+        image:
+          "./images/axiom-ss31-vial.png",
 
-  const cartSubtotal =
-    document.getElementById(
-      "cartSubtotal"
-    );
+        description:
+          "Research peptide investigated in laboratory models concerning mitochondrial function and oxidative processes."
+      },
 
-  const checkoutButton =
-    document.getElementById(
-      "checkoutButton"
-    );
+      "ghk-cu-100mg": {
+        category:
+          "cellular",
 
-  const cartToast =
-    document.getElementById(
-      "cartToast"
-    );
+        categoryLabel:
+          "Cellular research",
 
-  const cartToastText =
-    document.getElementById(
-      "cartToastText"
-    );
+        image:
+          "./images/axiom-ghk-cu-vial.png",
 
-  const catalogueProductCount =
-    document.getElementById(
-      "catalogueProductCount"
-    );
+        description:
+          "Copper-binding peptide investigated in laboratory research relating to cellular signalling and tissue processes."
+      },
 
-  /*
-    --------------------------------------------------
-    STATE
-    --------------------------------------------------
-  */
+      "cjc-ipamorelin-10mg": {
+        category:
+          "peptide",
 
-  let PRODUCTS = [];
+        categoryLabel:
+          "Peptide research",
 
-  let activeCategory =
-    "all";
+        image:
+          "./images/axiom-cjc-ipamorelin-vial.png",
 
-  let cart =
-    loadCart();
+        description:
+          "Combined research peptides studied in controlled models concerning growth-hormone signalling pathways."
+      },
 
-  let toastTimer =
-    null;
+      "epithalon-10mg": {
+        category:
+          "cellular",
 
-  let productsLoaded =
-    false;
+        categoryLabel:
+          "Cellular research",
 
-  /*
-    --------------------------------------------------
-    HELPERS
-    --------------------------------------------------
-  */
+        image:
+          "./images/axiom-epithalon-vial.png",
 
-  function escapeHtml(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
+        description:
+          "Synthetic tetrapeptide investigated in laboratory research involving cellular ageing and regulatory processes."
+      },
 
-  function formatCurrency(value) {
-    return new Intl.NumberFormat(
-      "en-GB",
-      {
-        style: "currency",
-        currency: "GBP"
+      "mots-c-10mg": {
+        category:
+          "metabolic",
+
+        categoryLabel:
+          "Metabolic research",
+
+        image:
+          "./images/axiom-mots-c-vial.png",
+
+        description:
+          "Mitochondrial-derived peptide investigated in laboratory models of metabolic signalling and cellular energy."
+      },
+
+      "mt-2-10mg": {
+        category:
+          "peptide",
+
+        categoryLabel:
+          "Peptide research",
+
+        image:
+          "./images/axiom-mt-2-vial.png",
+
+        description:
+          "Synthetic melanocortin research peptide studied in controlled laboratory receptor-binding models."
+      },
+
+      "selank-10mg": {
+        category:
+          "cognitive",
+
+        categoryLabel:
+          "Cognitive research",
+
+        image:
+          "./images/axiom-selank-vial.png",
+
+        description:
+          "Synthetic peptide investigated across neurological, behavioural and cognitive laboratory research models."
+      },
+
+      "semax-10mg": {
+        category:
+          "cognitive",
+
+        categoryLabel:
+          "Cognitive research",
+
+        image:
+          "./images/axiom-semax-vial.png",
+
+        description:
+          "Synthetic peptide investigated in laboratory research involving neurological and cognitive signalling pathways."
+      },
+
+      "tesamorelin-10mg": {
+        category:
+          "peptide",
+
+        categoryLabel:
+          "Peptide research",
+
+        image:
+          "./images/axiom-tesamorelin-vial.png",
+
+        description:
+          "Research peptide investigated in controlled laboratory models concerning growth-hormone-releasing pathways."
+      },
+
+      "5-amino-1mq-50mg": {
+        category:
+          "metabolic",
+
+        categoryLabel:
+          "Metabolic research",
+
+        image:
+          "./images/axiom-5-amino-1mq-vial.png",
+
+        description:
+          "Small-molecule research compound investigated in relation to NNMT activity and metabolic cellular pathways."
+      },
+
+      "nad-plus-1000mg": {
+        category:
+          "cellular",
+
+        categoryLabel:
+          "Cellular research",
+
+        image:
+          "./images/axiom-nad-plus-vial.png",
+
+        description:
+          "Research material investigated in laboratory models concerning cellular energy transfer and redox processes."
       }
-    ).format(
-      Number(value) || 0
-    );
-  }
+    };
 
-  function loadCart() {
-    try {
-      const savedCart =
-        JSON.parse(
-          localStorage.getItem(
-            CART_STORAGE_KEY
-          )
-        );
+    const CART_STORAGE_KEY =
+      "axiomResearchCart";
 
-      return Array.isArray(savedCart)
-        ? savedCart
-        : [];
-    } catch (error) {
-      console.error(
-        "Unable to load basket:",
-        error
+    /*
+      --------------------------------------------------
+      ELEMENTS
+      --------------------------------------------------
+    */
+
+    const productGrid =
+      document.getElementById(
+        "productGrid"
       );
 
-      return [];
-    }
-  }
-
-  function saveCart() {
-    localStorage.setItem(
-      CART_STORAGE_KEY,
-      JSON.stringify(cart)
-    );
-  }
-
-  function getProductById(productId) {
-    return PRODUCTS.find(
-      (product) =>
-        product.id === productId
-    );
-  }
-
-  function getCartQuantity(productId) {
-    const item =
-      cart.find(
-        (cartItem) =>
-          cartItem.id === productId
+    const emptyResults =
+      document.getElementById(
+        "emptyResults"
       );
 
-    return item
-      ? Number(item.quantity) || 0
-      : 0;
-  }
+    const resultsCount =
+      document.getElementById(
+        "resultsCount"
+      );
 
-  function handleMissingImage(image) {
-    image.onerror =
+    const resultsTitle =
+      document.getElementById(
+        "resultsTitle"
+      );
+
+    const productSearch =
+      document.getElementById(
+        "productSearch"
+      );
+
+    const productSort =
+      document.getElementById(
+        "productSort"
+      );
+
+    const categoryFilters =
+      document.getElementById(
+        "categoryFilters"
+      );
+
+    const cartDrawer =
+      document.getElementById(
+        "cartDrawer"
+      );
+
+    const cartOverlay =
+      document.getElementById(
+        "cartOverlay"
+      );
+
+    const openCartButton =
+      document.getElementById(
+        "openCartButton"
+      );
+
+    const closeCartButton =
+      document.getElementById(
+        "closeCartButton"
+      );
+
+    const cartItemsElement =
+      document.getElementById(
+        "cartItems"
+      );
+
+    const cartCount =
+      document.getElementById(
+        "cartCount"
+      );
+
+    const cartItemTotal =
+      document.getElementById(
+        "cartItemTotal"
+      );
+
+    const cartSubtotal =
+      document.getElementById(
+        "cartSubtotal"
+      );
+
+    const checkoutButton =
+      document.getElementById(
+        "checkoutButton"
+      );
+
+    const cartToast =
+      document.getElementById(
+        "cartToast"
+      );
+
+    const cartToastText =
+      document.getElementById(
+        "cartToastText"
+      );
+
+    const catalogueProductCount =
+      document.getElementById(
+        "catalogueProductCount"
+      );
+
+    /*
+      --------------------------------------------------
+      STATE
+      --------------------------------------------------
+    */
+
+    let PRODUCTS = [];
+
+    let activeCategory =
+      "all";
+
+    let cart =
+      loadCart();
+
+    let toastTimer =
       null;
 
-    image.src =
-      "./images/axiom-logo-icon.png";
+    let productsLoaded =
+      false;
 
-    image.style.padding =
-      "35px";
-  }
+    let catalogueLoading =
+      false;
 
-  /*
-    --------------------------------------------------
-    SUPABASE PRODUCTS
-    --------------------------------------------------
-  */
+    /*
+      --------------------------------------------------
+      HELPERS
+      --------------------------------------------------
+    */
 
-  function buildCatalogueProduct(
-    databaseProduct
-  ) {
-    const displayData =
-      PRODUCT_DISPLAY_DATA[
-        databaseProduct.id
-      ] || {};
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-    return {
-      id:
-        databaseProduct.id,
+    function formatCurrency(value) {
+      return new Intl.NumberFormat(
+        "en-GB",
+        {
+          style: "currency",
+          currency: "GBP"
+        }
+      ).format(
+        Number(value) || 0
+      );
+    }
 
-      name:
-        databaseProduct.name ||
-        "Unnamed product",
-
-      strength:
-        databaseProduct.strength ||
-        "",
-
-      price:
-        Number(
-          databaseProduct.price
-        ) || 0,
-
-      stock:
-        Math.max(
-          0,
-          Math.floor(
-            Number(
-              databaseProduct.stock
-            ) || 0
-          )
-        ),
-
-      category:
-        databaseProduct.category ||
-        displayData.category ||
-        "peptide",
-
-      categoryLabel:
-        databaseProduct.category_label ||
-        displayData.categoryLabel ||
-        "Peptide research",
-
-      image:
-        databaseProduct.image_url ||
-        displayData.image ||
-        "./images/axiom-logo-icon.png",
-
-      description:
-        databaseProduct.description ||
-        displayData.description ||
-        "Specialist material supplied strictly for controlled laboratory research use."
-    };
-  }
-
-  async function loadProductsFromSupabase() {
-    productGrid.innerHTML = `
-      <div class="col-12">
-        <div
-          class="text-center py-5"
-          style="color:var(--axiom-muted);"
-        >
-          <div
-            class="spinner-border mb-3"
-            role="status"
-            aria-label="Loading catalogue"
-          ></div>
-
-          <div>
-            Loading live catalogue...
-          </div>
-        </div>
-      </div>
-    `;
-
-    try {
-      const {
-        data,
-        error
-      } = await supabaseClient
-        .from("products")
-        .select(`
-          id,
-          name,
-          strength,
-          price,
-          stock,
-          is_active,
-          image_url
-        `)
-        .eq(
-          "is_active",
-          true
-        )
-        .order(
-          "name",
-          {
-            ascending: true
-          }
-        );
-
-      if (error) {
-        throw error;
-      }
-
-      PRODUCTS =
-        (data || [])
-          .map(
-            buildCatalogueProduct
+    function loadCart() {
+      try {
+        const savedCart =
+          JSON.parse(
+            localStorage.getItem(
+              CART_STORAGE_KEY
+            )
           );
 
-      productsLoaded =
-        true;
+        return Array.isArray(savedCart)
+          ? savedCart
+          : [];
+      } catch (error) {
+        console.error(
+          "Unable to load basket:",
+          error
+        );
 
-      cleanCartAgainstLiveStock();
+        return [];
+      }
+    }
 
-      catalogueProductCount.textContent =
-        PRODUCTS.length;
-
-      renderProducts();
-      renderCart();
-    } catch (error) {
-      console.error(
-        "Unable to load catalogue:",
-        error
+    function saveCart() {
+      localStorage.setItem(
+        CART_STORAGE_KEY,
+        JSON.stringify(cart)
       );
+    }
 
-      PRODUCTS =
-        [];
+    function getProductById(productId) {
+      return PRODUCTS.find(
+        (product) =>
+          product.id ===
+          productId
+      );
+    }
 
-      productsLoaded =
-        false;
+    function getCartQuantity(productId) {
+      const item =
+        cart.find(
+          (cartItem) =>
+            cartItem.id ===
+            productId
+        );
 
-      catalogueProductCount.textContent =
-        "0";
+      return item
+        ? Number(
+            item.quantity
+          ) || 0
+        : 0;
+    }
 
-      resultsCount.textContent =
-        "Catalogue unavailable";
+    function handleMissingImage(image) {
+      image.onerror =
+        null;
+
+      image.src =
+        "./images/axiom-logo-icon.png";
+
+      image.style.padding =
+        "35px";
+    }
+
+    window.handleMissingImage =
+      handleMissingImage;
+
+    /*
+      --------------------------------------------------
+      LOAD PRODUCTS FROM SUPABASE
+      --------------------------------------------------
+    */
+
+    function buildCatalogueProduct(
+      databaseProduct
+    ) {
+      const displayData =
+        PRODUCT_DISPLAY_DATA[
+          databaseProduct.id
+        ] || {};
+
+      return {
+        id:
+          databaseProduct.id,
+
+        name:
+          databaseProduct.name ||
+          "Unnamed product",
+
+        strength:
+          databaseProduct.strength ||
+          "",
+
+        price:
+          Number(
+            databaseProduct.price
+          ) || 0,
+
+        stock:
+          Math.max(
+            0,
+            Math.floor(
+              Number(
+                databaseProduct.stock
+              ) || 0
+            )
+          ),
+
+        category:
+          displayData.category ||
+          "peptide",
+
+        categoryLabel:
+          displayData.categoryLabel ||
+          "Peptide research",
+
+        image:
+          displayData.image ||
+          "./images/axiom-logo-icon.png",
+
+        description:
+          displayData.description ||
+          "Specialist material supplied strictly for controlled laboratory research use."
+      };
+    }
+
+    async function loadProductsFromSupabase() {
+      if (catalogueLoading) {
+        return;
+      }
+
+      catalogueLoading =
+        true;
 
       productGrid.innerHTML = `
         <div class="col-12">
 
           <div
-            class="empty-results"
-            style="display:grid;"
+            class="text-center py-5"
+            style="color:var(--axiom-muted);"
           >
 
+            <div
+              class="spinner-border mb-3"
+              role="status"
+              aria-label="Loading catalogue"
+            ></div>
+
             <div>
-
-              <i class="bi bi-exclamation-triangle"></i>
-
-              <h2>
-                Catalogue temporarily unavailable
-              </h2>
-
-              <p>
-                Products could not be loaded. Please refresh the page or try again shortly.
-              </p>
-
+              Loading live catalogue...
             </div>
 
           </div>
@@ -2161,554 +2190,811 @@
         </div>
       `;
 
+      resultsCount.textContent =
+        "Loading products...";
+
+      try {
+        /*
+          Only request columns we know exist.
+
+          Do not add image_url, description,
+          category or category_label here unless
+          those columns definitely exist.
+        */
+
+        const {
+          data,
+          error
+        } = await supabaseClient
+          .from("products")
+          .select(`
+            id,
+            name,
+            strength,
+            price,
+            stock,
+            is_active
+          `)
+          .eq(
+            "is_active",
+            true
+          )
+          .order(
+            "name",
+            {
+              ascending: true
+            }
+          );
+
+        if (error) {
+          throw error;
+        }
+
+        PRODUCTS =
+          (data || [])
+            .map(
+              buildCatalogueProduct
+            );
+
+        productsLoaded =
+          true;
+
+        cleanCartAgainstLiveStock();
+
+        catalogueProductCount.textContent =
+          PRODUCTS.length;
+
+        renderProducts();
+        renderCart();
+      } catch (error) {
+        console.error(
+          "Unable to load catalogue:",
+          error
+        );
+
+        PRODUCTS =
+          [];
+
+        productsLoaded =
+          false;
+
+        catalogueProductCount.textContent =
+          "0";
+
+        resultsCount.textContent =
+          "Catalogue unavailable";
+
+        productGrid.innerHTML = `
+          <div class="col-12">
+
+            <div
+              class="empty-results"
+              style="display:grid;"
+            >
+
+              <div>
+
+                <i class="bi bi-exclamation-triangle"></i>
+
+                <h2>
+                  Catalogue temporarily unavailable
+                </h2>
+
+                <p>
+                  ${escapeHtml(
+                    error?.message ||
+                    "Products could not be loaded."
+                  )}
+                </p>
+
+                <button
+                  type="button"
+                  class="add-button mt-4"
+                  id="retryCatalogueButton"
+                  style="max-width:260px;margin-inline:auto;"
+                >
+                  <i class="bi bi-arrow-clockwise"></i>
+                  Try loading again
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+        const retryButton =
+          document.getElementById(
+            "retryCatalogueButton"
+          );
+
+        if (retryButton) {
+          retryButton.addEventListener(
+            "click",
+            loadProductsFromSupabase
+          );
+        }
+
+        renderCart();
+      } finally {
+        catalogueLoading =
+          false;
+      }
+    }
+
+    function cleanCartAgainstLiveStock() {
+      if (!productsLoaded) {
+        return;
+      }
+
+      let cartChanged =
+        false;
+
+      cart =
+        cart
+          .map((item) => {
+            const product =
+              getProductById(
+                item.id
+              );
+
+            if (!product) {
+              cartChanged =
+                true;
+
+              return null;
+            }
+
+            const requestedQuantity =
+              Math.max(
+                1,
+                Math.floor(
+                  Number(
+                    item.quantity
+                  ) || 1
+                )
+              );
+
+            const allowedQuantity =
+              Math.min(
+                requestedQuantity,
+                product.stock
+              );
+
+            if (
+              allowedQuantity <= 0
+            ) {
+              cartChanged =
+                true;
+
+              return null;
+            }
+
+            if (
+              requestedQuantity !==
+              allowedQuantity
+            ) {
+              cartChanged =
+                true;
+            }
+
+            return {
+              id:
+                product.id,
+
+              quantity:
+                allowedQuantity
+            };
+          })
+          .filter(Boolean);
+
+      if (cartChanged) {
+        saveCart();
+
+        showToast(
+          "Your basket was updated to match current stock."
+        );
+      }
+    }
+
+    /*
+      --------------------------------------------------
+      PRODUCT CARDS
+      --------------------------------------------------
+    */
+
+    function createProductCard(product) {
+      const quantityInCart =
+        getCartQuantity(
+          product.id
+        );
+
+      const remainingStock =
+        Math.max(
+          product.stock -
+          quantityInCart,
+          0
+        );
+
+      const outOfStock =
+        product.stock <= 0;
+
+      const addDisabled =
+        outOfStock ||
+        remainingStock <= 0;
+
+      let stockText =
+        `${remainingStock} available`;
+
+      if (outOfStock) {
+        stockText =
+          "Out of stock";
+      } else if (
+        remainingStock <= 0
+      ) {
+        stockText =
+          "Basket limit reached";
+      }
+
+      let buttonText =
+        "Add to basket";
+
+      if (outOfStock) {
+        buttonText =
+          "Out of stock";
+      } else if (
+        remainingStock <= 0
+      ) {
+        buttonText =
+          "Maximum added";
+      }
+
+      return `
+        <div
+          class="col-xl-3 col-lg-4 col-md-6"
+          data-product-card
+          data-product-id="${escapeHtml(product.id)}"
+        >
+
+          <article class="product-card">
+
+            <div class="product-image-wrap">
+
+              <span
+                class="stock-badge ${
+                  outOfStock
+                    ? "out"
+                    : ""
+                }"
+              >
+                ${escapeHtml(stockText)}
+              </span>
+
+              <img
+                src="${escapeHtml(product.image)}"
+                alt="Axiom Research ${escapeHtml(product.name)} ${escapeHtml(product.strength)}"
+                class="product-image"
+                onerror="handleMissingImage(this)"
+              >
+
+            </div>
+
+            <div class="product-body">
+
+              <div class="product-category">
+                ${escapeHtml(product.categoryLabel)}
+              </div>
+
+              <h2 class="product-title">
+                ${escapeHtml(product.name)}
+              </h2>
+
+              <p class="product-description">
+                ${escapeHtml(product.description)}
+              </p>
+
+              <div class="product-info-row">
+
+                <div class="product-price">
+
+                  <span>
+                    Price
+                  </span>
+
+                  ${escapeHtml(
+                    formatCurrency(
+                      product.price
+                    )
+                  )}
+
+                </div>
+
+                <div class="product-strength">
+                  ${escapeHtml(product.strength)}
+                </div>
+
+              </div>
+
+              <button
+                type="button"
+                class="add-button"
+                data-add-product="${escapeHtml(product.id)}"
+                ${addDisabled ? "disabled" : ""}
+              >
+
+                <i class="bi bi-bag-plus"></i>
+
+                ${escapeHtml(buttonText)}
+
+              </button>
+
+            </div>
+
+          </article>
+
+        </div>
+      `;
+    }
+
+    function getFilteredProducts() {
+      const searchTerm =
+        productSearch.value
+          .trim()
+          .toLowerCase();
+
+      const filteredProducts =
+        PRODUCTS.filter(
+          (product) => {
+            const matchesCategory =
+              activeCategory === "all" ||
+              product.category ===
+                activeCategory;
+
+            const searchableText =
+              [
+                product.name,
+                product.strength,
+                product.categoryLabel,
+                product.description
+              ]
+                .join(" ")
+                .toLowerCase();
+
+            const matchesSearch =
+              !searchTerm ||
+              searchableText.includes(
+                searchTerm
+              );
+
+            return (
+              matchesCategory &&
+              matchesSearch
+            );
+          }
+        );
+
+      const sortValue =
+        productSort.value;
+
+      if (
+        sortValue ===
+        "name-asc"
+      ) {
+        filteredProducts.sort(
+          (a, b) =>
+            a.name.localeCompare(
+              b.name
+            )
+        );
+      }
+
+      if (
+        sortValue ===
+        "price-asc"
+      ) {
+        filteredProducts.sort(
+          (a, b) =>
+            a.price -
+            b.price
+        );
+      }
+
+      if (
+        sortValue ===
+        "price-desc"
+      ) {
+        filteredProducts.sort(
+          (a, b) =>
+            b.price -
+            a.price
+        );
+      }
+
+      return filteredProducts;
+    }
+
+    function renderProducts() {
+      const products =
+        getFilteredProducts();
+
+      productGrid.innerHTML =
+        products
+          .map(
+            createProductCard
+          )
+          .join("");
+
+      emptyResults.style.display =
+        products.length
+          ? "none"
+          : "grid";
+
+      resultsCount.textContent =
+        `Showing ${products.length} ${
+          products.length === 1
+            ? "product"
+            : "products"
+        }`;
+
+      const activeButton =
+        categoryFilters
+          .querySelector(
+            ".filter-button.active"
+          );
+
+      resultsTitle.textContent =
+        activeButton
+          ? activeButton.textContent.trim()
+          : "Research materials";
+    }
+
+    /*
+      --------------------------------------------------
+      CART
+      --------------------------------------------------
+    */
+
+    function addToCart(productId) {
+      const product =
+        getProductById(
+          productId
+        );
+
+      if (!product) {
+        showToast(
+          "This product is no longer available."
+        );
+
+        return;
+      }
+
+      if (
+        product.stock <= 0
+      ) {
+        showToast(
+          `${product.name} is currently out of stock.`
+        );
+
+        return;
+      }
+
+      const currentQuantity =
+        getCartQuantity(
+          productId
+        );
+
+      if (
+        currentQuantity >=
+        product.stock
+      ) {
+        showToast(
+          `Only ${product.stock} available for ${product.name}.`
+        );
+
+        return;
+      }
+
+      const existingItem =
+        cart.find(
+          (item) =>
+            item.id ===
+            productId
+        );
+
+      if (existingItem) {
+        existingItem.quantity +=
+          1;
+      } else {
+        cart.push({
+          id:
+            productId,
+
+          quantity:
+            1
+        });
+      }
+
+      saveCart();
       renderCart();
+      renderProducts();
+
+      showToast(
+        `${product.name} added to basket`
+      );
     }
-  }
 
-  function cleanCartAgainstLiveStock() {
-    if (!productsLoaded) {
-      return;
+    function updateCartQuantity(
+      productId,
+      change
+    ) {
+      const product =
+        getProductById(
+          productId
+        );
+
+      const item =
+        cart.find(
+          (cartItem) =>
+            cartItem.id ===
+            productId
+        );
+
+      if (!product || !item) {
+        removeFromCart(
+          productId
+        );
+
+        return;
+      }
+
+      const nextQuantity =
+        item.quantity +
+        change;
+
+      if (
+        nextQuantity <= 0
+      ) {
+        removeFromCart(
+          productId
+        );
+
+        return;
+      }
+
+      if (
+        nextQuantity >
+        product.stock
+      ) {
+        showToast(
+          `Only ${product.stock} available for ${product.name}.`
+        );
+
+        return;
+      }
+
+      item.quantity =
+        nextQuantity;
+
+      saveCart();
+      renderCart();
+      renderProducts();
     }
 
-    let cartChanged =
-      false;
+    function removeFromCart(productId) {
+      cart =
+        cart.filter(
+          (item) =>
+            item.id !==
+            productId
+        );
 
-    cart =
-      cart
-        .map((item) => {
+      saveCart();
+      renderCart();
+      renderProducts();
+    }
+
+    function calculateCart() {
+      return cart.reduce(
+        (summary, item) => {
           const product =
             getProductById(
               item.id
             );
 
           if (!product) {
-            cartChanged =
-              true;
-
-            return null;
+            return summary;
           }
 
-          const requestedQuantity =
-            Math.max(
-              1,
-              Number(
-                item.quantity
-              ) || 1
-            );
+          summary.quantity +=
+            item.quantity;
 
-          const allowedQuantity =
-            Math.min(
-              requestedQuantity,
-              product.stock
-            );
+          summary.subtotal +=
+            product.price *
+            item.quantity;
 
-          if (
-            allowedQuantity <= 0
-          ) {
-            cartChanged =
-              true;
-
-            return null;
-          }
-
-          if (
-            allowedQuantity !==
-            requestedQuantity
-          ) {
-            cartChanged =
-              true;
-          }
-
-          return {
-            id:
-              product.id,
-
-            quantity:
-              allowedQuantity
-          };
-        })
-        .filter(Boolean);
-
-    if (cartChanged) {
-      saveCart();
-
-      showToast(
-        "Your basket was updated to match current stock."
-      );
-    }
-  }
-
-  /*
-    --------------------------------------------------
-    PRODUCT CARDS
-    --------------------------------------------------
-  */
-
-  function createProductCard(product) {
-    const quantityInCart =
-      getCartQuantity(
-        product.id
-      );
-
-    const remainingStock =
-      Math.max(
-        product.stock -
-        quantityInCart,
-        0
-      );
-
-    const outOfStock =
-      product.stock <= 0;
-
-    const addDisabled =
-      outOfStock ||
-      remainingStock <= 0;
-
-    let stockText =
-      `${remainingStock} available`;
-
-    if (outOfStock) {
-      stockText =
-        "Out of stock";
-    } else if (
-      remainingStock <= 0
-    ) {
-      stockText =
-        "Basket limit reached";
-    }
-
-    let buttonText =
-      "Add to basket";
-
-    if (outOfStock) {
-      buttonText =
-        "Out of stock";
-    } else if (
-      remainingStock <= 0
-    ) {
-      buttonText =
-        "Maximum added";
-    }
-
-    return `
-      <div
-        class="col-xl-3 col-lg-4 col-md-6"
-        data-product-card
-        data-product-id="${escapeHtml(product.id)}"
-      >
-
-        <article class="product-card">
-
-          <div class="product-image-wrap">
-
-            <span
-              class="stock-badge"
-              style="${
-                outOfStock
-                  ? "color:var(--axiom-danger);border-color:rgba(201,77,92,.18);"
-                  : ""
-              }"
-            >
-              ${escapeHtml(stockText)}
-            </span>
-
-            <img
-              src="${escapeHtml(product.image)}"
-              alt="Axiom Research ${escapeHtml(product.name)} ${escapeHtml(product.strength)}"
-              class="product-image"
-              onerror="handleMissingImage(this)"
-            >
-
-          </div>
-
-          <div class="product-body">
-
-            <div class="product-category">
-              ${escapeHtml(product.categoryLabel)}
-            </div>
-
-            <h2 class="product-title">
-              ${escapeHtml(product.name)}
-            </h2>
-
-            <p class="product-description">
-              ${escapeHtml(product.description)}
-            </p>
-
-            <div class="product-info-row">
-
-              <div class="product-price">
-
-                <span>
-                  Price
-                </span>
-
-                ${escapeHtml(
-                  formatCurrency(
-                    product.price
-                  )
-                )}
-
-              </div>
-
-              <div class="product-strength">
-                ${escapeHtml(product.strength)}
-              </div>
-
-            </div>
-
-            <button
-              type="button"
-              class="add-button"
-              data-add-product="${escapeHtml(product.id)}"
-              ${addDisabled ? "disabled" : ""}
-            >
-
-              <i class="bi bi-bag-plus"></i>
-
-              ${escapeHtml(buttonText)}
-
-            </button>
-
-          </div>
-
-        </article>
-
-      </div>
-    `;
-  }
-
-  function getFilteredProducts() {
-    const searchTerm =
-      productSearch.value
-        .trim()
-        .toLowerCase();
-
-    const filteredProducts =
-      PRODUCTS.filter(
-        (product) => {
-          const matchesCategory =
-            activeCategory === "all" ||
-            product.category ===
-              activeCategory;
-
-          const searchableText =
-            [
-              product.name,
-              product.strength,
-              product.categoryLabel,
-              product.description
-            ]
-              .join(" ")
-              .toLowerCase();
-
-          const matchesSearch =
-            !searchTerm ||
-            searchableText.includes(
-              searchTerm
-            );
-
-          return (
-            matchesCategory &&
-            matchesSearch
-          );
+          return summary;
+        },
+        {
+          quantity: 0,
+          subtotal: 0
         }
       );
-
-    const sortValue =
-      productSort.value;
-
-    if (
-      sortValue ===
-      "name-asc"
-    ) {
-      filteredProducts.sort(
-        (a, b) =>
-          a.name.localeCompare(
-            b.name
-          )
-      );
     }
 
-    if (
-      sortValue ===
-      "price-asc"
-    ) {
-      filteredProducts.sort(
-        (a, b) =>
-          a.price -
-          b.price
-      );
-    }
+    function renderCart() {
+      const summary =
+        calculateCart();
 
-    if (
-      sortValue ===
-      "price-desc"
-    ) {
-      filteredProducts.sort(
-        (a, b) =>
-          b.price -
-          a.price
-      );
-    }
+      cartCount.textContent =
+        summary.quantity;
 
-    return filteredProducts;
-  }
+      cartItemTotal.textContent =
+        summary.quantity;
 
-  function renderProducts() {
-    const products =
-      getFilteredProducts();
-
-    productGrid.innerHTML =
-      products
-        .map(
-          createProductCard
-        )
-        .join("");
-
-    emptyResults.style.display =
-      products.length
-        ? "none"
-        : "grid";
-
-    resultsCount.textContent =
-      `Showing ${products.length} ${
-        products.length === 1
-          ? "product"
-          : "products"
-      }`;
-
-    const activeButton =
-      categoryFilters
-        .querySelector(
-          ".filter-button.active"
+      cartSubtotal.textContent =
+        formatCurrency(
+          summary.subtotal
         );
 
-    resultsTitle.textContent =
-      activeButton
-        ? activeButton.textContent.trim()
-        : "Research materials";
-  }
+      if (!productsLoaded) {
+        cartItemsElement.innerHTML = `
+          <div class="cart-empty">
 
-  /*
-    --------------------------------------------------
-    CART
-    --------------------------------------------------
-  */
+            <div>
 
-  function addToCart(productId) {
-    const product =
-      getProductById(
-        productId
-      );
+              <i class="bi bi-arrow-clockwise"></i>
 
-    if (!product) {
-      showToast(
-        "This product is no longer available."
-      );
+              <h3>
+                Loading your basket
+              </h3>
 
-      return;
-    }
+              <p>
+                Current prices and stock are being checked.
+              </p>
 
-    if (
-      product.stock <= 0
-    ) {
-      showToast(
-        `${product.name} is currently out of stock.`
-      );
-
-      return;
-    }
-
-    const currentQuantity =
-      getCartQuantity(
-        productId
-      );
-
-    if (
-      currentQuantity >=
-      product.stock
-    ) {
-      showToast(
-        `Only ${product.stock} available for ${product.name}.`
-      );
-
-      return;
-    }
-
-    const existingItem =
-      cart.find(
-        (item) =>
-          item.id === productId
-      );
-
-    if (existingItem) {
-      existingItem.quantity +=
-        1;
-    } else {
-      cart.push({
-        id:
-          productId,
-
-        quantity:
-          1
-      });
-    }
-
-    saveCart();
-    renderCart();
-    renderProducts();
-
-    showToast(
-      `${product.name} added to basket`
-    );
-  }
-
-  function updateCartQuantity(
-    productId,
-    change
-  ) {
-    const product =
-      getProductById(
-        productId
-      );
-
-    const item =
-      cart.find(
-        (cartItem) =>
-          cartItem.id ===
-          productId
-      );
-
-    if (!product || !item) {
-      removeFromCart(
-        productId
-      );
-
-      return;
-    }
-
-    const nextQuantity =
-      item.quantity +
-      change;
-
-    if (
-      nextQuantity <= 0
-    ) {
-      removeFromCart(
-        productId
-      );
-
-      return;
-    }
-
-    if (
-      nextQuantity >
-      product.stock
-    ) {
-      showToast(
-        `Only ${product.stock} available for ${product.name}.`
-      );
-
-      return;
-    }
-
-    item.quantity =
-      nextQuantity;
-
-    saveCart();
-    renderCart();
-    renderProducts();
-  }
-
-  function removeFromCart(productId) {
-    cart =
-      cart.filter(
-        (item) =>
-          item.id !==
-          productId
-      );
-
-    saveCart();
-    renderCart();
-    renderProducts();
-  }
-
-  function calculateCart() {
-    return cart.reduce(
-      (summary, item) => {
-        const product =
-          getProductById(
-            item.id
-          );
-
-        if (!product) {
-          return summary;
-        }
-
-        summary.quantity +=
-          item.quantity;
-
-        summary.subtotal +=
-          product.price *
-          item.quantity;
-
-        return summary;
-      },
-      {
-        quantity: 0,
-        subtotal: 0
-      }
-    );
-  }
-
-  function renderCart() {
-    const summary =
-      calculateCart();
-
-    cartCount.textContent =
-      summary.quantity;
-
-    cartItemTotal.textContent =
-      summary.quantity;
-
-    cartSubtotal.textContent =
-      formatCurrency(
-        summary.subtotal
-      );
-
-    if (
-      !cart.length ||
-      !productsLoaded
-    ) {
-      cartItemsElement.innerHTML = `
-        <div class="cart-empty">
-
-          <div>
-
-            <i class="bi bi-bag"></i>
-
-            <h3>
-              ${
-                productsLoaded
-                  ? "Your basket is empty"
-                  : "Loading your basket"
-              }
-            </h3>
-
-            <p>
-              ${
-                productsLoaded
-                  ? "Add a research material from the catalogue to begin your order."
-                  : "Current prices and stock are being checked."
-              }
-            </p>
+            </div>
 
           </div>
+        `;
 
-        </div>
-      `;
+        disableCheckout();
 
+        return;
+      }
+
+      if (!cart.length) {
+        cartItemsElement.innerHTML = `
+          <div class="cart-empty">
+
+            <div>
+
+              <i class="bi bi-bag"></i>
+
+              <h3>
+                Your basket is empty
+              </h3>
+
+              <p>
+                Add a research material from the catalogue to begin your order.
+              </p>
+
+            </div>
+
+          </div>
+        `;
+
+        disableCheckout();
+
+        return;
+      }
+
+      enableCheckout();
+
+      cartItemsElement.innerHTML =
+        cart
+          .map((item) => {
+            const product =
+              getProductById(
+                item.id
+              );
+
+            if (!product) {
+              return "";
+            }
+
+            const canIncrease =
+              item.quantity <
+              product.stock;
+
+            return `
+              <article class="cart-item">
+
+                <img
+                  src="${escapeHtml(product.image)}"
+                  alt="${escapeHtml(product.name)}"
+                  class="cart-item-image"
+                  onerror="handleMissingImage(this)"
+                >
+
+                <div>
+
+                  <div class="cart-item-top">
+
+                    <div>
+
+                      <div class="cart-item-title">
+                        ${escapeHtml(product.name)}
+                      </div>
+
+                      <div class="cart-item-strength">
+                        ${escapeHtml(product.strength)}
+                      </div>
+
+                    </div>
+
+                    <button
+                      type="button"
+                      class="remove-item"
+                      data-remove-product="${escapeHtml(product.id)}"
+                      aria-label="Remove ${escapeHtml(product.name)}"
+                    >
+                      <i class="bi bi-trash3"></i>
+                    </button>
+
+                  </div>
+
+                  <div class="cart-item-bottom">
+
+                    <div class="quantity-control">
+
+                      <button
+                        type="button"
+                        class="quantity-button"
+                        data-quantity-change="-1"
+                        data-product-id="${escapeHtml(product.id)}"
+                        aria-label="Reduce ${escapeHtml(product.name)} quantity"
+                      >
+                        <i class="bi bi-dash"></i>
+                      </button>
+
+                      <span class="quantity-value">
+                        ${item.quantity}
+                      </span>
+
+                      <button
+                        type="button"
+                        class="quantity-button"
+                        data-quantity-change="1"
+                        data-product-id="${escapeHtml(product.id)}"
+                        aria-label="Increase ${escapeHtml(product.name)} quantity"
+                        ${canIncrease ? "" : "disabled"}
+                      >
+                        <i class="bi bi-plus"></i>
+                      </button>
+
+                    </div>
+
+                    <div class="cart-item-price">
+                      ${escapeHtml(
+                        formatCurrency(
+                          product.price *
+                          item.quantity
+                        )
+                      )}
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </article>
+            `;
+          })
+          .join("");
+    }
+
+    function disableCheckout() {
       checkoutButton.setAttribute(
         "aria-disabled",
         "true"
@@ -2719,352 +3005,251 @@
 
       checkoutButton.style.opacity =
         "0.55";
-
-      return;
     }
 
-    checkoutButton.removeAttribute(
-      "aria-disabled"
-    );
-
-    checkoutButton.style.pointerEvents =
-      "";
-
-    checkoutButton.style.opacity =
-      "";
-
-    cartItemsElement.innerHTML =
-      cart
-        .map((item) => {
-          const product =
-            getProductById(
-              item.id
-            );
-
-          if (!product) {
-            return "";
-          }
-
-          const canIncrease =
-            item.quantity <
-            product.stock;
-
-          return `
-            <article class="cart-item">
-
-              <img
-                src="${escapeHtml(product.image)}"
-                alt="${escapeHtml(product.name)}"
-                class="cart-item-image"
-                onerror="handleMissingImage(this)"
-              >
-
-              <div>
-
-                <div class="cart-item-top">
-
-                  <div>
-
-                    <div class="cart-item-title">
-                      ${escapeHtml(product.name)}
-                    </div>
-
-                    <div class="cart-item-strength">
-                      ${escapeHtml(product.strength)}
-                    </div>
-
-                  </div>
-
-                  <button
-                    type="button"
-                    class="remove-item"
-                    data-remove-product="${escapeHtml(product.id)}"
-                    aria-label="Remove ${escapeHtml(product.name)}"
-                  >
-                    <i class="bi bi-trash3"></i>
-                  </button>
-
-                </div>
-
-                <div class="cart-item-bottom">
-
-                  <div class="quantity-control">
-
-                    <button
-                      type="button"
-                      class="quantity-button"
-                      data-quantity-change="-1"
-                      data-product-id="${escapeHtml(product.id)}"
-                      aria-label="Reduce ${escapeHtml(product.name)} quantity"
-                    >
-                      <i class="bi bi-dash"></i>
-                    </button>
-
-                    <span class="quantity-value">
-                      ${item.quantity}
-                    </span>
-
-                    <button
-                      type="button"
-                      class="quantity-button"
-                      data-quantity-change="1"
-                      data-product-id="${escapeHtml(product.id)}"
-                      aria-label="Increase ${escapeHtml(product.name)} quantity"
-                      ${canIncrease ? "" : "disabled"}
-                    >
-                      <i class="bi bi-plus"></i>
-                    </button>
-
-                  </div>
-
-                  <div class="cart-item-price">
-                    ${escapeHtml(
-                      formatCurrency(
-                        product.price *
-                        item.quantity
-                      )
-                    )}
-                  </div>
-
-                </div>
-
-              </div>
-
-            </article>
-          `;
-        })
-        .join("");
-  }
-
-  /*
-    --------------------------------------------------
-    DRAWER AND TOAST
-    --------------------------------------------------
-  */
-
-  function openCart() {
-    cartDrawer.classList.add(
-      "active"
-    );
-
-    cartOverlay.classList.add(
-      "active"
-    );
-
-    document.body.classList.add(
-      "cart-open"
-    );
-
-    cartDrawer.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-  }
-
-  function closeCart() {
-    cartDrawer.classList.remove(
-      "active"
-    );
-
-    cartOverlay.classList.remove(
-      "active"
-    );
-
-    document.body.classList.remove(
-      "cart-open"
-    );
-
-    cartDrawer.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-  }
-
-  function showToast(message) {
-    cartToastText.textContent =
-      message;
-
-    cartToast.classList.add(
-      "active"
-    );
-
-    window.clearTimeout(
-      toastTimer
-    );
-
-    toastTimer =
-      window.setTimeout(
-        () => {
-          cartToast.classList.remove(
-            "active"
-          );
-        },
-        2600
+    function enableCheckout() {
+      checkoutButton.removeAttribute(
+        "aria-disabled"
       );
-  }
 
-  /*
-    --------------------------------------------------
-    EVENTS
-    --------------------------------------------------
-  */
+      checkoutButton.style.pointerEvents =
+        "";
 
-  productGrid.addEventListener(
-    "click",
-    (event) => {
-      const addButton =
-        event.target.closest(
-          "[data-add-product]"
-        );
-
-      if (!addButton) {
-        return;
-      }
-
-      addToCart(
-        addButton.dataset.addProduct
-      );
+      checkoutButton.style.opacity =
+        "";
     }
-  );
 
-  cartItemsElement.addEventListener(
-    "click",
-    (event) => {
-      const removeButton =
-        event.target.closest(
-          "[data-remove-product]"
-        );
+    /*
+      --------------------------------------------------
+      CART DRAWER
+      --------------------------------------------------
+    */
 
-      if (removeButton) {
-        removeFromCart(
-          removeButton.dataset.removeProduct
-        );
-
-        return;
-      }
-
-      const quantityButton =
-        event.target.closest(
-          "[data-quantity-change]"
-        );
-
-      if (!quantityButton) {
-        return;
-      }
-
-      updateCartQuantity(
-        quantityButton.dataset.productId,
-        Number(
-          quantityButton.dataset.quantityChange
-        )
-      );
-    }
-  );
-
-  productSearch.addEventListener(
-    "input",
-    renderProducts
-  );
-
-  productSort.addEventListener(
-    "change",
-    renderProducts
-  );
-
-  categoryFilters.addEventListener(
-    "click",
-    (event) => {
-      const button =
-        event.target.closest(
-          ".filter-button"
-        );
-
-      if (!button) {
-        return;
-      }
-
-      categoryFilters
-        .querySelectorAll(
-          ".filter-button"
-        )
-        .forEach(
-          (filterButton) => {
-            filterButton.classList.remove(
-              "active"
-            );
-          }
-        );
-
-      button.classList.add(
+    function openCart() {
+      cartDrawer.classList.add(
         "active"
       );
 
-      activeCategory =
-        button.dataset.category;
+      cartOverlay.classList.add(
+        "active"
+      );
 
-      renderProducts();
+      document.body.classList.add(
+        "cart-open"
+      );
+
+      cartDrawer.setAttribute(
+        "aria-hidden",
+        "false"
+      );
     }
-  );
 
-  openCartButton.addEventListener(
-    "click",
-    openCart
-  );
+    function closeCart() {
+      cartDrawer.classList.remove(
+        "active"
+      );
 
-  closeCartButton.addEventListener(
-    "click",
-    closeCart
-  );
+      cartOverlay.classList.remove(
+        "active"
+      );
 
-  cartOverlay.addEventListener(
-    "click",
-    closeCart
-  );
+      document.body.classList.remove(
+        "cart-open"
+      );
 
-  document.addEventListener(
-    "keydown",
-    (event) => {
-      if (
-        event.key === "Escape"
-      ) {
-        closeCart();
+      cartDrawer.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+    }
+
+    function showToast(message) {
+      cartToastText.textContent =
+        message;
+
+      cartToast.classList.add(
+        "active"
+      );
+
+      window.clearTimeout(
+        toastTimer
+      );
+
+      toastTimer =
+        window.setTimeout(
+          () => {
+            cartToast.classList.remove(
+              "active"
+            );
+          },
+          2600
+        );
+    }
+
+    /*
+      --------------------------------------------------
+      EVENTS
+      --------------------------------------------------
+    */
+
+    productGrid.addEventListener(
+      "click",
+      (event) => {
+        const addButton =
+          event.target.closest(
+            "[data-add-product]"
+          );
+
+        if (!addButton) {
+          return;
+        }
+
+        addToCart(
+          addButton.dataset.addProduct
+        );
       }
-    }
-  );
+    );
 
-  /*
-    Re-check live inventory when the visitor
-    returns to the tab.
-  */
+    cartItemsElement.addEventListener(
+      "click",
+      (event) => {
+        const removeButton =
+          event.target.closest(
+            "[data-remove-product]"
+          );
 
-  document.addEventListener(
-    "visibilitychange",
-    () => {
-      if (
-        document.visibilityState ===
-        "visible"
-      ) {
-        loadProductsFromSupabase();
+        if (removeButton) {
+          removeFromCart(
+            removeButton.dataset.removeProduct
+          );
+
+          return;
+        }
+
+        const quantityButton =
+          event.target.closest(
+            "[data-quantity-change]"
+          );
+
+        if (
+          !quantityButton ||
+          quantityButton.disabled
+        ) {
+          return;
+        }
+
+        updateCartQuantity(
+          quantityButton.dataset.productId,
+          Number(
+            quantityButton.dataset.quantityChange
+          )
+        );
       }
-    }
-  );
+    );
 
-  /*
-    --------------------------------------------------
-    START
-    --------------------------------------------------
-  */
+    productSearch.addEventListener(
+      "input",
+      renderProducts
+    );
 
-  document.getElementById(
-    "currentYear"
-  ).textContent =
-    new Date().getFullYear();
+    productSort.addEventListener(
+      "change",
+      renderProducts
+    );
 
-  renderCart();
+    categoryFilters.addEventListener(
+      "click",
+      (event) => {
+        const button =
+          event.target.closest(
+            ".filter-button"
+          );
 
-  loadProductsFromSupabase();
+        if (!button) {
+          return;
+        }
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        categoryFilters
+          .querySelectorAll(
+            ".filter-button"
+          )
+          .forEach(
+            (filterButton) => {
+              filterButton.classList.remove(
+                "active"
+              );
+            }
+          );
+
+        button.classList.add(
+          "active"
+        );
+
+        activeCategory =
+          button.dataset.category;
+
+        renderProducts();
+      }
+    );
+
+    openCartButton.addEventListener(
+      "click",
+      openCart
+    );
+
+    closeCartButton.addEventListener(
+      "click",
+      closeCart
+    );
+
+    cartOverlay.addEventListener(
+      "click",
+      closeCart
+    );
+
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          closeCart();
+        }
+      }
+    );
+
+    /*
+      Reload current prices and stock when the
+      visitor returns to the browser tab.
+    */
+
+    document.addEventListener(
+      "visibilitychange",
+      () => {
+        if (
+          document.visibilityState ===
+          "visible"
+        ) {
+          loadProductsFromSupabase();
+        }
+      }
+    );
+
+    /*
+      --------------------------------------------------
+      START
+      --------------------------------------------------
+    */
+
+    document.getElementById(
+      "currentYear"
+    ).textContent =
+      new Date().getFullYear();
+
+    renderCart();
+
+    loadProductsFromSupabase();
   </script>
 
 </body>
