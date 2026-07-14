@@ -1224,11 +1224,12 @@
   */
 
   const EMAILJS_CONFIG = {
-    publicKey: "uZOuTrBdIAc6AmKjo",
-    serviceId: "service_vdz5j5b",
-    adminTemplateId: "template_o4eneh5",
-    adminEmail: "support@axiomresearchpeptides.uk"
-  };
+  publicKey: "uZOuTrBdIAc6AmKjo",
+  serviceId: "service_vdz5j5b",
+  customerTemplateId: "template_piitdtl",
+  adminTemplateId: "template_o4eneh5",
+  adminEmail: "support@axiomresearchpeptides.uk"
+};
 
   const SUPABASE_CONFIG = {
     url: "https://myqrwkynxmxpvstyydjq.supabase.co",
@@ -2042,142 +2043,215 @@
   */
 
   async function sendOrderEmails(order) {
-    if (!window.emailjs) {
-      throw new Error(
-        "EmailJS failed to load."
-      );
-    }
-
-    const formattedItems =
-      formatOrderItemsForEmail(
-        order.items
-      );
-
-    const formattedAddress =
-      formatAddress(
-        order.deliveryAddress
-      );
-
-    const unifiedParameters = {
-      to_email:
-        EMAILJS_CONFIG.adminEmail,
-
-      customer_email:
-        order.customer.email,
-
-      customer_name:
-        `${order.customer.firstName} ${order.customer.lastName}`,
-
-      first_name:
-        order.customer.firstName,
-
-      last_name:
-        order.customer.lastName,
-
-      customer_phone:
-        order.customer.phone,
-
-      order_reference:
-        order.reference,
-
-      order_status:
-        "Awaiting payment",
-
-      order_items:
-        formattedItems,
-
-      subtotal:
-        formatCurrency(
-          order.subtotal
-        ),
-
-      delivery_method:
-        order.delivery.name,
-
-      delivery_price:
-        formatCurrency(
-          order.delivery.price
-        ),
-
-      order_total:
-        formatCurrency(
-          order.total
-        ),
-
-      delivery_address:
-        formattedAddress,
-
-      address_line_1:
-        order.deliveryAddress
-          .addressLine1,
-
-      address_line_2:
-        order.deliveryAddress
-          .addressLine2 ||
-        "",
-
-      town_city:
-        order.deliveryAddress
-          .townCity,
-
-      county:
-        order.deliveryAddress
-          .county ||
-        "",
-
-      postcode:
-        order.deliveryAddress
-          .postcode,
-
-      country:
-        order.deliveryAddress
-          .country,
-
-      delivery_notes:
-        order.deliveryAddress
-          .deliveryNotes ||
-        "None",
-
-      bank_account_name:
-        BANK_DETAILS.accountName,
-
-      bank_sort_code:
-        BANK_DETAILS.sortCode,
-
-      bank_account_number:
-        BANK_DETAILS.accountNumber,
-
-      payment_reference:
-        order.reference,
-
-      support_email:
-        EMAILJS_CONFIG.adminEmail,
-
-      research_declaration:
-        "Accepted",
-
-      database_order_id:
-        order.databaseId ||
-        "",
-
-      created_at:
-        new Date(
-          order.createdAt
-        ).toLocaleString(
-          "en-GB",
-          {
-            dateStyle: "full",
-            timeStyle: "short"
-          }
-        )
-    };
-
-    await window.emailjs.send(
-      EMAILJS_CONFIG.serviceId,
-      EMAILJS_CONFIG.adminTemplateId,
-      unifiedParameters
+  if (!window.emailjs) {
+    throw new Error(
+      "EmailJS failed to load."
     );
   }
+
+  const formattedItems =
+    formatOrderItemsForEmail(
+      order.items
+    );
+
+  const formattedAddress =
+    formatAddress(
+      order.deliveryAddress
+    );
+
+  const customerParameters = {
+    to_email:
+      order.customer.email,
+
+    customer_email:
+      order.customer.email,
+
+    customer_name:
+      `${order.customer.firstName} ${order.customer.lastName}`,
+
+    first_name:
+      order.customer.firstName,
+
+    last_name:
+      order.customer.lastName,
+
+    customer_phone:
+      order.customer.phone,
+
+    order_reference:
+      order.reference,
+
+    order_status:
+      "Awaiting payment",
+
+    order_items:
+      formattedItems,
+
+    subtotal:
+      formatCurrency(
+        order.subtotal
+      ),
+
+    delivery_method:
+      order.delivery.name,
+
+    delivery_price:
+      formatCurrency(
+        order.delivery.price
+      ),
+
+    order_total:
+      formatCurrency(
+        order.total
+      ),
+
+    delivery_address:
+      formattedAddress,
+
+    delivery_notes:
+      order.deliveryAddress.deliveryNotes ||
+      "None",
+
+    bank_account_name:
+      BANK_DETAILS.accountName,
+
+    bank_sort_code:
+      BANK_DETAILS.sortCode,
+
+    bank_account_number:
+      BANK_DETAILS.accountNumber,
+
+    payment_reference:
+      order.reference,
+
+    support_email:
+      EMAILJS_CONFIG.adminEmail
+  };
+
+  const adminParameters = {
+    to_email:
+      EMAILJS_CONFIG.adminEmail,
+
+    customer_email:
+      order.customer.email,
+
+    customer_name:
+      `${order.customer.firstName} ${order.customer.lastName}`,
+
+    first_name:
+      order.customer.firstName,
+
+    last_name:
+      order.customer.lastName,
+
+    customer_phone:
+      order.customer.phone,
+
+    order_reference:
+      order.reference,
+
+    order_status:
+      "Awaiting payment",
+
+    order_items:
+      formattedItems,
+
+    subtotal:
+      formatCurrency(
+        order.subtotal
+      ),
+
+    delivery_method:
+      order.delivery.name,
+
+    delivery_price:
+      formatCurrency(
+        order.delivery.price
+      ),
+
+    order_total:
+      formatCurrency(
+        order.total
+      ),
+
+    delivery_address:
+      formattedAddress,
+
+    address_line_1:
+      order.deliveryAddress.addressLine1,
+
+    address_line_2:
+      order.deliveryAddress.addressLine2 ||
+      "",
+
+    town_city:
+      order.deliveryAddress.townCity,
+
+    county:
+      order.deliveryAddress.county ||
+      "",
+
+    postcode:
+      order.deliveryAddress.postcode,
+
+    country:
+      order.deliveryAddress.country,
+
+    delivery_notes:
+      order.deliveryAddress.deliveryNotes ||
+      "None",
+
+    research_declaration:
+      "Accepted",
+
+    database_order_id:
+      order.databaseId ||
+      "",
+
+    created_at:
+      new Date(
+        order.createdAt
+      ).toLocaleString(
+        "en-GB",
+        {
+          dateStyle: "full",
+          timeStyle: "short"
+        }
+      )
+  };
+
+  /*
+    Send the customer confirmation first.
+  */
+
+  await window.emailjs.send(
+    EMAILJS_CONFIG.serviceId,
+    EMAILJS_CONFIG.customerTemplateId,
+    customerParameters
+  );
+
+  /*
+    EmailJS allows one browser request per second.
+    Wait before sending the admin notification.
+  */
+
+  await new Promise((resolve) => {
+    window.setTimeout(
+      resolve,
+      1200
+    );
+  });
+
+  /*
+    Send the admin notification second.
+  */
+
+  await window.emailjs.send(
+    EMAILJS_CONFIG.serviceId,
+    EMAILJS_CONFIG.adminTemplateId,
+    adminParameters
+  );
+}
 
   /*
     --------------------------------------------------
