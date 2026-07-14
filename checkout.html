@@ -2175,6 +2175,19 @@
       ==========================================================
     */
 
+    const EMAILJS_CONFIG = {
+  publicKey: "YOUR_PUBLIC_KEY",
+  serviceId: "YOUR_SERVICE_ID",
+  customerTemplateId: "YOUR_CUSTOMER_TEMPLATE_ID",
+  adminTemplateId: "YOUR_ADMIN_TEMPLATE_ID",
+  adminEmail: "support@axiomresearchpeptides.uk"
+};
+
+emailjs.init({
+  publicKey: EMAILJS_CONFIG.publicKey
+});
+    
+    
     const BANK_DETAILS = {
       accountName: "Axiom (Name Wont Match)",
       sortCode: "04-06-05",
@@ -2752,6 +2765,20 @@
       };
     }
 
+   function formatOrderItemsForEmail(items) {
+  return items
+    .map((item) => {
+      return [
+        `${item.name} ${item.strength}`,
+        `Quantity: ${item.quantity}`,
+        `Price each: ${formatCurrency(item.price)}`,
+        `Line total: ${formatCurrency(item.lineTotal)}`
+      ].join("\n");
+    })
+    .join("\n\n");
+} 
+    
+    
     function formatAddress(address) {
       return [
         address.addressLine1,
@@ -2764,6 +2791,192 @@
         .filter(Boolean)
         .join(", ");
     }
+
+    async function sendOrderEmails(order) {
+  const formattedItems =
+    formatOrderItemsForEmail(order.items);
+
+  const formattedAddress =
+    formatAddress(order.deliveryAddress);
+
+  const customerTemplateParameters = {
+    to_email: order.customer.email,
+    customer_email: order.customer.email,
+    customer_name:
+      `${order.customer.firstName} ${order.customer.lastName}`,
+
+    first_name:
+      order.customer.firstName,
+
+    order_reference:
+      order.reference,
+
+    order_status:
+      "Awaiting payment",
+
+    order_items:
+      formattedItems,
+
+    subtotal:
+      formatCurrency(order.subtotal),
+
+    delivery_method:
+      order.delivery.name,
+
+    delivery_price:
+      formatCurrency(order.delivery.price),
+
+    order_total:
+      formatCurrency(order.total),
+
+    delivery_address:
+      formattedAddress,
+
+    delivery_notes:
+      order.deliveryAddress.deliveryNotes || "None",
+
+    bank_account_name:
+      BANK_DETAILS.accountName,
+
+    bank_sort_code:
+      BANK_DETAILS.sortCode,
+
+    bank_account_number:
+      BANK_DETAILS.accountNumber,
+
+    payment_reference:
+      order.reference,
+
+    support_email:
+      EMAILJS_CONFIG.adminEmail
+  };
+
+  const adminTemplateParameters = {
+    to_email:
+      EMAILJS_CONFIG.adminEmail,
+
+    customer_name:
+      `${order.customer.firstName} ${order.customer.lastName}`,
+
+    first_name:
+      order.customer.firstName,
+
+    last_name:
+      order.customer.lastName,
+
+    customer_email:
+      order.customer.email,
+
+    customer_phone:
+      order.customer.phone,
+
+    order_reference:
+      order.reference,
+
+    order_status:
+      "Awaiting payment",
+
+    order_items:
+      formattedItems,
+
+    subtotal:
+      formatCurrency(order.subtotal),
+
+    delivery_method:
+      order.delivery.name,
+
+    delivery_price:
+      formatCurrency(order.delivery.price),
+
+    order_total:
+      formatCurrency(order.total),
+
+    delivery_address:
+      formattedAddress,
+
+    address_line_1:
+      order.deliveryAddress.addressLine1,
+
+    address_line_2:
+      order.deliveryAddress.addressLine2 || "",
+
+    town_city:
+      order.deliveryAddress.townCity,
+
+    county:
+      order.deliveryAddress.county || "",
+
+    postcode:
+      order.deliveryAddress.postcode,
+
+    country:
+      order.deliveryAddress.country,
+
+    delivery_notes:
+      order.deliveryAddress.deliveryNotes || "None",
+
+    research_declaration:
+      order.researchDeclarationAccepted
+        ? "Accepted"
+        : "Not accepted",
+
+    created_at:
+      new Date(order.createdAt).toLocaleString(
+        "en-GB",
+        {
+          dateStyle: "full",
+          timeStyle: "short"
+        }
+      )
+  };
+
+  const customerEmailPromise =
+    emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.customerTemplateId,
+      customerTemplateParameters
+    );
+
+  const adminEmailPromise =
+    emailjs.send(
+      EMAILJS_CONFIG.serviceId,
+      EMAILJS_CONFIG.adminTemplateId,
+      adminTemplateParameters
+    );
+
+  const results =
+    await Promise.allSettled([
+      customerEmailPromise,
+      adminEmailPromise
+    ]);
+
+  const customerEmailResult =
+    results[0];
+
+  const adminEmailResult =
+    results[1];
+
+  if (
+    customerEmailResult.status === "rejected" ||
+    adminEmailResult.status === "rejected"
+  ) {
+    console.error(
+      "Customer email result:",
+      customerEmailResult
+    );
+
+    console.error(
+      "Admin email result:",
+      adminEmailResult
+    );
+
+    throw new Error(
+      "One or more order emails could not be sent."
+    );
+  }
+
+  return true;
+}
 
     function showConfirmation(order) {
       checkoutHero.style.display =
@@ -2845,83 +3058,91 @@
       });
     }
 
-    function submitOrder(event) {
-      event.preventDefault();
+    async function submitOrder(event) {
+  event.preventDefault();
 
-      if (orderSubmitted) {
-        return;
-      }
+  if (orderSubmitted) {
+    return;
+  }
 
-      if (!validateForm()) {
-        const firstInvalid =
-          checkoutForm.querySelector(
-            ":invalid"
-          );
+  if (!validateForm()) {
+    const firstInvalid =
+      checkoutForm.querySelector(":invalid");
 
-        if (firstInvalid) {
-          firstInvalid.focus();
-          firstInvalid.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-        }
+    if (firstInvalid) {
+      firstInvalid.focus();
 
-        return;
-      }
-
-      placeOrderButton.disabled =
-        true;
-
-      placeOrderButton.innerHTML = `
-        <span
-          class="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
-        Submitting order
-      `;
-
-      try {
-        const order =
-          createOrderObject();
-
-        localStorage.setItem(
-          LAST_ORDER_STORAGE_KEY,
-          JSON.stringify(order)
-        );
-
-        /*
-          Basket is cleared only after the order has been successfully
-          created locally. EmailJS and Supabase will replace this local-only
-          stage in Steps 4 and 5.
-        */
-
-        localStorage.removeItem(
-          CART_STORAGE_KEY
-        );
-
-        cart = [];
-        orderSubmitted = true;
-
-        showConfirmation(order);
-      } catch (error) {
-        console.error(
-          "Unable to submit order:",
-          error
-        );
-
-        placeOrderButton.disabled =
-          false;
-
-        placeOrderButton.innerHTML = `
-          Submit order
-          <i class="bi bi-arrow-right"></i>
-        `;
-
-        alert(
-          "The order could not be submitted. Please check your details and try again."
-        );
-      }
+      firstInvalid.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
     }
+
+    return;
+  }
+
+  placeOrderButton.disabled = true;
+
+  placeOrderButton.innerHTML = `
+    <span
+      class="spinner-border spinner-border-sm"
+      aria-hidden="true"
+    ></span>
+    Submitting order
+  `;
+
+  try {
+    const order =
+      createOrderObject();
+
+    /*
+      Send both the customer email and your admin notification
+      before clearing the basket.
+    */
+
+    await sendOrderEmails(order);
+
+    /*
+      Temporary browser backup.
+
+      Supabase will replace this in Step 5.
+    */
+
+    localStorage.setItem(
+      LAST_ORDER_STORAGE_KEY,
+      JSON.stringify(order)
+    );
+
+    /*
+      Clear the basket only after both emails have sent.
+    */
+
+    localStorage.removeItem(
+      CART_STORAGE_KEY
+    );
+
+    cart = [];
+    orderSubmitted = true;
+
+    showConfirmation(order);
+  } catch (error) {
+    console.error(
+      "Unable to submit order:",
+      error
+    );
+
+    placeOrderButton.disabled = false;
+
+    placeOrderButton.innerHTML = `
+      Submit order
+      <i class="bi bi-arrow-right"></i>
+    `;
+
+    alert(
+      "Your order could not be submitted because the confirmation email service did not respond. Your basket has not been cleared. Please try again."
+    );
+  }
+}
 
     function initialiseCheckout() {
       cleanCart();
