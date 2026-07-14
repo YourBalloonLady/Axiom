@@ -1,272 +1,290 @@
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-  <script>
-    const EMAILJS_CONFIG = {
-      publicKey: "uZOuTrBdIAc6AmKjo",
-      serviceId: "service_vdz5j5b",
-      customerTemplateId: "template_piitdtl",
-      adminTemplateId: "template_o4eneh5",
-      adminEmail: "support@axiomresearchpeptides.uk"
-    };
+<script>
+  const EMAILJS_CONFIG = {
+    publicKey: "uZOuTrBdIAc6AmKjo",
+    serviceId: "service_vdz5j5b",
+    customerTemplateId: "template_piitdtl",
+    adminTemplateId: "template_o4eneh5",
+    adminEmail: "support@axiomresearchpeptides.uk"
+  };
 
-    emailjs.init({
+  const BANK_DETAILS = {
+    accountName: "Axiom (Name Won't Match)",
+    sortCode: "04-06-05",
+    accountNumber: "31588150"
+  };
+
+  const DELIVERY_PRICES = {
+    tracked48: 3.99,
+    tracked24: 4.99
+  };
+
+  const PRODUCTS = [
+    {
+      id: "bpc-tb500-blend-10mg",
+      name: "BPC-157 & TB500 Blend",
+      strength: "10MG",
+      price: 35,
+      stock: 5,
+      image: "./images/axiom-bpc-tb500-vial.png"
+    },
+    {
+      id: "slu-pp-332-5mg",
+      name: "SLU-PP-332",
+      strength: "5MG",
+      price: 50,
+      stock: 5,
+      image: "./images/axiom-slu-pp-332-vial.png"
+    },
+    {
+      id: "ss-31-10mg",
+      name: "SS-31",
+      strength: "10MG",
+      price: 30,
+      stock: 5,
+      image: "./images/axiom-ss31-vial.png"
+    },
+    {
+      id: "ghk-cu-100mg",
+      name: "GHK-CU",
+      strength: "100MG",
+      price: 45,
+      stock: 5,
+      image: "./images/axiom-ghk-cu-vial.png"
+    },
+    {
+      id: "cjc-ipamorelin-10mg",
+      name: "CJC + Ipamorelin",
+      strength: "10MG",
+      price: 55,
+      stock: 5,
+      image: "./images/axiom-cjc-ipamorelin-vial.png"
+    },
+    {
+      id: "epithalon-10mg",
+      name: "Epithalon",
+      strength: "10MG",
+      price: 20,
+      stock: 5,
+      image: "./images/axiom-epithalon-vial.png"
+    },
+    {
+      id: "mots-c-10mg",
+      name: "MOTS-C",
+      strength: "10MG",
+      price: 55,
+      stock: 5,
+      image: "./images/axiom-mots-c-vial.png"
+    },
+    {
+      id: "mt-2-10mg",
+      name: "MT-2",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-mt-2-vial.png"
+    },
+    {
+      id: "selank-10mg",
+      name: "Selank",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-selank-vial.png"
+    },
+    {
+      id: "semax-10mg",
+      name: "Semax",
+      strength: "10MG",
+      price: 25,
+      stock: 5,
+      image: "./images/axiom-semax-vial.png"
+    },
+    {
+      id: "tesamorelin-10mg",
+      name: "Tesamorelin",
+      strength: "10MG",
+      price: 50,
+      stock: 5,
+      image: "./images/axiom-tesamorelin-vial.png"
+    },
+    {
+      id: "5-amino-1mq-50mg",
+      name: "5 Amino 1MQ",
+      strength: "50MG",
+      price: 65,
+      stock: 5,
+      image: "./images/axiom-5-amino-1mq-vial.png"
+    },
+    {
+      id: "nad-plus-1000mg",
+      name: "NAD+",
+      strength: "1000MG",
+      price: 130,
+      stock: 5,
+      image: "./images/axiom-nad-plus-vial.png"
+    }
+  ];
+
+  const CART_STORAGE_KEY = "axiomResearchCart";
+  const LAST_ORDER_STORAGE_KEY = "axiomLastOrder";
+
+  const checkoutHero =
+    document.getElementById("checkoutHero");
+
+  const checkoutMain =
+    document.getElementById("checkoutMain");
+
+  const checkoutForm =
+    document.getElementById("checkoutForm");
+
+  const emptyCheckout =
+    document.getElementById("emptyCheckout");
+
+  const confirmationSection =
+    document.getElementById("confirmationSection");
+
+  const summaryItems =
+    document.getElementById("summaryItems");
+
+  const summarySubtotal =
+    document.getElementById("summarySubtotal");
+
+  const summaryDelivery =
+    document.getElementById("summaryDelivery");
+
+  const summaryTotal =
+    document.getElementById("summaryTotal");
+
+  const placeOrderButton =
+    document.getElementById("placeOrderButton");
+
+  const researchDeclaration =
+    document.getElementById("researchDeclaration");
+
+  const declarationError =
+    document.getElementById("declarationError");
+
+  const postcodeInput =
+    document.getElementById("postcode");
+
+  const copyReferenceButton =
+    document.getElementById("copyReferenceButton");
+
+  let cart = loadCart();
+  let orderSubmitted = false;
+
+  function initialiseEmailJs() {
+    if (typeof window.emailjs === "undefined") {
+      console.error("EmailJS failed to load.");
+      return false;
+    }
+
+    window.emailjs.init({
       publicKey: EMAILJS_CONFIG.publicKey
     });
 
-    const BANK_DETAILS = {
-      accountName: "Axiom (Name Won't Match)",
-      sortCode: "04-06-05",
-      accountNumber: "31588150"
-    };
+    return true;
+  }
 
-    const DELIVERY_PRICES = {
-      tracked48: 3.99,
-      tracked24: 4.99
-    };
+  function formatCurrency(value) {
+    return new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP"
+    }).format(value);
+  }
 
-    const PRODUCTS = [
-      {
-        id: "bpc-tb500-blend-10mg",
-        name: "BPC-157 & TB500 Blend",
-        strength: "10MG",
-        price: 35,
-        stock: 5,
-        image: "./images/axiom-bpc-tb500-vial.png"
-      },
-      {
-        id: "slu-pp-332-5mg",
-        name: "SLU-PP-332",
-        strength: "5MG",
-        price: 50,
-        stock: 5,
-        image: "./images/axiom-slu-pp-332-vial.png"
-      },
-      {
-        id: "ss-31-10mg",
-        name: "SS-31",
-        strength: "10MG",
-        price: 30,
-        stock: 5,
-        image: "./images/axiom-ss31-vial.png"
-      },
-      {
-        id: "ghk-cu-100mg",
-        name: "GHK-CU",
-        strength: "100MG",
-        price: 45,
-        stock: 5,
-        image: "./images/axiom-ghk-cu-vial.png"
-      },
-      {
-        id: "cjc-ipamorelin-10mg",
-        name: "CJC + Ipamorelin",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        image: "./images/axiom-cjc-ipamorelin-vial.png"
-      },
-      {
-        id: "epithalon-10mg",
-        name: "Epithalon",
-        strength: "10MG",
-        price: 20,
-        stock: 5,
-        image: "./images/axiom-epithalon-vial.png"
-      },
-      {
-        id: "mots-c-10mg",
-        name: "MOTS-C",
-        strength: "10MG",
-        price: 55,
-        stock: 5,
-        image: "./images/axiom-mots-c-vial.png"
-      },
-      {
-        id: "mt-2-10mg",
-        name: "MT-2",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-mt-2-vial.png"
-      },
-      {
-        id: "selank-10mg",
-        name: "Selank",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-selank-vial.png"
-      },
-      {
-        id: "semax-10mg",
-        name: "Semax",
-        strength: "10MG",
-        price: 25,
-        stock: 5,
-        image: "./images/axiom-semax-vial.png"
-      },
-      {
-        id: "tesamorelin-10mg",
-        name: "Tesamorelin",
-        strength: "10MG",
-        price: 50,
-        stock: 5,
-        image: "./images/axiom-tesamorelin-vial.png"
-      },
-      {
-        id: "5-amino-1mq-50mg",
-        name: "5 Amino 1MQ",
-        strength: "50MG",
-        price: 65,
-        stock: 5,
-        image: "./images/axiom-5-amino-1mq-vial.png"
-      },
-      {
-        id: "nad-plus-1000mg",
-        name: "NAD+",
-        strength: "1000MG",
-        price: 130,
-        stock: 5,
-        image: "./images/axiom-nad-plus-vial.png"
-      }
-    ];
-
-    const CART_STORAGE_KEY = "axiomResearchCart";
-    const LAST_ORDER_STORAGE_KEY = "axiomLastOrder";
-
-    const checkoutHero =
-      document.getElementById("checkoutHero");
-
-    const checkoutMain =
-      document.getElementById("checkoutMain");
-
-    const checkoutForm =
-      document.getElementById("checkoutForm");
-
-    const emptyCheckout =
-      document.getElementById("emptyCheckout");
-
-    const confirmationSection =
-      document.getElementById("confirmationSection");
-
-    const summaryItems =
-      document.getElementById("summaryItems");
-
-    const summarySubtotal =
-      document.getElementById("summarySubtotal");
-
-    const summaryDelivery =
-      document.getElementById("summaryDelivery");
-
-    const summaryTotal =
-      document.getElementById("summaryTotal");
-
-    const placeOrderButton =
-      document.getElementById("placeOrderButton");
-
-    const researchDeclaration =
-      document.getElementById("researchDeclaration");
-
-    const declarationError =
-      document.getElementById("declarationError");
-
-    const postcodeInput =
-      document.getElementById("postcode");
-
-    const copyReferenceButton =
-      document.getElementById("copyReferenceButton");
-
-    let cart = loadCart();
-    let orderSubmitted = false;
-
-    function formatCurrency(value) {
-      return new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP"
-      }).format(value);
-    }
-
-    function loadCart() {
-      try {
-        const savedCart =
-          JSON.parse(
-            localStorage.getItem(CART_STORAGE_KEY)
-          );
-
-        return Array.isArray(savedCart)
-          ? savedCart
-          : [];
-      } catch (error) {
-        console.error("Unable to load basket:", error);
-        return [];
-      }
-    }
-
-    function getProductById(productId) {
-      return PRODUCTS.find(
-        (product) => product.id === productId
-      );
-    }
-
-    function cleanCart() {
-      cart = cart
-        .map((item) => {
-          const product =
-            getProductById(item.id);
-
-          if (!product) {
-            return null;
-          }
-
-          const safeQuantity =
-            Math.max(
-              1,
-              Math.min(
-                Number(item.quantity) || 1,
-                product.stock
-              )
-            );
-
-          return {
-            id: product.id,
-            quantity: safeQuantity
-          };
-        })
-        .filter(Boolean);
-
-      localStorage.setItem(
-        CART_STORAGE_KEY,
-        JSON.stringify(cart)
-      );
-    }
-
-    function getSelectedDelivery() {
-      const selectedOption =
-        document.querySelector(
-          'input[name="deliveryMethod"]:checked'
+  function loadCart() {
+    try {
+      const savedCart =
+        JSON.parse(
+          localStorage.getItem(CART_STORAGE_KEY)
         );
 
-      if (!selectedOption) {
-        return {
-          id: "tracked48",
-          name: "Royal Mail Tracked 48",
-          price: DELIVERY_PRICES.tracked48
-        };
-      }
+      return Array.isArray(savedCart)
+        ? savedCart
+        : [];
+    } catch (error) {
+      console.error(
+        "Unable to load basket:",
+        error
+      );
 
+      return [];
+    }
+  }
+
+  function getProductById(productId) {
+    return PRODUCTS.find(
+      (product) =>
+        product.id === productId
+    );
+  }
+
+  function cleanCart() {
+    cart = cart
+      .map((item) => {
+        const product =
+          getProductById(item.id);
+
+        if (!product) {
+          return null;
+        }
+
+        const safeQuantity =
+          Math.max(
+            1,
+            Math.min(
+              Number(item.quantity) || 1,
+              product.stock
+            )
+          );
+
+        return {
+          id: product.id,
+          quantity: safeQuantity
+        };
+      })
+      .filter(Boolean);
+
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      JSON.stringify(cart)
+    );
+  }
+
+  function getSelectedDelivery() {
+    const selectedOption =
+      document.querySelector(
+        'input[name="deliveryMethod"]:checked'
+      );
+
+    if (!selectedOption) {
       return {
-        id: selectedOption.value,
-        name: selectedOption.dataset.name,
-        price:
-          DELIVERY_PRICES[selectedOption.value] ??
-          Number(selectedOption.dataset.price) ??
-          0
+        id: "tracked48",
+        name: "Royal Mail Tracked 48",
+        price: DELIVERY_PRICES.tracked48
       };
     }
 
-    function calculateOrder() {
-      const subtotal =
-        cart.reduce((total, item) => {
+    return {
+      id: selectedOption.value,
+      name:
+        selectedOption.dataset.name ||
+        "Royal Mail delivery",
+
+      price:
+        DELIVERY_PRICES[selectedOption.value] ??
+        Number(selectedOption.dataset.price) ??
+        0
+    };
+  }
+
+  function calculateOrder() {
+    const subtotal =
+      cart.reduce(
+        (total, item) => {
           const product =
             getProductById(item.id);
 
@@ -277,646 +295,912 @@
           return total +
             product.price *
             item.quantity;
-        }, 0);
-
-      const delivery =
-        getSelectedDelivery();
-
-      return {
-        subtotal,
-        delivery,
-        total: subtotal + delivery.price
-      };
-    }
-
-    function handleMissingImage(image) {
-      image.onerror = null;
-      image.src =
-        "./images/axiom-logo-icon.png";
-      image.style.padding = "14px";
-    }
-
-    function renderSummary() {
-      const order =
-        calculateOrder();
-
-      summaryItems.innerHTML =
-        cart
-          .map((item) => {
-            const product =
-              getProductById(item.id);
-
-            if (!product) {
-              return "";
-            }
-
-            return `
-              <article class="summary-item">
-                <img
-                  src="${product.image}"
-                  alt="${product.name}"
-                  class="summary-item-image"
-                  onerror="handleMissingImage(this)"
-                >
-
-                <div>
-                  <div class="summary-item-name">
-                    ${product.name}
-                  </div>
-
-                  <div class="summary-item-meta">
-                    ${product.strength} × ${item.quantity}
-                  </div>
-                </div>
-
-                <div class="summary-item-price">
-                  ${formatCurrency(
-                    product.price *
-                    item.quantity
-                  )}
-                </div>
-              </article>
-            `;
-          })
-          .join("");
-
-      summarySubtotal.textContent =
-        formatCurrency(order.subtotal);
-
-      summaryDelivery.textContent =
-        formatCurrency(order.delivery.price);
-
-      summaryTotal.textContent =
-        formatCurrency(order.total);
-    }
-
-    function isValidUkPostcode(postcode) {
-      const normalised =
-        postcode
-          .trim()
-          .toUpperCase();
-
-      const pattern =
-        /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/;
-
-      return pattern.test(normalised);
-    }
-
-    function normalisePostcode() {
-      const rawValue =
-        postcodeInput.value
-          .trim()
-          .toUpperCase()
-          .replace(/\s+/g, "");
-
-      if (rawValue.length > 3) {
-        postcodeInput.value =
-          `${rawValue.slice(0, -3)} ${rawValue.slice(-3)}`;
-      } else {
-        postcodeInput.value =
-          rawValue;
-      }
-    }
-
-    function validateForm() {
-      normalisePostcode();
-
-      if (
-        !isValidUkPostcode(
-          postcodeInput.value
-        )
-      ) {
-        postcodeInput.setCustomValidity(
-          "Enter a valid UK postcode."
-        );
-      } else {
-        postcodeInput.setCustomValidity("");
-      }
-
-      let valid =
-        checkoutForm.checkValidity();
-
-      if (!researchDeclaration.checked) {
-        declarationError.classList.add(
-          "visible"
-        );
-
-        valid = false;
-      } else {
-        declarationError.classList.remove(
-          "visible"
-        );
-      }
-
-      checkoutForm.classList.add(
-        "was-validated"
+        },
+        0
       );
 
-      return valid;
+    const delivery =
+      getSelectedDelivery();
+
+    return {
+      subtotal,
+      delivery,
+      total:
+        subtotal +
+        delivery.price
+    };
+  }
+
+  function handleMissingImage(image) {
+    image.onerror = null;
+    image.src =
+      "./images/axiom-logo-icon.png";
+
+    image.style.padding =
+      "14px";
+  }
+
+  function renderSummary() {
+    if (
+      !summaryItems ||
+      !summarySubtotal ||
+      !summaryDelivery ||
+      !summaryTotal
+    ) {
+      throw new Error(
+        "One or more checkout summary elements are missing."
+      );
     }
 
-    function generateOrderReference() {
-      const now =
-        new Date();
+    const order =
+      calculateOrder();
 
-      const datePart = [
-        String(now.getFullYear()).slice(-2),
-        String(now.getMonth() + 1).padStart(2, "0"),
-        String(now.getDate()).padStart(2, "0")
-      ].join("");
-
-      const randomPart =
-        Math.floor(
-          1000 +
-          Math.random() * 9000
-        );
-
-      return `AX-${datePart}-${randomPart}`;
-    }
-
-    function formValue(fieldName) {
-      const field =
-        checkoutForm.elements[fieldName];
-
-      return field
-        ? field.value.trim()
-        : "";
-    }
-
-    function createOrderObject() {
-      const totals =
-        calculateOrder();
-
-      const reference =
-        generateOrderReference();
-
-      const orderItems =
-        cart.map((item) => {
+    summaryItems.innerHTML =
+      cart
+        .map((item) => {
           const product =
             getProductById(item.id);
 
-          return {
-            productId: product.id,
-            name: product.name,
-            strength: product.strength,
-            price: product.price,
-            quantity: item.quantity,
-            lineTotal:
-              product.price *
-              item.quantity
-          };
-        });
+          if (!product) {
+            return "";
+          }
 
-      return {
-        reference,
-        status: "awaiting_payment",
-        createdAt:
-          new Date().toISOString(),
+          return `
+            <article class="summary-item">
 
-        customer: {
-          firstName:
-            formValue("firstName"),
+              <img
+                src="${product.image}"
+                alt="${product.name}"
+                class="summary-item-image"
+                onerror="handleMissingImage(this)"
+              >
 
-          lastName:
-            formValue("lastName"),
+              <div>
 
-          email:
-            formValue("email")
-              .toLowerCase(),
+                <div class="summary-item-name">
+                  ${product.name}
+                </div>
 
-          phone:
-            formValue("phone")
-        },
+                <div class="summary-item-meta">
+                  ${product.strength} × ${item.quantity}
+                </div>
 
-        deliveryAddress: {
-          addressLine1:
-            formValue("addressLine1"),
+              </div>
 
-          addressLine2:
-            formValue("addressLine2"),
+              <div class="summary-item-price">
+                ${formatCurrency(
+                  product.price *
+                  item.quantity
+                )}
+              </div>
 
-          townCity:
-            formValue("townCity"),
-
-          county:
-            formValue("county"),
-
-          postcode:
-            formValue("postcode")
-              .toUpperCase(),
-
-          country:
-            formValue("country"),
-
-          deliveryNotes:
-            formValue("deliveryNotes")
-        },
-
-        delivery: {
-          id: totals.delivery.id,
-          name: totals.delivery.name,
-          price: totals.delivery.price
-        },
-
-        items: orderItems,
-        subtotal: totals.subtotal,
-        total: totals.total,
-        researchDeclarationAccepted: true
-      };
-    }
-
-    function formatOrderItemsForEmail(items) {
-      return items
-        .map((item) => {
-          return [
-            `${item.name} ${item.strength}`,
-            `Quantity: ${item.quantity}`,
-            `Price each: ${formatCurrency(item.price)}`,
-            `Line total: ${formatCurrency(item.lineTotal)}`
-          ].join("\n");
+            </article>
+          `;
         })
-        .join("\n\n");
+        .join("");
+
+    summarySubtotal.textContent =
+      formatCurrency(
+        order.subtotal
+      );
+
+    summaryDelivery.textContent =
+      formatCurrency(
+        order.delivery.price
+      );
+
+    summaryTotal.textContent =
+      formatCurrency(
+        order.total
+      );
+  }
+
+  function isValidUkPostcode(postcode) {
+    const normalised =
+      postcode
+        .trim()
+        .toUpperCase();
+
+    const pattern =
+      /^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$/;
+
+    return pattern.test(normalised);
+  }
+
+  function normalisePostcode() {
+    if (!postcodeInput) {
+      return;
     }
 
-    function formatAddress(address) {
-      return [
-        address.addressLine1,
-        address.addressLine2,
-        address.townCity,
-        address.county,
-        address.postcode,
-        address.country
-      ]
-        .filter(Boolean)
-        .join(", ");
+    const rawValue =
+      postcodeInput.value
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "");
+
+    if (rawValue.length > 3) {
+      postcodeInput.value =
+        `${rawValue.slice(0, -3)} ${rawValue.slice(-3)}`;
+    } else {
+      postcodeInput.value =
+        rawValue;
+    }
+  }
+
+  function validateForm() {
+    if (
+      !checkoutForm ||
+      !postcodeInput ||
+      !researchDeclaration
+    ) {
+      return false;
     }
 
-    async function sendOrderEmails(order) {
-      const formattedItems =
-        formatOrderItemsForEmail(order.items);
+    normalisePostcode();
 
-      const formattedAddress =
-        formatAddress(order.deliveryAddress);
+    if (
+      !isValidUkPostcode(
+        postcodeInput.value
+      )
+    ) {
+      postcodeInput.setCustomValidity(
+        "Enter a valid UK postcode."
+      );
+    } else {
+      postcodeInput.setCustomValidity("");
+    }
 
-      const customerTemplateParameters = {
-        to_email:
-          order.customer.email,
+    let valid =
+      checkoutForm.checkValidity();
 
-        customer_email:
-          order.customer.email,
-
-        customer_name:
-          `${order.customer.firstName} ${order.customer.lastName}`,
-
-        first_name:
-          order.customer.firstName,
-
-        order_reference:
-          order.reference,
-
-        order_status:
-          "Awaiting payment",
-
-        order_items:
-          formattedItems,
-
-        subtotal:
-          formatCurrency(order.subtotal),
-
-        delivery_method:
-          order.delivery.name,
-
-        delivery_price:
-          formatCurrency(order.delivery.price),
-
-        order_total:
-          formatCurrency(order.total),
-
-        delivery_address:
-          formattedAddress,
-
-        delivery_notes:
-          order.deliveryAddress.deliveryNotes || "None",
-
-        bank_account_name:
-          BANK_DETAILS.accountName,
-
-        bank_sort_code:
-          BANK_DETAILS.sortCode,
-
-        bank_account_number:
-          BANK_DETAILS.accountNumber,
-
-        payment_reference:
-          order.reference,
-
-        support_email:
-          EMAILJS_CONFIG.adminEmail
-      };
-
-      const adminTemplateParameters = {
-        to_email:
-          EMAILJS_CONFIG.adminEmail,
-
-        customer_name:
-          `${order.customer.firstName} ${order.customer.lastName}`,
-
-        first_name:
-          order.customer.firstName,
-
-        last_name:
-          order.customer.lastName,
-
-        customer_email:
-          order.customer.email,
-
-        customer_phone:
-          order.customer.phone,
-
-        order_reference:
-          order.reference,
-
-        order_status:
-          "Awaiting payment",
-
-        order_items:
-          formattedItems,
-
-        subtotal:
-          formatCurrency(order.subtotal),
-
-        delivery_method:
-          order.delivery.name,
-
-        delivery_price:
-          formatCurrency(order.delivery.price),
-
-        order_total:
-          formatCurrency(order.total),
-
-        delivery_address:
-          formattedAddress,
-
-        address_line_1:
-          order.deliveryAddress.addressLine1,
-
-        address_line_2:
-          order.deliveryAddress.addressLine2 || "",
-
-        town_city:
-          order.deliveryAddress.townCity,
-
-        county:
-          order.deliveryAddress.county || "",
-
-        postcode:
-          order.deliveryAddress.postcode,
-
-        country:
-          order.deliveryAddress.country,
-
-        delivery_notes:
-          order.deliveryAddress.deliveryNotes || "None",
-
-        research_declaration:
-          order.researchDeclarationAccepted
-            ? "Accepted"
-            : "Not accepted",
-
-        created_at:
-          new Date(
-            order.createdAt
-          ).toLocaleString(
-            "en-GB",
-            {
-              dateStyle: "full",
-              timeStyle: "short"
-            }
-          )
-      };
-
-      const results =
-        await Promise.allSettled([
-          emailjs.send(
-            EMAILJS_CONFIG.serviceId,
-            EMAILJS_CONFIG.customerTemplateId,
-            customerTemplateParameters
-          ),
-
-          emailjs.send(
-            EMAILJS_CONFIG.serviceId,
-            EMAILJS_CONFIG.adminTemplateId,
-            adminTemplateParameters
-          )
-        ]);
-
-      const customerEmailResult =
-        results[0];
-
-      const adminEmailResult =
-        results[1];
-
-      if (
-        customerEmailResult.status === "rejected" ||
-        adminEmailResult.status === "rejected"
-      ) {
-        console.error(
-          "Customer email result:",
-          customerEmailResult
-        );
-
-        console.error(
-          "Admin email result:",
-          adminEmailResult
-        );
-
-        throw new Error(
-          "One or more order emails could not be sent."
+    if (!researchDeclaration.checked) {
+      if (declarationError) {
+        declarationError.classList.add(
+          "visible"
         );
       }
+
+      valid = false;
+    } else if (declarationError) {
+      declarationError.classList.remove(
+        "visible"
+      );
     }
 
-    function showConfirmation(order) {
+    checkoutForm.classList.add(
+      "was-validated"
+    );
+
+    return valid;
+  }
+
+  function generateOrderReference() {
+    const now =
+      new Date();
+
+    const datePart = [
+      String(
+        now.getFullYear()
+      ).slice(-2),
+
+      String(
+        now.getMonth() + 1
+      ).padStart(2, "0"),
+
+      String(
+        now.getDate()
+      ).padStart(2, "0")
+    ].join("");
+
+    const randomPart =
+      Math.floor(
+        1000 +
+        Math.random() * 9000
+      );
+
+    return `AX-${datePart}-${randomPart}`;
+  }
+
+  function formValue(fieldName) {
+    if (!checkoutForm) {
+      return "";
+    }
+
+    const field =
+      checkoutForm.elements[
+        fieldName
+      ];
+
+    return field
+      ? field.value.trim()
+      : "";
+  }
+
+  function createOrderObject() {
+    const totals =
+      calculateOrder();
+
+    const reference =
+      generateOrderReference();
+
+    const orderItems =
+      cart.map((item) => {
+        const product =
+          getProductById(item.id);
+
+        if (!product) {
+          throw new Error(
+            `Product not found: ${item.id}`
+          );
+        }
+
+        return {
+          productId:
+            product.id,
+
+          name:
+            product.name,
+
+          strength:
+            product.strength,
+
+          price:
+            product.price,
+
+          quantity:
+            item.quantity,
+
+          lineTotal:
+            product.price *
+            item.quantity
+        };
+      });
+
+    return {
+      reference,
+      status: "awaiting_payment",
+      createdAt:
+        new Date().toISOString(),
+
+      customer: {
+        firstName:
+          formValue("firstName"),
+
+        lastName:
+          formValue("lastName"),
+
+        email:
+          formValue("email")
+            .toLowerCase(),
+
+        phone:
+          formValue("phone")
+      },
+
+      deliveryAddress: {
+        addressLine1:
+          formValue("addressLine1"),
+
+        addressLine2:
+          formValue("addressLine2"),
+
+        townCity:
+          formValue("townCity"),
+
+        county:
+          formValue("county"),
+
+        postcode:
+          formValue("postcode")
+            .toUpperCase(),
+
+        country:
+          formValue("country"),
+
+        deliveryNotes:
+          formValue("deliveryNotes")
+      },
+
+      delivery: {
+        id:
+          totals.delivery.id,
+
+        name:
+          totals.delivery.name,
+
+        price:
+          totals.delivery.price
+      },
+
+      items:
+        orderItems,
+
+      subtotal:
+        totals.subtotal,
+
+      total:
+        totals.total,
+
+      researchDeclarationAccepted:
+        true
+    };
+  }
+
+  function formatOrderItemsForEmail(items) {
+    return items
+      .map((item) => {
+        return [
+          `${item.name} ${item.strength}`,
+          `Quantity: ${item.quantity}`,
+          `Price each: ${formatCurrency(item.price)}`,
+          `Line total: ${formatCurrency(item.lineTotal)}`
+        ].join("\n");
+      })
+      .join("\n\n");
+  }
+
+  function formatAddress(address) {
+    return [
+      address.addressLine1,
+      address.addressLine2,
+      address.townCity,
+      address.county,
+      address.postcode,
+      address.country
+    ]
+      .filter(Boolean)
+      .join(", ");
+  }
+
+  async function sendOrderEmails(order) {
+    if (
+      typeof window.emailjs ===
+      "undefined"
+    ) {
+      throw new Error(
+        "EmailJS is not available."
+      );
+    }
+
+    const formattedItems =
+      formatOrderItemsForEmail(
+        order.items
+      );
+
+    const formattedAddress =
+      formatAddress(
+        order.deliveryAddress
+      );
+
+    const customerTemplateParameters = {
+      to_email:
+        order.customer.email,
+
+      customer_email:
+        order.customer.email,
+
+      customer_name:
+        `${order.customer.firstName} ${order.customer.lastName}`,
+
+      first_name:
+        order.customer.firstName,
+
+      order_reference:
+        order.reference,
+
+      order_status:
+        "Awaiting payment",
+
+      order_items:
+        formattedItems,
+
+      subtotal:
+        formatCurrency(
+          order.subtotal
+        ),
+
+      delivery_method:
+        order.delivery.name,
+
+      delivery_price:
+        formatCurrency(
+          order.delivery.price
+        ),
+
+      order_total:
+        formatCurrency(
+          order.total
+        ),
+
+      delivery_address:
+        formattedAddress,
+
+      delivery_notes:
+        order.deliveryAddress
+          .deliveryNotes ||
+        "None",
+
+      bank_account_name:
+        BANK_DETAILS.accountName,
+
+      bank_sort_code:
+        BANK_DETAILS.sortCode,
+
+      bank_account_number:
+        BANK_DETAILS.accountNumber,
+
+      payment_reference:
+        order.reference,
+
+      support_email:
+        EMAILJS_CONFIG.adminEmail
+    };
+
+    const adminTemplateParameters = {
+      to_email:
+        EMAILJS_CONFIG.adminEmail,
+
+      customer_name:
+        `${order.customer.firstName} ${order.customer.lastName}`,
+
+      first_name:
+        order.customer.firstName,
+
+      last_name:
+        order.customer.lastName,
+
+      customer_email:
+        order.customer.email,
+
+      customer_phone:
+        order.customer.phone,
+
+      order_reference:
+        order.reference,
+
+      order_status:
+        "Awaiting payment",
+
+      order_items:
+        formattedItems,
+
+      subtotal:
+        formatCurrency(
+          order.subtotal
+        ),
+
+      delivery_method:
+        order.delivery.name,
+
+      delivery_price:
+        formatCurrency(
+          order.delivery.price
+        ),
+
+      order_total:
+        formatCurrency(
+          order.total
+        ),
+
+      delivery_address:
+        formattedAddress,
+
+      address_line_1:
+        order.deliveryAddress
+          .addressLine1,
+
+      address_line_2:
+        order.deliveryAddress
+          .addressLine2 ||
+        "",
+
+      town_city:
+        order.deliveryAddress
+          .townCity,
+
+      county:
+        order.deliveryAddress
+          .county ||
+        "",
+
+      postcode:
+        order.deliveryAddress
+          .postcode,
+
+      country:
+        order.deliveryAddress
+          .country,
+
+      delivery_notes:
+        order.deliveryAddress
+          .deliveryNotes ||
+        "None",
+
+      research_declaration:
+        order
+          .researchDeclarationAccepted
+          ? "Accepted"
+          : "Not accepted",
+
+      created_at:
+        new Date(
+          order.createdAt
+        ).toLocaleString(
+          "en-GB",
+          {
+            dateStyle: "full",
+            timeStyle: "short"
+          }
+        )
+    };
+
+    const results =
+      await Promise.allSettled([
+        window.emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG
+            .customerTemplateId,
+          customerTemplateParameters
+        ),
+
+        window.emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG
+            .adminTemplateId,
+          adminTemplateParameters
+        )
+      ]);
+
+    const customerResult =
+      results[0];
+
+    const adminResult =
+      results[1];
+
+    if (
+      customerResult.status ===
+        "rejected" ||
+      adminResult.status ===
+        "rejected"
+    ) {
+      console.error(
+        "Customer email:",
+        customerResult
+      );
+
+      console.error(
+        "Admin email:",
+        adminResult
+      );
+
+      throw new Error(
+        "One or more confirmation emails failed."
+      );
+    }
+  }
+
+  function showConfirmation(order) {
+    if (checkoutHero) {
+      checkoutHero.style.display =
+        "none";
+    }
+
+    if (checkoutMain) {
+      checkoutMain.style.display =
+        "none";
+    }
+
+    if (emptyCheckout) {
+      emptyCheckout.style.display =
+        "none";
+    }
+
+    if (confirmationSection) {
+      confirmationSection.style.display =
+        "block";
+    }
+
+    const confirmationReference =
+      document.getElementById(
+        "confirmationReference"
+      );
+
+    const confirmationReferenceDuplicate =
+      document.getElementById(
+        "confirmationReferenceDuplicate"
+      );
+
+    const confirmationAmount =
+      document.getElementById(
+        "confirmationAmount"
+      );
+
+    const confirmationCustomer =
+      document.getElementById(
+        "confirmationCustomer"
+      );
+
+    const confirmationEmail =
+      document.getElementById(
+        "confirmationEmail"
+      );
+
+    const confirmationDeliveryMethod =
+      document.getElementById(
+        "confirmationDeliveryMethod"
+      );
+
+    const confirmationAddress =
+      document.getElementById(
+        "confirmationAddress"
+      );
+
+    const confirmationTotal =
+      document.getElementById(
+        "confirmationTotal"
+      );
+
+    const bankAccountName =
+      document.getElementById(
+        "bankAccountName"
+      );
+
+    const bankSortCode =
+      document.getElementById(
+        "bankSortCode"
+      );
+
+    const bankAccountNumber =
+      document.getElementById(
+        "bankAccountNumber"
+      );
+
+    if (confirmationReference) {
+      confirmationReference.textContent =
+        order.reference;
+    }
+
+    if (
+      confirmationReferenceDuplicate
+    ) {
+      confirmationReferenceDuplicate
+        .textContent =
+        order.reference;
+    }
+
+    if (confirmationAmount) {
+      confirmationAmount.textContent =
+        formatCurrency(
+          order.total
+        );
+    }
+
+    if (confirmationCustomer) {
+      confirmationCustomer.textContent =
+        `${order.customer.firstName} ${order.customer.lastName}`;
+    }
+
+    if (confirmationEmail) {
+      confirmationEmail.textContent =
+        order.customer.email;
+    }
+
+    if (
+      confirmationDeliveryMethod
+    ) {
+      confirmationDeliveryMethod
+        .textContent =
+        order.delivery.name;
+    }
+
+    if (confirmationAddress) {
+      confirmationAddress.textContent =
+        formatAddress(
+          order.deliveryAddress
+        );
+    }
+
+    if (confirmationTotal) {
+      confirmationTotal.textContent =
+        formatCurrency(
+          order.total
+        );
+    }
+
+    if (bankAccountName) {
+      bankAccountName.textContent =
+        BANK_DETAILS.accountName;
+    }
+
+    if (bankSortCode) {
+      bankSortCode.textContent =
+        BANK_DETAILS.sortCode;
+    }
+
+    if (bankAccountNumber) {
+      bankAccountNumber.textContent =
+        BANK_DETAILS.accountNumber;
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  async function submitOrder(event) {
+    event.preventDefault();
+
+    if (orderSubmitted) {
+      return;
+    }
+
+    if (!validateForm()) {
+      const firstInvalid =
+        checkoutForm.querySelector(
+          ":invalid"
+        );
+
+      if (firstInvalid) {
+        firstInvalid.focus();
+
+        firstInvalid.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+
+      return;
+    }
+
+    placeOrderButton.disabled =
+      true;
+
+    placeOrderButton.innerHTML = `
+      <span
+        class="spinner-border spinner-border-sm"
+        aria-hidden="true"
+      ></span>
+      Submitting order
+    `;
+
+    try {
+      const order =
+        createOrderObject();
+
+      await sendOrderEmails(order);
+
+      localStorage.setItem(
+        LAST_ORDER_STORAGE_KEY,
+        JSON.stringify(order)
+      );
+
+      localStorage.removeItem(
+        CART_STORAGE_KEY
+      );
+
+      cart = [];
+      orderSubmitted = true;
+
+      showConfirmation(order);
+    } catch (error) {
+      console.error(
+        "Unable to submit order:",
+        error
+      );
+
+      placeOrderButton.disabled =
+        false;
+
+      placeOrderButton.innerHTML = `
+        Submit order
+        <i class="bi bi-arrow-right"></i>
+      `;
+
+      alert(
+        "Your order could not be submitted. Your basket has not been cleared. Please try again."
+      );
+    }
+  }
+
+  function showCheckoutLoadError(error) {
+    console.error(
+      "Checkout failed to initialise:",
+      error
+    );
+
+    if (checkoutHero) {
+      checkoutHero.style.display =
+        "none";
+    }
+
+    if (checkoutMain) {
+      checkoutMain.style.display =
+        "none";
+    }
+
+    if (confirmationSection) {
+      confirmationSection.style.display =
+        "none";
+    }
+
+    if (emptyCheckout) {
+      emptyCheckout.style.display =
+        "flex";
+
+      emptyCheckout.innerHTML = `
+        <div>
+
+          <i class="bi bi-exclamation-triangle"></i>
+
+          <h1>
+            Checkout could not load
+          </h1>
+
+          <p>
+            The checkout encountered an error. Your basket has not been changed.
+          </p>
+
+          <a
+            href="./shop.html"
+            class="catalogue-button"
+          >
+            <i class="bi bi-arrow-left"></i>
+            Return to catalogue
+          </a>
+
+        </div>
+      `;
+    }
+  }
+
+  function initialiseCheckout() {
+    if (
+      !checkoutHero ||
+      !checkoutMain ||
+      !checkoutForm ||
+      !emptyCheckout ||
+      !confirmationSection
+    ) {
+      throw new Error(
+        "Required checkout HTML elements are missing."
+      );
+    }
+
+    initialiseEmailJs();
+    cleanCart();
+
+    if (!cart.length) {
       checkoutHero.style.display =
         "none";
 
       checkoutMain.style.display =
         "none";
 
-      emptyCheckout.style.display =
+      confirmationSection.style.display =
         "none";
 
-      confirmationSection.style.display =
-        "block";
+      emptyCheckout.style.display =
+        "flex";
 
-      document.getElementById(
-        "confirmationReference"
-      ).textContent =
-        order.reference;
-
-      document.getElementById(
-        "confirmationReferenceDuplicate"
-      ).textContent =
-        order.reference;
-
-      document.getElementById(
-        "confirmationAmount"
-      ).textContent =
-        formatCurrency(order.total);
-
-      document.getElementById(
-        "confirmationCustomer"
-      ).textContent =
-        `${order.customer.firstName} ${order.customer.lastName}`;
-
-      document.getElementById(
-        "confirmationEmail"
-      ).textContent =
-        order.customer.email;
-
-      document.getElementById(
-        "confirmationDeliveryMethod"
-      ).textContent =
-        order.delivery.name;
-
-      document.getElementById(
-        "confirmationAddress"
-      ).textContent =
-        formatAddress(
-          order.deliveryAddress
-        );
-
-      document.getElementById(
-        "confirmationTotal"
-      ).textContent =
-        formatCurrency(order.total);
-
-      document.getElementById(
-        "bankAccountName"
-      ).textContent =
-        BANK_DETAILS.accountName;
-
-      document.getElementById(
-        "bankSortCode"
-      ).textContent =
-        BANK_DETAILS.sortCode;
-
-      document.getElementById(
-        "bankAccountNumber"
-      ).textContent =
-        BANK_DETAILS.accountNumber;
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      return;
     }
 
-    async function submitOrder(event) {
-      event.preventDefault();
+    renderSummary();
+  }
 
-      if (orderSubmitted) {
-        return;
-      }
+  document
+    .querySelectorAll(
+      'input[name="deliveryMethod"]'
+    )
+    .forEach((input) => {
+      input.addEventListener(
+        "change",
+        renderSummary
+      );
+    });
 
-      if (!validateForm()) {
-        const firstInvalid =
-          checkoutForm.querySelector(
-            ":invalid"
-          );
-
-        if (firstInvalid) {
-          firstInvalid.focus();
-
-          firstInvalid.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-          });
-        }
-
-        return;
-      }
-
-      placeOrderButton.disabled =
-        true;
-
-      placeOrderButton.innerHTML = `
-        <span
-          class="spinner-border spinner-border-sm"
-          aria-hidden="true"
-        ></span>
-        Submitting order
-      `;
-
-      try {
-        const order =
-          createOrderObject();
-
-        await sendOrderEmails(order);
-
-        localStorage.setItem(
-          LAST_ORDER_STORAGE_KEY,
-          JSON.stringify(order)
-        );
-
-        localStorage.removeItem(
-          CART_STORAGE_KEY
-        );
-
-        cart = [];
-        orderSubmitted = true;
-
-        showConfirmation(order);
-      } catch (error) {
-        console.error(
-          "Unable to submit order:",
-          error
-        );
-
-        placeOrderButton.disabled =
-          false;
-
-        placeOrderButton.innerHTML = `
-          Submit order
-          <i class="bi bi-arrow-right"></i>
-        `;
-
-        alert(
-          "Your order could not be submitted because the confirmation email service did not respond. Your basket has not been cleared. Please try again."
-        );
-      }
-    }
-
-    function initialiseCheckout() {
-      cleanCart();
-
-      if (!cart.length) {
-        checkoutHero.style.display =
-          "none";
-
-        checkoutMain.style.display =
-          "none";
-
-        emptyCheckout.style.display =
-          "flex";
-
-        return;
-      }
-
-      renderSummary();
-    }
-
-    document
-      .querySelectorAll(
-        'input[name="deliveryMethod"]'
-      )
-      .forEach((input) => {
-        input.addEventListener(
-          "change",
-          renderSummary
-        );
-      });
-
+  if (postcodeInput) {
     postcodeInput.addEventListener(
       "blur",
       () => {
@@ -927,9 +1211,8 @@
             postcodeInput.value
           )
         ) {
-          postcodeInput.setCustomValidity(
-            ""
-          );
+          postcodeInput
+            .setCustomValidity("");
         }
       }
     );
@@ -938,67 +1221,97 @@
       "input",
       () => {
         postcodeInput.value =
-          postcodeInput.value.toUpperCase();
+          postcodeInput.value
+            .toUpperCase();
 
-        postcodeInput.setCustomValidity("");
+        postcodeInput
+          .setCustomValidity("");
       }
     );
+  }
 
-    researchDeclaration.addEventListener(
-      "change",
-      () => {
-        declarationError.classList.toggle(
-          "visible",
-          !researchDeclaration.checked
-        );
-      }
-    );
+  if (researchDeclaration) {
+    researchDeclaration
+      .addEventListener(
+        "change",
+        () => {
+          if (declarationError) {
+            declarationError
+              .classList.toggle(
+                "visible",
+                !researchDeclaration
+                  .checked
+              );
+          }
+        }
+      );
+  }
 
+  if (checkoutForm) {
     checkoutForm.addEventListener(
       "submit",
       submitOrder
     );
+  }
 
-    copyReferenceButton.addEventListener(
-      "click",
-      async () => {
-        const reference =
-          document.getElementById(
-            "confirmationReference"
-          ).textContent;
+  if (copyReferenceButton) {
+    copyReferenceButton
+      .addEventListener(
+        "click",
+        async () => {
+          const referenceElement =
+            document.getElementById(
+              "confirmationReference"
+            );
 
-        try {
-          await navigator.clipboard.writeText(
-            reference
-          );
+          if (!referenceElement) {
+            return;
+          }
 
-          copyReferenceButton.innerHTML = `
-            <i class="bi bi-check2"></i>
-            Copied
-          `;
+          const reference =
+            referenceElement.textContent;
 
-          window.setTimeout(() => {
+          try {
+            await navigator.clipboard
+              .writeText(reference);
+
             copyReferenceButton.innerHTML = `
-              <i class="bi bi-copy"></i>
-              Copy reference
+              <i class="bi bi-check2"></i>
+              Copied
             `;
-          }, 1800);
-        } catch (error) {
-          console.error(
-            "Unable to copy reference:",
-            error
-          );
-        }
-      }
-    );
 
+            window.setTimeout(() => {
+              copyReferenceButton.innerHTML = `
+                <i class="bi bi-copy"></i>
+                Copy reference
+              `;
+            }, 1800);
+          } catch (error) {
+            console.error(
+              "Unable to copy reference:",
+              error
+            );
+          }
+        }
+      );
+  }
+
+  const currentYear =
     document.getElementById(
       "currentYear"
-    ).textContent =
-      new Date().getFullYear();
+    );
 
+  if (currentYear) {
+    currentYear.textContent =
+      new Date().getFullYear();
+  }
+
+  try {
     initialiseCheckout();
-  </script>
+  } catch (error) {
+    showCheckoutLoadError(error);
+  }
+</script>
 
 </body>
 </html>
