@@ -17,6 +17,10 @@
 
   <meta name="robots" content="index, follow">
 
+  <link rel="canonical" href="https://www.axiomresearchpeptides.uk/product.html">
+  <meta name="theme-color" content="#071421">
+  <link rel="manifest" href="./site.webmanifest">
+
   <link
     rel="icon"
     type="image/png"
@@ -1707,22 +1711,10 @@
     </span>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    const PRODUCTS = [
-      {
-        id: "bacteriostatic-water-10ml",
-        name: "Bateriostatic Water",
-        strength: "10ml",
-        price: 9,
-        stock: 10,
-        categoryLabel: "Repair research",
-        code: "AX-BC10",
-        image: "./images/axiom-10ml-bac-vial.png",
-        description:
-          "Medical Grade Bacteriostatic Water.",
-        },
-      
-      
+    let PRODUCTS = [
       {
         id: "bpc-tb500-blend-10mg",
         name: "BPC-157 & TB500 Blend",
@@ -1915,11 +1907,19 @@
     const requestedProductId =
       queryParameters.get("id");
 
-    const currentProduct =
-      PRODUCTS.find(
-        (product) =>
-          product.id === requestedProductId
-      );
+    let currentProduct = null;
+
+    const SUPABASE_CONFIG = {
+      url: "https://myqrwkynxmxpvstyydjq.supabase.co",
+      publishableKey: "sb_publishable_ByS5y5ivRwPw69xTo22R3Q_sBpaHz0e"
+    };
+
+    const supabaseClient = window.supabase
+      ? window.supabase.createClient(
+          SUPABASE_CONFIG.url,
+          SUPABASE_CONFIG.publishableKey
+        )
+      : null;
 
     const productPage =
       document.getElementById("productPage");
@@ -2074,6 +2074,64 @@
 
       image.style.padding =
         "40px";
+    }
+
+    async function loadLiveProducts() {
+      if (!supabaseClient) {
+        throw new Error("The live catalogue service did not load.");
+      }
+
+      const displayProducts = new Map(
+        PRODUCTS.map((product) => [product.id, product])
+      );
+
+      const { data, error } = await supabaseClient
+        .from("products")
+        .select("id,name,strength,price,stock,is_active")
+        .eq("is_active", true)
+        .order("name", { ascending: true });
+
+      if (error) {
+        throw error;
+      }
+
+      PRODUCTS = (data || [])
+        .map((liveProduct) => {
+          const displayProduct = displayProducts.get(liveProduct.id);
+
+          if (!displayProduct) {
+            return null;
+          }
+
+          return {
+            ...displayProduct,
+            name: liveProduct.name || displayProduct.name,
+            strength: liveProduct.strength || displayProduct.strength,
+            price: Number(liveProduct.price) || 0,
+            stock: Math.max(0, Math.floor(Number(liveProduct.stock) || 0))
+          };
+        })
+        .filter(Boolean);
+
+      currentProduct = PRODUCTS.find(
+        (product) => product.id === requestedProductId
+      ) || null;
+    }
+
+    function showProductLoadError(error) {
+      productPage.style.display = "none";
+      breadcrumbSection.style.display = "none";
+      notFound.style.display = "flex";
+
+      const heading = notFound.querySelector("h1");
+      const message = notFound.querySelector("p");
+
+      heading.textContent = "Product temporarily unavailable";
+      message.textContent =
+        "Current pricing and availability could not be verified. Please return to the catalogue and try again.";
+
+      document.title = "Product Unavailable | Axiom Research Peptides";
+      console.error("Unable to load live product data:", error);
     }
 
     function loadProductPage() {
@@ -2672,8 +2730,17 @@
     ).textContent =
       new Date().getFullYear();
 
-    loadProductPage();
-    renderCart();
+    async function initialiseProductPage() {
+      try {
+        await loadLiveProducts();
+        loadProductPage();
+        renderCart();
+      } catch (error) {
+        showProductLoadError(error);
+      }
+    }
+
+    initialiseProductPage();
   </script>
 
 </body>
